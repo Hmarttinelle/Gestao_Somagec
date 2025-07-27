@@ -1,0 +1,167 @@
+{% extends "stock/base.html" %}
+{% load i18n %}
+{% load l10n %}
+
+{% block title %}{% trans "Dashboard" %}{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Dashboard</h1>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-primary shadow h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Total Faturado (Mês)" %}</h5>
+                    <p class="card-text fs-4 fw-bold">{{ total_faturado_mes|floatformat:2 }} CFA</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-success shadow h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Nº de Faturas (Mês)" %}</h5>
+                    <p class="card-text fs-4 fw-bold">{{ num_faturas_mes }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-white bg-info shadow h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Total de Clientes" %}</h5>
+                    <p class="card-text fs-4 fw-bold">{{ num_clientes }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-lg-8 mb-4">
+            <div class="card shadow">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="h4 mb-0">{% trans "Análise de Vendas" %}</h2>
+                        <form method="get" class="d-flex align-items-center">
+                            <select name="periodo" id="periodo-select" class="form-select form-select-sm me-2" style="width: auto;">
+                                <option value="6m" {% if periodo_selecionado == '6m' %}selected{% endif %}>{% trans "Últimos 6 Meses" %}</option>
+                                <option value="3m" {% if periodo_selecionado == '3m' %}selected{% endif %}>{% trans "Últimos 3 Meses" %}</option>
+                                <option value="1m_daily" {% if periodo_selecionado == '1m_daily' %}selected{% endif %}>{% trans "Mês Atual (Diário)" %}</option>
+                                <option value="custom" {% if periodo_selecionado == 'custom' %}selected{% endif %}>{% trans "Período Personalizado" %}</option>
+                            </select>
+                            
+                            <div id="date-range-picker" class="d-flex align-items-center" style="display: none;">
+                                <input type="date" name="start_date" class="form-control form-control-sm me-2" value="{{ start_date }}">
+                                <input type="date" name="end_date" class="form-control form-control-sm me-2" value="{{ end_date }}">
+                            </div>
+
+                            <button type="submit" class="btn btn-secondary btn-sm">{% trans "Filtrar" %}</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="graficoVendas"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+             <div class="card shadow">
+                <div class="card-header">
+                    <h2 class="h4">{% blocktrans %}Estoque Baixo (<= {{ limite_estoque_baixo }}){% endblocktrans %}</h2>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>{% trans "Produto" %}</th>
+                                    <th class="text-end">{% trans "Estoque Atual" %}</th>
+                                    <th class="text-end">{% trans "Ações" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for produto in produtos_estoque_baixo %}
+                                <tr>
+                                    <td>{{ produto.nome }} ({{ produto.calibre }})</td>
+                                    <td class="text-end text-danger fw-bold">{{ produto.estoque_atual|floatformat:2 }}</td>
+                                    <td class="text-end">
+                                        <a href="{% url 'editar_produto' produto.id %}" class="btn btn-warning btn-sm">{% trans "Editar" %}</a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="3" class="text-center text-muted">{% trans "Nenhum produto com estoque baixo." %}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center text-muted mt-5">
+        <p>Desenvolvido por: Helder Martinelle | Versão 1.0</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const labels = {{ labels_grafico|safe }};
+        const data = {{ dados_grafico|safe }};
+
+        const ctx = document.getElementById('graficoVendas').getContext('2d');
+        const graficoVendas = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: '{% trans "Total Faturado" %}',
+                    data: data,
+                    backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                    borderColor: 'rgba(0, 123, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value, index, values) {
+                                return value.toLocaleString() + ' CFA';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) { label += ': '; }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y.toLocaleString() + ' CFA';
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // JAVASCRIPT PARA MOSTRAR/ESCONDER OS CAMPOS DE DATA
+        const periodoSelect = document.getElementById('periodo-select');
+        const dateRangePicker = document.getElementById('date-range-picker');
+
+        function toggleDateRangePicker() {
+            if (periodoSelect.value === 'custom') {
+                dateRangePicker.style.display = 'flex';
+            } else {
+                dateRangePicker.style.display = 'none';
+            }
+        }
+        
+        toggleDateRangePicker();
+        periodoSelect.addEventListener('change', toggleDateRangePicker);
+    </script>
+{% endblock %}

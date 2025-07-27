@@ -1,0 +1,126 @@
+{% load i18n %}
+{% load l10n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="{{ request.LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{% blocktrans %}Fatura {{ fatura.numero_fatura }}{% endblocktrans %}</title>
+    <style>
+        body { background-color: #EEE; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.5; }
+        .page { width: 21cm; min-height: 29.7cm; padding: 1.5cm; margin: 1cm auto; background: white; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; }
+        .main-content { flex-grow: 1; }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+        .company-logo img { max-height: 135px; max-width: 450px; }
+        .invoice-info { text-align: right; }
+        .invoice-info h1 { margin: 0; font-size: 28px; color: #333; }
+        .details-row { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 20px; border-bottom: 2px solid #000; margin-bottom: 40px; }
+        .company-contact-details, .customer-details { text-align: left; }
+        .customer-details { text-align: right; }
+        .items-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+        .items-table thead th { background-color: #f2f2f2; border-bottom: 2px solid #ddd; }
+        .items-table th, .items-table td { border: 1px solid #ddd; padding: 10px; text-align: left; vertical-align: top; }
+        .totals-section { display: flex; justify-content: flex-end; }
+        .totals-table { width: 45%; }
+        .totals-table td { padding: 8px; }
+        .totals-table .total-final td { font-weight: bold; font-size: 1.3em; border-top: 2px solid #000; }
+        .signature-section { margin-top: auto; padding-top: 50px; text-align: center; }
+        .signature-line { border-bottom: 1px solid #555; width: 250px; margin: 0 auto; }
+        .footer { padding-top: 15px; border-top: 1px solid #ccc; font-size: 12px; text-align: center; color: #555; }
+        @page { size: A4; margin: 0; }
+        @media print { body, .page { margin: 0; box-shadow: none; border: none; background: white; } }
+    </style>
+</head>
+<body onload="window.print()">
+    <div class="page">
+        <div class="main-content">
+            {% if dados_empresa %}
+                <div class="header">
+                    <div class="company-logo">
+                        {% if dados_empresa.logotipo %}<img src="{{ dados_empresa.logotipo.url }}" alt="Logotipo">{% endif %}
+                    </div>
+                    <div class="invoice-info">
+                        <h1>{% trans "FATURA" %}</h1>
+                        <p>
+                            <strong>Nº: {{ fatura.numero_fatura }}</strong><br>
+                            {% trans "Data" %}: {{ fatura.data_emissao }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="details-row">
+                    <div class="company-contact-details">
+                        <strong>{{ dados_empresa.nome_empresa }}</strong><br>
+                        {% trans "Tel" %}: {{ dados_empresa.telefone }}<br>
+                        Email: {{ dados_empresa.email }}<br>
+                        NIF: {{ dados_empresa.nif }}
+                    </div>
+                    <div class="customer-details">
+                        <strong>{% trans "Faturado a" %}:</strong><br>
+                        {{ fatura.cliente.nome }}<br>
+                        {% if fatura.cliente.endereco %}{{ fatura.cliente.endereco|linebreaksbr }}<br>{% endif %}
+                        {% if fatura.cliente.nif %}NIF: {{ fatura.cliente.nif }}{% endif %}
+                    </div>
+                </div>
+
+                <table class="items-table">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Produto / Serviço" %}</th>
+                            <th style="text-align: right;">{% trans "Qtd." %}</th>
+                            <th style="text-align: right;">{% trans "Preço Unit." %}</th>
+                            <th style="text-align: right;">{% trans "Subtotal" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in fatura.itens.all %}
+                        <tr>
+                            <td>{{ item.produto.nome }} ({{ item.produto.calibre }})</td>
+                            <td align="right">{{ item.quantidade|floatformat:2 }} {{ item.produto.get_unidade_medida_display }}</td>
+                            <td align="right">{{ item.preco_unitario|floatformat:2 }} CFA</td>
+                            <td align="right">{{ item.subtotal|floatformat:2 }} CFA</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="totals-section">
+                    <table class="totals-table">
+                        <tbody>
+                            <tr>
+                                <td>{% trans "Subtotal" %}:</td>
+                                <td align="right">{{ fatura.subtotal|floatformat:2 }} CFA</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans "IGV" %} ({{ fatura.taxa_igv|floatformat:2 }}%):</td>
+                                <td align="right">{{ fatura.valor_igv|floatformat:2 }} CFA</td>
+                            </tr>
+                            <tr class="total-final">
+                                <td>{% trans "Total" %}:</td>
+                                <td align="right">{{ fatura.total_final|floatformat:2 }} CFA</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <h1>{% trans "Erro: Dados da empresa não configurados." %}</h1>
+                <p>{% trans "Por favor, vá ao painel de administração e insira os dados da sua empresa." %}</p>
+            {% endif %}
+        </div>
+
+        <div class="signature-section">
+            <p>&nbsp;</p>
+            <div class="signature-line"></div>
+            <p>({% trans "Assinatura e Carimbo" %})</p>
+        </div>
+
+        {% if dados_empresa %}
+            <div class="footer">
+                <p>{{ dados_empresa.endereco|linebreaksbr }}</p>
+                <p>{% trans "Contactos" %}: {{ dados_empresa.telefone }} / {{ dados_empresa.email }} | {% trans "Processado por" %}: {{ fatura.utilizador.username|default:"N/A" }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

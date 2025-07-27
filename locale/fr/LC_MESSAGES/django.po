@@ -1,0 +1,785 @@
+# French translations for SOMAGEC MINING BISSAU project.
+# Copyright (C) 2025 SOMAGEC MINING BISSAU
+# This file is distributed under the same license as the SOMAGEC MINING BISSAU package.
+# Gemini <ai@google.com>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: SOMAGEC MINING BISSAU 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-27 05:03+0100\n"
+"PO-Revision-Date: 2025-07-27 05:06+0100\n"
+"Last-Translator: Gemini <ai@google.com>\n"
+"Language-Team: French <fr@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\gestao_pedreira\settings.py:20
+msgid "Português"
+msgstr "Portugais"
+
+#: .\gestao_pedreira\settings.py:21
+msgid "Inglês"
+msgstr "Anglais"
+
+#: .\gestao_pedreira\settings.py:22
+msgid "Francês"
+msgstr "Français"
+
+#: .\stock\models.py:10
+msgid "Tonelada"
+msgstr "Tonne"
+
+#: .\stock\models.py:10
+msgid "Metro Cúbico"
+msgstr "Mètre Cube"
+
+#: .\stock\models.py:10 .\stock\templates\stock\lista_produtos.html:22
+msgid "Unidade"
+msgstr "Unité"
+
+#: .\stock\models.py:11 .\stock\models.py:24
+msgid "nome"
+msgstr "nom"
+
+#: .\stock\models.py:12
+msgid "calibre"
+msgstr "calibre"
+
+#: .\stock\models.py:13
+msgid "descrição"
+msgstr "description"
+
+#: .\stock\models.py:14
+msgid "unidade de medida"
+msgstr "unité de mesure"
+
+#: .\stock\models.py:15
+msgid "estoque atual"
+msgstr "stock actuel"
+
+#: .\stock\models.py:16
+msgid "preço por unidade"
+msgstr "prix par unité"
+
+#: .\stock\models.py:20 .\stock\templates\stock\criar_fatura.html:55
+#: .\stock\templates\stock\criar_fatura.html:84
+#: .\stock\templates\stock\detalhe_fatura.html:54
+#: .\stock\templates\stock\editar_fatura.html:58
+#: .\stock\templates\stock\editar_fatura.html:87
+#: .\stock\templates\stock\home.html:75
+msgid "Produto"
+msgstr "Produit"
+
+#: .\stock\models.py:21
+msgid "Produtos"
+msgstr "Produits"
+
+#: .\stock\models.py:25
+msgid "NIF/Contribuinte"
+msgstr "NIF/Contribuable"
+
+#: .\stock\models.py:26
+msgid "endereço"
+msgstr "adresse"
+
+#: .\stock\models.py:27
+msgid "telefone"
+msgstr "téléphone"
+
+#: .\stock\models.py:28
+msgid "email"
+msgstr "email"
+
+#: .\stock\models.py:32 .\stock\templates\stock\criar_fatura.html:25
+#: .\stock\templates\stock\detalhe_fatura.html:43
+#: .\stock\templates\stock\editar_fatura.html:26
+#: .\stock\templates\stock\lista_faturas.html:17
+msgid "Cliente"
+msgstr "Client"
+
+#: .\stock\models.py:33 .\stock\templates\stock\base.html:39
+#: .\stock\templates\stock\lista_clientes.html:8
+msgid "Clientes"
+msgstr "Clients"
+
+#: .\stock\models.py:36
+msgid "cliente"
+msgstr "client"
+
+#: .\stock\models.py:37
+msgid "Criado por"
+msgstr "Créé par"
+
+#: .\stock\models.py:38
+msgid "data de emissão"
+msgstr "date d'émission"
+
+#: .\stock\models.py:39
+msgid "número da fatura"
+msgstr "numéro de facture"
+
+#: .\stock\models.py:40
+msgid "paga"
+msgstr "payée"
+
+#: .\stock\models.py:41
+msgid "Taxa IGV (%)"
+msgstr "Taux TVA (%)"
+
+#: .\stock\models.py:54 .\stock\templates\stock\detalhe_fatura.html:33
+msgid "Fatura"
+msgstr "Facture"
+
+#: .\stock\models.py:55
+msgid "Faturas"
+msgstr "Factures"
+
+#: .\stock\models.py:59
+msgid "produto"
+msgstr "produit"
+
+#: .\stock\models.py:60
+msgid "quantidade"
+msgstr "quantité"
+
+#: .\stock\models.py:61
+msgid "preço unitário"
+msgstr "prix unitaire"
+
+#: .\stock\models.py:67
+msgid "Nome da Empresa"
+msgstr "Nom de l'Entreprise"
+
+#: .\stock\models.py:68
+msgid "Logotipo"
+msgstr "Logo"
+
+#: .\stock\models.py:69
+msgid "Endereço"
+msgstr "Adresse"
+
+#: .\stock\models.py:70 .\stock\templates\stock\adicionar_cliente.html:19
+#: .\stock\templates\stock\editar_cliente.html:19
+#: .\stock\templates\stock\lista_clientes.html:19
+msgid "NIF"
+msgstr "NIF"
+
+#: .\stock\models.py:71 .\stock\templates\stock\adicionar_cliente.html:25
+#: .\stock\templates\stock\editar_cliente.html:25
+#: .\stock\templates\stock\lista_clientes.html:20
+msgid "Telefone"
+msgstr "Téléphone"
+
+#: .\stock\models.py:72 .\stock\templates\stock\adicionar_cliente.html:29
+#: .\stock\templates\stock\editar_cliente.html:29
+#: .\stock\templates\stock\lista_clientes.html:21
+msgid "Email"
+msgstr "Email"
+
+#: .\stock\models.py:73
+msgid "Dados de Pagamento"
+msgstr "Détails de Paiement"
+
+#: .\stock\models.py:76 .\stock\models.py:77
+msgid "Dados da Empresa"
+msgstr "Détails de l'Entreprise"
+
+#: .\stock\templates\registration\login.html:4
+#: .\stock\templates\registration\login.html:11
+msgid "Login"
+msgstr "Connexion"
+
+#: .\stock\templates\registration\login.html:17
+msgid ""
+"O seu nome de utilizador e palavra-passe não correspondem. Por favor, tente "
+"novamente."
+msgstr "Votre nom d'utilisateur et votre mot de passe ne correspondent pas. Veuillez réessayer."
+
+#: .\stock\templates\registration\login.html:35
+msgid "Entrar"
+msgstr "Se connecter"
+
+#: .\stock\templates\stock\adicionar_cliente.html:4
+#: .\stock\templates\stock\adicionar_cliente.html:7
+#: .\stock\templates\stock\lista_clientes.html:9
+msgid "Adicionar Novo Cliente"
+msgstr "Ajouter un Nouveau Client"
+
+#: .\stock\templates\stock\adicionar_cliente.html:15
+#: .\stock\templates\stock\editar_cliente.html:15
+#: .\stock\templates\stock\lista_clientes.html:18
+#: .\stock\templates\stock\lista_produtos.html:19
+msgid "Nome"
+msgstr "Nom"
+
+#: .\stock\templates\stock\adicionar_cliente.html:34
+#: .\stock\templates\stock\editar_cliente.html:34
+#: .\stock\templates\stock\lista_clientes.html:22
+msgid "Morada"
+msgstr "Adresse"
+
+#: .\stock\templates\stock\adicionar_cliente.html:40
+msgid "Salvar Cliente"
+msgstr "Enregistrer le Client"
+
+#: .\stock\templates\stock\adicionar_cliente.html:41
+#: .\stock\templates\stock\adicionar_produto.html:49
+#: .\stock\templates\stock\cliente_confirm_delete.html:17
+#: .\stock\templates\stock\editar_cliente.html:41
+#: .\stock\templates\stock\editar_fatura.html:111
+#: .\stock\templates\stock\editar_produto.html:49
+#: .\stock\templates\stock\produto_confirm_delete.html:18
+msgid "Cancelar"
+msgstr "Annuler"
+
+#: .\stock\templates\stock\adicionar_produto.html:4
+#: .\stock\templates\stock\adicionar_produto.html:7
+#: .\stock\templates\stock\lista_produtos.html:10
+msgid "Adicionar Novo Produto"
+msgstr "Ajouter un Nouveau Produit"
+
+#: .\stock\templates\stock\adicionar_produto.html:15
+#: .\stock\templates\stock\editar_produto.html:15
+msgid "Nome do Produto"
+msgstr "Nom du Produit"
+
+#: .\stock\templates\stock\adicionar_produto.html:19
+#: .\stock\templates\stock\editar_produto.html:19
+#: .\stock\templates\stock\lista_produtos.html:20
+msgid "Calibre"
+msgstr "Calibre"
+
+#: .\stock\templates\stock\adicionar_produto.html:24
+#: .\stock\templates\stock\editar_produto.html:24
+msgid "Descrição"
+msgstr "Description"
+
+#: .\stock\templates\stock\adicionar_produto.html:29
+#: .\stock\templates\stock\editar_produto.html:29
+msgid "Unidade de Medida"
+msgstr "Unité de Mesure"
+
+#: .\stock\templates\stock\adicionar_produto.html:37
+msgid "Estoque Inicial"
+msgstr "Stock Initial"
+
+#: .\stock\templates\stock\adicionar_produto.html:41
+#: .\stock\templates\stock\editar_produto.html:41
+msgid "Preço por Unidade"
+msgstr "Prix par Unité"
+
+#: .\stock\templates\stock\adicionar_produto.html:48
+msgid "Salvar Produto"
+msgstr "Enregistrer le Produit"
+
+#: .\stock\templates\stock\base.html:36
+msgid "Nova Fatura"
+msgstr "Nouvelle Facture"
+
+#: .\stock\templates\stock\base.html:37
+msgid "Histórico"
+msgstr "Historique"
+
+#: .\stock\templates\stock\base.html:38
+msgid "Estoque"
+msgstr "Stock"
+
+#: .\stock\templates\stock\base.html:40
+msgid "Administração"
+msgstr "Administration"
+
+#: .\stock\templates\stock\base.html:58
+msgid "Bem-vindo"
+msgstr "Bienvenue"
+
+#: .\stock\templates\stock\base.html:62
+msgid "Sair"
+msgstr "Déconnexion"
+
+#: .\stock\templates\stock\cliente_confirm_delete.html:4
+#: .\stock\templates\stock\produto_confirm_delete.html:4
+msgid "Confirmar Remoção"
+msgstr "Confirmer la Suppression"
+
+#: .\stock\templates\stock\cliente_confirm_delete.html:7
+msgid "Apagar Cliente"
+msgstr "Supprimer le Client"
+
+#: .\stock\templates\stock\cliente_confirm_delete.html:10
+#: .\stock\templates\stock\produto_confirm_delete.html:10
+msgid "Tem a certeza?"
+msgstr "Êtes-vous sûr(e) ?"
+
+#: .\stock\templates\stock\cliente_confirm_delete.html:11
+#, python-format
+msgid ""
+"Você está prestes a apagar permanentemente o cliente "
+"<strong>%(cliente.nome)s</strong>. Esta ação não pode ser desfeita."
+msgstr ""
+"Vous êtes sur le point de supprimer définitivement le client "
+"<strong>%(cliente.nome)s</strong>. Cette action est irréversible."
+
+#: .\stock\templates\stock\cliente_confirm_delete.html:16
+msgid "Sim, apagar cliente"
+msgstr "Oui, supprimer le client"
+
+#: .\stock\templates\stock\criar_fatura.html:4
+#: .\stock\templates\stock\criar_fatura.html:7
+msgid "Criar Nova Fatura"
+msgstr "Créer une Nouvelle Facture"
+
+#: .\stock\templates\stock\criar_fatura.html:20
+#: .\stock\templates\stock\editar_fatura.html:21
+msgid "Detalhes Gerais"
+msgstr "Détails Généraux"
+
+#: .\stock\templates\stock\criar_fatura.html:33
+#: .\stock\templates\stock\editar_fatura.html:36
+msgid "Tipo de Imposto"
+msgstr "Type de Taxe"
+
+#: .\stock\templates\stock\criar_fatura.html:36
+#: .\stock\templates\stock\editar_fatura.html:40
+msgid "Personalizado"
+msgstr "Personnalisé"
+
+#: .\stock\templates\stock\criar_fatura.html:37
+#: .\stock\templates\stock\editar_fatura.html:39
+msgid "Isento"
+msgstr "Exonéré"
+
+#: .\stock\templates\stock\criar_fatura.html:41
+#: .\stock\templates\stock\editar_fatura.html:44
+#, python-format
+msgid "Taxa (%%)"
+msgstr "Taux (%%)"
+
+#: .\stock\templates\stock\criar_fatura.html:50
+#: .\stock\templates\stock\editar_fatura.html:53
+msgid "Adicionar Itens"
+msgstr "Ajouter des Articles"
+
+#: .\stock\templates\stock\criar_fatura.html:65
+#: .\stock\templates\stock\detalhe_fatura.html:55
+#: .\stock\templates\stock\editar_fatura.html:68
+msgid "Quantidade"
+msgstr "Quantité"
+
+#: .\stock\templates\stock\criar_fatura.html:69
+#: .\stock\templates\stock\editar_fatura.html:72
+msgid "Adicionar"
+msgstr "Ajouter"
+
+#: .\stock\templates\stock\criar_fatura.html:77
+#: .\stock\templates\stock\editar_fatura.html:80
+msgid "Itens da Fatura"
+msgstr "Articles de la Facture"
+
+#: .\stock\templates\stock\criar_fatura.html:85
+#: .\stock\templates\stock\editar_fatura.html:88
+#: .\stock\templates\stock\fatura_print.html:71
+msgid "Qtd."
+msgstr "Qté."
+
+#: .\stock\templates\stock\criar_fatura.html:86
+#: .\stock\templates\stock\editar_fatura.html:89
+#: .\stock\templates\stock\fatura_print.html:72
+msgid "Preço Unit."
+msgstr "Prix Unit."
+
+#: .\stock\templates\stock\criar_fatura.html:87
+#: .\stock\templates\stock\criar_fatura.html:97
+#: .\stock\templates\stock\detalhe_fatura.html:57
+#: .\stock\templates\stock\detalhe_fatura.html:78
+#: .\stock\templates\stock\editar_fatura.html:90
+#: .\stock\templates\stock\editar_fatura.html:100
+#: .\stock\templates\stock\fatura_print.html:73
+#: .\stock\templates\stock\fatura_print.html:92
+msgid "Subtotal"
+msgstr "Sous-total"
+
+#: .\stock\templates\stock\criar_fatura.html:88
+#: .\stock\templates\stock\editar_fatura.html:91
+msgid "Ação"
+msgstr "Action"
+
+#: .\stock\templates\stock\criar_fatura.html:100
+#: .\stock\templates\stock\detalhe_fatura.html:86
+#: .\stock\templates\stock\editar_fatura.html:103
+#: .\stock\templates\stock\fatura_print.html:100
+msgid "Total"
+msgstr "Total"
+
+#: .\stock\templates\stock\criar_fatura.html:107
+msgid "Gerar Fatura"
+msgstr "Générer la Facture"
+
+#: .\stock\templates\stock\detalhe_fatura.html:5
+#, python-format
+msgid "Detalhe da Fatura %(fatura.numero_fatura)s"
+msgstr "Détail de la Facture %(fatura.numero_fatura)s"
+
+#: .\stock\templates\stock\detalhe_fatura.html:9
+msgid "Detalhe da Fatura"
+msgstr "Détail de la Facture"
+
+#: .\stock\templates\stock\detalhe_fatura.html:12
+msgid "Editar Fatura"
+msgstr "Modifier la Facture"
+
+#: .\stock\templates\stock\detalhe_fatura.html:15
+msgid "Imprimir Fatura"
+msgstr "Imprimer la Facture"
+
+#: .\stock\templates\stock\detalhe_fatura.html:29
+msgid "Dados da empresa não configurados."
+msgstr "Détails de l'entreprise non configurés."
+
+#: .\stock\templates\stock\detalhe_fatura.html:35
+#: .\stock\templates\stock\lista_faturas.html:18
+msgid "Data de Emissão"
+msgstr "Date d'Émission"
+
+#: .\stock\templates\stock\detalhe_fatura.html:56
+msgid "Preço Unitário"
+msgstr "Prix Unitaire"
+
+#: .\stock\templates\stock\detalhe_fatura.html:82
+#: .\stock\templates\stock\fatura_print.html:96
+msgid "IGV"
+msgstr "TVA"
+
+#: .\stock\templates\stock\detalhe_fatura.html:97
+#: .\stock\templates\stock\fatura_print.html:121
+msgid "Processado por"
+msgstr "Traité par"
+
+#: .\stock\templates\stock\detalhe_fatura.html:100
+msgid "Pagamento"
+msgstr "Paiement"
+
+#: .\stock\templates\stock\editar_cliente.html:4
+#: .\stock\templates\stock\editar_cliente.html:7
+msgid "Editar Cliente"
+msgstr "Modifier le Client"
+
+#: .\stock\templates\stock\editar_cliente.html:40
+#: .\stock\templates\stock\editar_fatura.html:110
+#: .\stock\templates\stock\editar_produto.html:48
+msgid "Salvar Alterações"
+msgstr "Enregistrer les Modifications"
+
+#: .\stock\templates\stock\editar_fatura.html:5
+#: .\stock\templates\stock\editar_fatura.html:8
+#, python-format
+msgid "Editar Fatura %(fatura.numero_fatura)s"
+msgstr "Modifier la Facture %(fatura.numero_fatura)s"
+
+#: .\stock\templates\stock\editar_produto.html:4
+#: .\stock\templates\stock\editar_produto.html:7
+msgid "Editar Produto"
+msgstr "Modifier le Produit"
+
+#: .\stock\templates\stock\editar_produto.html:37
+#: .\stock\templates\stock\home.html:76
+#: .\stock\templates\stock\lista_produtos.html:21
+msgid "Estoque Atual"
+msgstr "Stock Actuel"
+
+#: .\stock\templates\stock\fatura_print.html:9
+#, python-format
+msgid "Fatura %(fatura.numero_fatura)s"
+msgstr "Facture %(fatura.numero_fatura)s"
+
+#: .\stock\templates\stock\fatura_print.html:44
+msgid "FATURA"
+msgstr "FACTURE"
+
+#: .\stock\templates\stock\fatura_print.html:47
+msgid "Data"
+msgstr "Date"
+
+#: .\stock\templates\stock\fatura_print.html:55
+msgid "Tel"
+msgstr "Tél"
+
+#: .\stock\templates\stock\fatura_print.html:60
+msgid "Faturado a"
+msgstr "Facturé à"
+
+#: .\stock\templates\stock\fatura_print.html:70
+msgid "Produto / Serviço"
+msgstr "Produit / Service"
+
+#: .\stock\templates\stock\fatura_print.html:107
+msgid "Erro: Dados da empresa não configurados."
+msgstr "Erreur : Détails de l'entreprise non configurés."
+
+#: .\stock\templates\stock\fatura_print.html:108
+msgid ""
+"Por favor, vá ao painel de administração e insira os dados da sua empresa."
+msgstr "Veuillez vous rendre dans le panneau d'administration et saisir les détails de votre entreprise."
+
+#: .\stock\templates\stock\fatura_print.html:115
+msgid "Assinatura e Carimbo"
+msgstr "Signature et Cachet"
+
+#: .\stock\templates\stock\fatura_print.html:121
+msgid "Contactos"
+msgstr "Contacts"
+
+#: .\stock\templates\stock\home.html:5
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: .\stock\templates\stock\home.html:14
+msgid "Total Faturado (Mês)"
+msgstr "Total Facturé (Mois)"
+
+#: .\stock\templates\stock\home.html:22
+msgid "Nº de Faturas (Mês)"
+msgstr "Nº de Factures (Mois)"
+
+#: .\stock\templates\stock\home.html:30
+msgid "Total de Clientes"
+msgstr "Total Clients"
+
+#: .\stock\templates\stock\home.html:42
+msgid "Análise de Vendas"
+msgstr "Analyse des Ventes"
+
+#: .\stock\templates\stock\home.html:45
+msgid "Últimos 6 Meses"
+msgstr "Derniers 6 Mois"
+
+#: .\stock\templates\stock\home.html:46
+msgid "Últimos 3 Meses"
+msgstr "Derniers 3 Mois"
+
+#: .\stock\templates\stock\home.html:47
+msgid "Mês Atual (Diário)"
+msgstr "Mois Actuel (Journalier)"
+
+#: .\stock\templates\stock\home.html:48
+msgid "Período Personalizado"
+msgstr "Période Personnalisée"
+
+#: .\stock\templates\stock\home.html:56
+msgid "Filtrar"
+msgstr "Filtrer"
+
+#: .\stock\templates\stock\home.html:68
+#, python-format
+msgid "Estoque Baixo (<= %(limite_estoque_baixo)s)"
+msgstr "Stock Faible (<= %(limite_estoque_baixo)s)"
+
+#: .\stock\templates\stock\home.html:77
+#: .\stock\templates\stock\lista_clientes.html:23
+#: .\stock\templates\stock\lista_faturas.html:22
+#: .\stock\templates\stock\lista_produtos.html:24
+msgid "Ações"
+msgstr "Actions"
+
+#: .\stock\templates\stock\home.html:86
+#: .\stock\templates\stock\lista_clientes.html:35
+#: .\stock\templates\stock\lista_faturas.html:46
+#: .\stock\templates\stock\lista_produtos.html:36
+msgid "Editar"
+msgstr "Modifier"
+
+#: .\stock\templates\stock\home.html:91
+msgid "Nenhum produto com estoque baixo."
+msgstr "Aucun produit avec un stock faible."
+
+#: .\stock\templates\stock\home.html:117
+msgid "Total Faturado"
+msgstr "Total Facturé"
+
+#: .\stock\templates\stock\lista_clientes.html:4
+msgid "Gestão de Clientes"
+msgstr "Gestion des Clients"
+
+#: .\stock\templates\stock\lista_clientes.html:36
+#: .\stock\templates\stock\lista_produtos.html:37
+msgid "Apagar"
+msgstr "Supprimer"
+
+#: .\stock\templates\stock\lista_clientes.html:41
+msgid "Nenhum cliente encontrado."
+msgstr "Aucun client trouvé."
+
+#: .\stock\templates\stock\lista_faturas.html:5
+#: .\stock\templates\stock\lista_faturas.html:8
+msgid "Histórico de Faturas"
+msgstr "Historique des Factures"
+
+#: .\stock\templates\stock\lista_faturas.html:16
+msgid "Número da Fatura"
+msgstr "Numéro de Facture"
+
+#: .\stock\templates\stock\lista_faturas.html:19
+msgid "Última Modificação"
+msgstr "Dernière Modification"
+
+#: .\stock\templates\stock\lista_faturas.html:20
+msgid "Valor Total"
+msgstr "Montant Total"
+
+#: .\stock\templates\stock\lista_faturas.html:21
+msgid "Paga"
+msgstr "Payée"
+
+#: .\stock\templates\stock\lista_faturas.html:39
+msgid "Sim"
+msgstr "Oui"
+
+#: .\stock\templates\stock\lista_faturas.html:41
+msgid "Não"
+msgstr "Non"
+
+#: .\stock\templates\stock\lista_faturas.html:51
+msgid "Nenhuma fatura encontrada."
+msgstr "Aucune facture trouvée."
+
+#: .\stock\templates\stock\pagination.html:8
+#: .\stock\templates\stock\pagination.html:12
+msgid "Anterior"
+msgstr "Précédent"
+
+#: .\stock\templates\stock\pagination.html:18
+msgid "Página"
+msgstr "Page"
+
+#: .\stock\templates\stock\pagination.html:18
+msgid "de"
+msgstr "de"
+
+#: .\stock\templates\stock\pagination.html:24
+#: .\stock\templates\stock\pagination.html:28
+msgid "Próxima"
+msgstr "Suivant"
+
+#: .\stock\templates\stock\lista_produtos.html:5
+#: .\stock\templates\stock\lista_produtos.html:9
+msgid "Estoque de Produtos"
+msgstr "Stock de Produits"
+
+#: .\stock\templates\stock\lista_produtos.html:23
+msgid "Preço"
+msgstr "Prix"
+
+#: .\stock\templates\stock\lista_produtos.html:42
+msgid "Nenhum produto encontrado."
+msgstr "Aucun produit trouvé."
+
+#: .\stock\templates\stock\produto_confirm_delete.html:7
+msgid "Apagar Produto"
+msgstr "Supprimer le Produit"
+
+#: .\stock\templates\stock\produto_confirm_delete.html:11
+#, python-format
+msgid ""
+"Você está prestes a apagar permanentemente o produto "
+"<strong>%(produto.nome)s</strong>. Esta ação não pode ser desfeita."
+msgstr ""
+"Vous êtes sur le point de supprimer définitivement le produit "
+"<strong>%(produto.nome)s</strong>. Cette action est irréversible."
+
+#: .\stock\templates\stock\produto_confirm_delete.html:12
+msgid ""
+"Apagar um produto não afeta as faturas antigas onde ele foi usado, mas "
+"remove-o da lista para futuras vendas."
+msgstr ""
+"La suppression d'un produit n'affecte pas les anciennes factures où il a été "
+"utilisé, mais le retire de la liste pour les ventes futures."
+
+#: .\stock\templates\stock\produto_confirm_delete.html:17
+msgid "Sim, apagar produto"
+msgstr "Oui, supprimer le produit"
+
+#: .\stock\views.py:84
+#, python-brace-format
+msgid "O cliente '{nome}' foi adicionado com sucesso!"
+msgstr "Le client '{nome}' a été ajouté avec succès !"
+
+#: .\stock\views.py:98
+#, python-brace-format
+msgid "Os dados do cliente '{nome}' foram atualizados com sucesso!"
+msgstr "Les données du client '{nome}' ont été mises à jour avec succès !"
+
+#: .\stock\views.py:110
+#, python-brace-format
+msgid "O cliente '{nome}' foi apagado com sucesso."
+msgstr "Le client '{nome}' a été supprimé avec succès."
+
+#: .\stock\views.py:112
+#, python-brace-format
+msgid ""
+"O cliente '{nome}' não pode ser apagado porque já tem faturas associadas a "
+"ele."
+msgstr "Le client '{nome}' ne peut pas être supprimé car il a des factures associées."
+
+#: .\stock\views.py:135
+#, python-brace-format
+msgid "O produto '{nome}' foi adicionado com sucesso!"
+msgstr "Le produit '{nome}' a été ajouté avec succès !"
+
+#: .\stock\views.py:151
+#, python-brace-format
+msgid "O produto '{nome}' foi atualizado com sucesso!"
+msgstr "Le produit '{nome}' a été mis à jour avec succès !"
+
+#: .\stock\views.py:163
+#, python-brace-format
+msgid "O produto '{nome}' foi apagado com sucesso."
+msgstr "Le produit '{nome}' a été supprimé avec succès."
+
+#: .\stock\views.py:165
+#, python-brace-format
+msgid ""
+"O produto '{nome}' não pode ser apagado porque já está associado a faturas "
+"existentes."
+msgstr "Le produit '{nome}' ne peut pas être supprimé car il est déjà associé à des factures existantes."
+
+#: .\stock\views.py:183 .\stock\views.py:223
+msgid "A fatura deve ter pelo menos um item."
+msgstr "La facture doit contenir au moins un article."
+
+#: .\stock\views.py:202 .\stock\views.py:236
+#, python-brace-format
+msgid "Estoque insuficiente para {produto_nome}. Disponível: {estoque}"
+msgstr "Stock insuffisant pour {produto_nome}. Disponible : {estoque}"
+
+#: .\stock\views.py:206
+#, python-brace-format
+msgid "Fatura {numero} criada com sucesso!"
+msgstr "Facture {numero} créée avec succès !"
+
+#: .\stock\views.py:209
+#, python-brace-format
+msgid "Ocorreu um erro ao gerar a fatura: {erro}"
+msgstr "Une erreur s'est produite lors de la génération de la facture : {erro}"
+
+#: .\stock\views.py:240
+#, python-brace-format
+msgid "Fatura {numero} atualizada com sucesso!"
+msgstr "Facture {numero} mise à jour avec succès !"
+
+#: .\stock\views.py:243
+#, python-brace-format
+msgid "Ocorreu um erro ao salvar as alterações: {erro}"
+msgstr "Une erreur s'est produite lors de l'enregistrement des modifications : {erro}"
+
+#: .\stock\views.py:273
+#, python-brace-format
+msgid "A fatura {numero} foi marcada como PAGA."
+msgstr "La facture {numero} a été marquée comme PAYÉE."
+
+#: .\stock\views.py:275
+#, python-brace-format
+msgid "A fatura {numero} foi marcada como NÃO PAGA."
+msgstr "La facture {numero} a été marquée comme NON PAYÉE."

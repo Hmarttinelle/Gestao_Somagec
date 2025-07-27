@@ -1,0 +1,238 @@
+{% extends "stock/base.html" %}
+{% load i18n %}
+{% load l10n %}
+
+{% block title %}{% blocktrans %}Editar Fatura {{ fatura.numero_fatura }}{% endblocktrans %}{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">{% blocktrans %}Editar Fatura {{ fatura.numero_fatura }}{% endblocktrans %}</h1>
+
+    {% if erro %}
+        <div class="alert alert-danger" role="alert">
+            {{ erro }}
+        </div>
+    {% endif %}
+
+    <form id="invoice-form" method="post">
+        {% csrf_token %}
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>{% trans "Detalhes Gerais" %}</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="cliente" class="form-label">{% trans "Cliente" %}:</label>
+                        <select name="cliente" id="cliente" class="form-select" required>
+                            {% for cliente in clientes %}
+                                <option value="{{ cliente.id }}" {% if cliente.id == fatura.cliente.id %}selected{% endif %}>
+                                    {{ cliente.nome }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="tax-type" class="form-label">{% trans "Tipo de Imposto" %}</label>
+                        <select id="tax-type" class="form-select">
+                            <option value="default" {% if fatura.taxa_igv == 17.00 %}selected{% endif %}>IGV (17%)</option>
+                            <option value="exempt" {% if fatura.taxa_igv == 0.00 %}selected{% endif %}>{% trans "Isento" %}</option>
+                            <option value="custom" {% if fatura.taxa_igv != 17.00 and fatura.taxa_igv != 0.00 %}selected{% endif %}>{% trans "Personalizado" %}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3" id="custom-tax-group" style="display: none;">
+                        <label for="tax-rate" class="form-label">{% trans "Taxa (%)" %}</label>
+                        <input type="number" id="tax-rate" class="form-control" step="0.01" value="{{ fatura.taxa_igv|stringformat:'f' }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3>{% trans "Adicionar Itens" %}</h3>
+            </div>
+            <div class="card-body">
+                <div class="row align-items-end">
+                    <div class="col-md-7 mb-3">
+                        <label for="produto" class="form-label">{% trans "Produto" %}:</label>
+                        <select id="produto" class="form-select">
+                            {% for produto in produtos %}
+                                <option value="{{ produto.id }}" data-price="{{ produto.preco_por_unidade|stringformat:'f' }}">
+                                    {{ produto.nome }} ({{ produto.calibre }}) - Estoque: {{ produto.estoque_atual }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="quantidade" class="form-label">{% trans "Quantidade" %}:</label>
+                        <input type="number" id="quantidade" class="form-control" step="0.01" value="1">
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <button type="button" id="add-item-btn" class="btn btn-success w-100">{% trans "Adicionar" %}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>{% trans "Itens da Fatura" %}</h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Produto" %}</th>
+                                <th>{% trans "Qtd." %}</th>
+                                <th>{% trans "Preço Unit." %}</th>
+                                <th>{% trans "Subtotal" %}</th>
+                                <th>{% trans "Ação" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody id="invoice-items">
+                            </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-end mt-3">
+                    <div class="totals" style="width: 280px;">
+                        <p class="fs-5"><strong>{% trans "Subtotal" %}:</strong> <span id="subtotal">0.00</span> CFA</p>
+                        <p class="fs-5"><strong>IGV (<span id="igv-rate-display">17</span>%):</strong> <span id="igv-total">0.00</span> CFA</p>
+                        <hr>
+                        <p class="fs-4"><strong>{% trans "Total" %}:</strong> <span id="total-final">0.00</span> CFA</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2 d-sm-flex">
+            <button type="submit" class="btn btn-primary btn-lg flex-grow-1">{% trans "Salvar Alterações" %}</button>
+            <a href="{% url 'detalhe_fatura' fatura.id %}" class="btn btn-secondary btn-lg">{% trans "Cancelar" %}</a>
+        </div>
+    </form>
+
+    <script>
+        // Esta linha PRECISA de ser processada pelo Django para passar os dados.
+        const itensIniciais = {{ itens_atuais_json|safe }};
+
+        // A partir daqui, é JavaScript puro. Usamos a tag 'verbatim' para o proteger.
+        {% verbatim %}
+        document.addEventListener('DOMContentLoaded', function() {
+            const invoiceForm = document.getElementById('invoice-form');
+            const produtoSelect = document.getElementById('produto');
+            const quantidadeInput = document.getElementById('quantidade');
+            const addItemBtn = document.getElementById('add-item-btn');
+            const invoiceItemsTable = document.getElementById('invoice-items');
+            const taxTypeSelect = document.getElementById('tax-type');
+            const customTaxGroup = document.getElementById('custom-tax-group');
+            const customTaxRateInput = document.getElementById('tax-rate');
+            const subtotalSpan = document.getElementById('subtotal');
+            const igvRateSpan = document.getElementById('igv-rate-display');
+            const igvTotalSpan = document.getElementById('igv-total');
+            const totalFinalSpan = document.getElementById('total-final');
+            
+            function carregarItensIniciais() {
+                itensIniciais.forEach(function(item) {
+                    const newRow = document.createElement('tr');
+                    newRow.dataset.produtoId = item.produto_id;
+                    const subtotal = parseFloat(item.quantidade) * parseFloat(item.preco_unitario);
+                    newRow.innerHTML = `
+                        <td>${item.produto_nome}</td>
+                        <td class="quantidade">${parseFloat(item.quantidade).toFixed(2)}</td>
+                        <td class="preco">${parseFloat(item.preco_unitario).toFixed(2)}</td>
+                        <td class="subtotal-linha">${subtotal.toFixed(2)}</td>
+                        <td><button type="button" class="btn btn-danger btn-sm btn-del">Eliminar</button></td>
+                    `;
+                    invoiceItemsTable.appendChild(newRow);
+                });
+                taxTypeSelect.dispatchEvent(new Event('change'));
+                atualizarTotais();
+            }
+
+            addItemBtn.addEventListener('click', adicionarItem);
+            taxTypeSelect.addEventListener('change', function() {
+                if (this.value === 'custom') { customTaxGroup.style.display = 'block'; } else { customTaxGroup.style.display = 'none'; }
+                atualizarTotais();
+            });
+            customTaxRateInput.addEventListener('input', atualizarTotais);
+            invoiceItemsTable.addEventListener('click', function(e) {
+                if (e.target && e.target.classList.contains('btn-del')) {
+                    e.target.closest('tr').remove();
+                    atualizarTotais();
+                }
+            });
+            invoiceForm.addEventListener('submit', prepararEnvioDoFormulario);
+
+            function prepararEnvioDoFormulario(e) {
+                const oldItems = invoiceForm.querySelectorAll('input[name="items[]"]');
+                oldItems.forEach(item => item.remove());
+                const todasAsLinhas = invoiceItemsTable.querySelectorAll('tr');
+                if (todasAsLinhas.length === 0) { e.preventDefault(); alert('Por favor, adicione pelo menos um item à fatura.'); return; }
+                todasAsLinhas.forEach(function(row) {
+                    const produtoId = row.dataset.produtoId;
+                    const quantidade = row.querySelector('.quantidade').textContent;
+                    const preco = row.querySelector('.preco').textContent;
+                    const itemData = {'produto_id': produtoId, 'quantidade': quantidade, 'preco_unitario': preco };
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = 'items[]';
+                    hiddenInput.value = JSON.stringify(itemData);
+                    invoiceForm.appendChild(hiddenInput);
+                });
+                const taxaIgv = parseFloat(igvRateSpan.textContent);
+                const taxInput = document.createElement('input');
+                taxInput.type = 'hidden';
+                taxInput.name = 'taxa_igv';
+                taxInput.value = taxaIgv;
+                invoiceForm.appendChild(taxInput);
+            }
+
+            function adicionarItem() {
+                const selectedOption = produtoSelect.options[produtoSelect.selectedIndex];
+                const produtoId = selectedOption.value;
+                const produtoNome = selectedOption.text.split(' - ')[0];
+                const precoString = selectedOption.dataset.price.replace(',', '.');
+                const precoUnit = parseFloat(precoString);
+                const quantidade = parseFloat(quantidadeInput.value);
+                if (isNaN(quantidade) || quantidade <= 0) { alert('Por favor, insira uma quantidade válida.'); return; }
+                const itemExistente = invoiceItemsTable.querySelector(`tr[data-produto-id="${produtoId}"]`);
+                if (itemExistente) { alert('Este produto já foi adicionado. Por favor, elimine a linha existente para o adicionar novamente com uma nova quantidade.'); return; }
+                const subtotalLinha = quantidade * precoUnit;
+                const newRow = document.createElement('tr');
+                newRow.dataset.produtoId = produtoId;
+                newRow.innerHTML = `
+                    <td>${produtoNome}</td>
+                    <td class="quantidade">${quantidade.toFixed(2)}</td>
+                    <td class="preco">${parseFloat(precoUnit).toFixed(2)}</td>
+                    <td class="subtotal-linha">${subtotalLinha.toFixed(2)}</td>
+                    <td><button type="button" class="btn btn-danger btn-sm btn-del">Eliminar</button></td>
+                `;
+                invoiceItemsTable.appendChild(newRow);
+                quantidadeInput.value = '1';
+                produtoSelect.focus();
+                atualizarTotais();
+            }
+
+            function atualizarTotais() {
+                let subtotalGeral = 0;
+                const todasAsLinhas = invoiceItemsTable.querySelectorAll('tr');
+                todasAsLinhas.forEach(function(row) {
+                    const subtotalLinhaEl = row.querySelector('.subtotal-linha');
+                    if (subtotalLinhaEl) { subtotalGeral += parseFloat(subtotalLinhaEl.textContent); }
+                });
+                let taxaIgv = 0;
+                if (taxTypeSelect.value === 'default') { taxaIgv = 17.0; } else if (taxTypeSelect.value === 'custom') { taxaIgv = parseFloat(customTaxRateInput.value) || 0; }
+                const valorIgv = subtotalGeral * (taxaIgv / 100);
+                const totalFinal = subtotalGeral + valorIgv;
+                subtotalSpan.textContent = subtotalGeral.toFixed(2);
+                igvRateSpan.textContent = taxaIgv.toFixed(2);
+                igvTotalSpan.textContent = valorIgv.toFixed(2);
+                totalFinalSpan.textContent = totalFinal.toFixed(2);
+            }
+            
+            carregarItensIniciais();
+        });
+        {% endverbatim %}
+    </script>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends "stock/base.html" %}
+{% load i18n %}
+{% load l10n %}
+
+{% block title %}{% trans "Histórico de Faturas" %}{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">{% trans "Histórico de Faturas" %}</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>{% trans "Número da Fatura" %}</th>
+                            <th>{% trans "Cliente" %}</th>
+                            <th>{% trans "Data de Emissão" %}</th>
+                            <th>{% trans "Última Modificação" %}</th>
+                            <th>{% trans "Valor Total" %}</th>
+                            <th>{% trans "Paga" %}</th>
+                            <th class="text-end">{% trans "Ações" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fatura in page_obj %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'detalhe_fatura' fatura.id %}">{{ fatura.numero_fatura }}</a>
+                                </td>
+                                <td>{{ fatura.cliente.nome }}</td>
+                                <td>{{ fatura.data_emissao }}</td>
+                                <td>{{ fatura.atualizado_em|date:"d/m/Y H:i" }}</td>
+                                <td>{{ fatura.total_final|floatformat:2 }} CFA</td>
+                                <td>
+                                    <form action="{% url 'toggle_fatura_paga' fatura.id %}" method="post" class="d-inline">
+                                        {% csrf_token %}
+                                        {% if fatura.paga %}
+                                            <button type="submit" class="btn btn-success btn-sm">{% trans "Sim" %}</button>
+                                        {% else %}
+                                            <button type="submit" class="btn btn-danger btn-sm">{% trans "Não" %}</button>
+                                        {% endif %}
+                                    </form>
+                                </td>
+                                <td class="text-end">
+                                    <a href="{% url 'editar_fatura' fatura.id %}" class="btn btn-warning btn-sm">{% trans "Editar" %}</a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="7" class="text-center">{% trans "Nenhuma fatura encontrada." %}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <nav aria-label="Navegação das páginas">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">{% trans "Anterior" %}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">{% trans "Anterior" %}</a>
+                        </li>
+                    {% endif %}
+
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">
+                            {% trans "Página" %} {{ page_obj.number }} {% trans "de" %} {{ page_obj.paginator.num_pages }}
+                        </span>
+                    </li>
+
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">{% trans "Próxima" %}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">{% trans "Próxima" %}</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            </div>
+    </div>
+{% endblock %}
