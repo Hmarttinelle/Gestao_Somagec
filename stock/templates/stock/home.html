@@ -1,167 +1,293 @@
 {% extends "stock/base.html" %}
 {% load i18n %}
+{% load humanize %}
 {% load l10n %}
 
 {% block title %}{% trans "Dashboard" %}{% endblock %}
 
 {% block content %}
-    <h1 class="mb-4">Dashboard</h1>
+<h1 class="mb-4">Dashboard</h1>
 
-    <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="card text-white bg-primary shadow h-100">
-                <div class="card-body">
-                    <h5 class="card-title">{% trans "Total Faturado (Mês)" %}</h5>
-                    <p class="card-text fs-4 fw-bold">{{ total_faturado_mes|floatformat:2 }} CFA</p>
+<div class="row">
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card text-white bg-danger shadow h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-uppercase fw-bold">{% trans "Por Pagar" %}</div>
+                        <div class="h5 mb-0 fw-bold">{{ valor_em_divida|floatformat:2|intcomma }} CFA</div>
+                    </div>
+                    <i class="fas fa-file-invoice-dollar fa-2x text-white-50"></i>
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card text-white bg-success shadow h-100">
-                <div class="card-body">
-                    <h5 class="card-title">{% trans "Nº de Faturas (Mês)" %}</h5>
-                    <p class="card-text fs-4 fw-bold">{{ num_faturas_mes }}</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-4">
-            <div class="card text-white bg-info shadow h-100">
-                <div class="card-body">
-                    <h5 class="card-title">{% trans "Total de Clientes" %}</h5>
-                    <p class="card-text fs-4 fw-bold">{{ num_clientes }}</p>
+                <div class="mt-2 text-white-75 small">
+                    {% blocktrans count counter=num_nao_pagas %}{{ counter }} fatura{% plural %}{{ counter }} faturas{% endblocktrans %}
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="row mt-2">
-        <div class="col-lg-8 mb-4">
-            <div class="card shadow">
-                <div class="card-header">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h2 class="h4 mb-0">{% trans "Análise de Vendas" %}</h2>
-                        <form method="get" class="d-flex align-items-center">
-                            <select name="periodo" id="periodo-select" class="form-select form-select-sm me-2" style="width: auto;">
-                                <option value="6m" {% if periodo_selecionado == '6m' %}selected{% endif %}>{% trans "Últimos 6 Meses" %}</option>
-                                <option value="3m" {% if periodo_selecionado == '3m' %}selected{% endif %}>{% trans "Últimos 3 Meses" %}</option>
-                                <option value="1m_daily" {% if periodo_selecionado == '1m_daily' %}selected{% endif %}>{% trans "Mês Atual (Diário)" %}</option>
-                                <option value="custom" {% if periodo_selecionado == 'custom' %}selected{% endif %}>{% trans "Período Personalizado" %}</option>
-                            </select>
-                            
-                            <div id="date-range-picker" class="d-flex align-items-center" style="display: none;">
-                                <input type="date" name="start_date" class="form-control form-control-sm me-2" value="{{ start_date }}">
-                                <input type="date" name="end_date" class="form-control form-control-sm me-2" value="{{ end_date }}">
-                            </div>
-
-                            <button type="submit" class="btn btn-secondary btn-sm">{% trans "Filtrar" %}</button>
-                        </form>
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card text-white bg-success shadow h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-uppercase fw-bold">{% trans "Já Pago" %}</div>
+                        <div class="h5 mb-0 fw-bold">{{ total_recebido|floatformat:2|intcomma }} CFA</div>
                     </div>
+                    <i class="fas fa-check-circle fa-2x text-white-50"></i>
                 </div>
-                <div class="card-body">
-                    <canvas id="graficoVendas"></canvas>
+                 <div class="mt-2 text-white-75 small">
+                    {% blocktrans count counter=num_pagas %}{{ counter }} fatura{% plural %}{{ counter }} faturas{% endblocktrans %}
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 mb-4">
-             <div class="card shadow">
-                <div class="card-header">
-                    <h2 class="h4">{% blocktrans %}Estoque Baixo (<= {{ limite_estoque_baixo }}){% endblocktrans %}</h2>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card text-white bg-primary shadow h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-uppercase fw-bold">{% trans "Faturação (Mês Atual)" %}</div>
+                        <div class="h5 mb-0 fw-bold">{{ total_faturado_mes|floatformat:2|intcomma }} CFA</div>
+                    </div>
+                    <i class="fas fa-calendar-alt fa-2x text-white-50"></i>
                 </div>
-                <div class="card-body">
+                 <div class="mt-2 text-white-75 small">
+                    {% blocktrans count counter=num_faturas_mes %}{{ counter }} fatura este mês{% plural %}{{ counter }} faturas este mês{% endblocktrans %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card text-white bg-info shadow h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="text-uppercase fw-bold">{% trans "Total de Clientes" %}</div>
+                        <div class="h5 mb-0 fw-bold">{{ num_clientes }}</div>
+                    </div>
+                    <i class="fas fa-users fa-2x text-white-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">{% trans "Análise de Vendas" %}</h6>
+            </div>
+            <div class="card-body">
+                <form id="grafico-filtro-form" class="row g-2 align-items-end mb-3">
+                    <div class="col-md-3">
+                        <label for="id_status_fatura" class="form-label form-label-sm">{% trans "Estado" %}</label>
+                        <select name="status_fatura" id="id_status_fatura" class="form-select form-select-sm" onchange="this.form.submit()">
+                            <option value="todas" {% if status_fatura_selecionado == 'todas' %}selected{% endif %}>{% trans "Todas" %}</option>
+                            <option value="pagas" {% if status_fatura_selecionado == 'pagas' %}selected{% endif %}>{% trans "Pagas" %}</option>
+                            <option value="nao_pagas" {% if status_fatura_selecionado == 'nao_pagas' %}selected{% endif %}>{% trans "Não Pagas" %}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="id_periodo" class="form-label form-label-sm">{% trans "Período" %}</label>
+                        <select name="periodo" id="id_periodo" class="form-select form-select-sm" onchange="this.form.submit()">
+                            <option value="1m_daily" {% if periodo_selecionado == '1m_daily' %}selected{% endif %}>{% trans "Mês Atual (Diário)" %}</option>
+                            <option value="3m" {% if periodo_selecionado == '3m' %}selected{% endif %}>{% trans "Últimos 3 Meses" %}</option>
+                            <option value="6m" {% if periodo_selecionado == '6m' %}selected{% endif %}>{% trans "Últimos 6 Meses" %}</option>
+                            <option value="custom" {% if periodo_selecionado == 'custom' %}selected{% endif %}>{% trans "Personalizado" %}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4" id="custom-date-range" style="display: {% if periodo_selecionado == 'custom' %}flex{% else %}none{% endif %};">
+                         <div class="row">
+                            <div class="col-6">
+                                <label for="start_date" class="form-label form-label-sm">{% trans "Início" %}</label>
+                                <input type="date" name="start_date" id="start_date" value="{{ start_date }}" class="form-control form-control-sm" onchange="this.form.submit()">
+                            </div>
+                            <div class="col-6">
+                                <label for="end_date" class="form-label form-label-sm">{% trans "Fim" %}</label>
+                                <input type="date" name="end_date" id="end_date" value="{{ end_date }}" class="form-control form-control-sm" onchange="this.form.submit()">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 d-none">
+                        <button type="submit" class="btn btn-primary btn-sm w-100">Filtrar</button>
+                    </div>
+                </form>
+                <div class="chart-area" style="height: 320px;">
+                    <canvas id="myAreaChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-4 mb-4">
+        <div class="card shadow h-100">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-danger">{% trans "Estoque Baixo" %} (<= {{ limite_estoque_baixo }})</h6>
+            </div>
+            <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                {% if produtos_estoque_baixo %}
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-sm table-hover">
                             <thead>
                                 <tr>
                                     <th>{% trans "Produto" %}</th>
-                                    <th class="text-end">{% trans "Estoque Atual" %}</th>
+                                    <th class="text-end">{% trans "Estoque" %}</th>
                                     <th class="text-end">{% trans "Ações" %}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for produto in produtos_estoque_baixo %}
+                            {% for produto in produtos_estoque_baixo %}
                                 <tr>
-                                    <td>{{ produto.nome }} ({{ produto.calibre }})</td>
-                                    <td class="text-end text-danger fw-bold">{{ produto.estoque_atual|floatformat:2 }}</td>
+                                    <td>{{ produto.nome }}</td>
+                                    <td class="text-end fw-bold">{{ produto.estoque_atual|floatformat:2|intcomma }}</td>
                                     <td class="text-end">
-                                        <a href="{% url 'editar_produto' produto.id %}" class="btn btn-warning btn-sm">{% trans "Editar" %}</a>
+                                        <a href="{% url 'editar_produto' produto.id %}" class="btn btn-warning btn-sm">Editar</a>
                                     </td>
                                 </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="3" class="text-center text-muted">{% trans "Nenhum produto com estoque baixo." %}</td>
-                                </tr>
-                                {% endfor %}
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
+                {% else %}
+                    <p class="text-success">{% trans "Nenhum produto com estoque baixo." %}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 mb-4">
+        <div class="card shadow h-100">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">{% trans "Top 10 Clientes (Últimos 30 dias)" %}</h6>
+            </div>
+            <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">{% trans "Cliente" %}</th>
+                                <th scope="col" class="text-end">{% trans "Total Gasto" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cliente in top_clientes %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ cliente.nome }}</td>
+                                    <td class="text-end">{{ cliente.total_gasto|floatformat:2|intcomma }} CFA</td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="3" class="text-center">{% trans "Não há dados de vendas nos últimos 30 dias." %}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+    <div class="col-lg-4 mb-4">
+        <div class="card shadow h-100">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">{% trans "Top 10 Produtos (Últimos 30 dias)" %}</h6>
+            </div>
+            <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">{% trans "Produto" %}</th>
+                                <th scope="col" class="text-end">{% trans "Total Vendido" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             {% for produto in top_produtos %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{ produto.nome }}</td>
+                                    <td class="text-end">{{ produto.total_vendido|floatformat:2|intcomma }} CFA</td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="3" class="text-center">{% trans "Não há dados de vendas nos últimos 30 dias." %}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <footer class="text-center text-muted mt-5">
-        <p>Desenvolvido por: Helder Martinelle | Versão 1.0</p>
-    </footer>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const periodoSelect = document.getElementById('id_periodo');
+    const customDateRange = document.getElementById('custom-date-range');
+    
+    if (periodoSelect) {
+        if (periodoSelect.value === 'custom') {
+            customDateRange.style.display = 'flex';
+        } else {
+            customDateRange.style.display = 'none';
+        }
+        
+        periodoSelect.addEventListener('change', function() {
+            if (this.value !== 'custom') {
+                this.form.submit();
+            } else {
+                customDateRange.style.display = 'flex';
+            }
+        });
+    }
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const labels = {{ labels_grafico|safe }};
-        const data = {{ dados_grafico|safe }};
-
-        const ctx = document.getElementById('graficoVendas').getContext('2d');
-        const graficoVendas = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: '{% trans "Total Faturado" %}',
-                    data: data,
-                    backgroundColor: 'rgba(0, 123, 255, 0.5)',
-                    borderColor: 'rgba(0, 123, 255, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value, index, values) {
-                                return value.toLocaleString() + ' CFA';
-                            }
+    var ctx = document.getElementById('myAreaChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ labels_grafico|safe }},
+            datasets: [{
+                label: "{% trans 'Faturação' %}",
+                data: {{ dados_grafico|safe }},
+                backgroundColor: 'rgba(78, 115, 223, 0.7)',
+                borderColor: 'rgba(78, 115, 223, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value, index, values) {
+                            return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'CFA' }).format(value);
                         }
                     }
-                },
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.dataset.label || '';
-                                if (label) { label += ': '; }
-                                if (context.parsed.y !== null) {
-                                    label += context.parsed.y.toLocaleString() + ' CFA';
-                                }
-                                return label;
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) { label += ': '; }
+                            if (context.parsed.y !== null) {
+                                label += new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'CFA' }).format(context.parsed.y);
                             }
+                            return label;
                         }
                     }
                 }
             }
-        });
-
-        // JAVASCRIPT PARA MOSTRAR/ESCONDER OS CAMPOS DE DATA
-        const periodoSelect = document.getElementById('periodo-select');
-        const dateRangePicker = document.getElementById('date-range-picker');
-
-        function toggleDateRangePicker() {
-            if (periodoSelect.value === 'custom') {
-                dateRangePicker.style.display = 'flex';
-            } else {
-                dateRangePicker.style.display = 'none';
-            }
         }
-        
-        toggleDateRangePicker();
-        periodoSelect.addEventListener('change', toggleDateRangePicker);
-    </script>
+    });
+});
+</script>
 {% endblock %}

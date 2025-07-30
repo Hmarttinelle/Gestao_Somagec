@@ -1,24 +1,54 @@
 {% extends "stock/base.html" %}
 {% load i18n %}
 {% load l10n %}
+{% load humanize %}
 
 {% block title %}{% trans "Histórico de Faturas" %}{% endblock %}
 
 {% block content %}
     <h1 class="mb-4">{% trans "Histórico de Faturas" %}</h1>
 
-    <div class="card">
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form method="GET" action="{% url 'lista_faturas' %}" class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label for="q_numero" class="form-label">{% trans "Nº Fatura" %}</label>
+                    <input type="text" name="q_numero" id="q_numero" class="form-control" value="{{ request.GET.q_numero }}">
+                </div>
+                <div class="col-md-3">
+                    <label for="q_cliente" class="form-label">{% trans "Nome do Cliente" %}</label>
+                    <input type="text" name="q_cliente" id="q_cliente" class="form-control" value="{{ request.GET.q_cliente }}">
+                </div>
+                <div class="col-md-3">
+                    <label for="q_data" class="form-label">{% trans "Data de Emissão" %}</label>
+                    <input type="date" name="q_data" id="q_data" class="form-control" value="{{ request.GET.q_data }}">
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-search"></i> {% trans "Pesquisar" %}
+                    </button>
+                    <a href="{% url 'lista_faturas' %}" class="btn btn-secondary w-100 mt-2">
+                        <i class="fas fa-eraser"></i> {% trans "Limpar" %}
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped table-hover align-middle">
+                <table class="table table-striped table-hover align-middle table-sm">
                     <thead class="table-light">
                         <tr>
-                            <th>{% trans "Número da Fatura" %}</th>
+                            <th>{% trans "Nº Fatura" %}</th>
                             <th>{% trans "Cliente" %}</th>
-                            <th>{% trans "Data de Emissão" %}</th>
-                            <th>{% trans "Última Modificação" %}</th>
-                            <th>{% trans "Valor Total" %}</th>
-                            <th>{% trans "Paga" %}</th>
+                            <th>{% trans "Criação" %}</th>
+                            <th>{% trans "Criado por" %}</th>
+                            <th>{% trans "Modificação" %}</th>
+                            <th>{% trans "Modificado por" %}</th> {# <-- NOVA COLUNA #}
+                            <th class="text-end">{% trans "Valor a Pagar" %}</th>
+                            <th class="text-center">{% trans "Paga" %}</th>
                             <th class="text-end">{% trans "Ações" %}</th>
                         </tr>
                     </thead>
@@ -26,19 +56,33 @@
                         {% for fatura in page_obj %}
                             <tr>
                                 <td>
-                                    <a href="{% url 'detalhe_fatura' fatura.id %}">{{ fatura.numero_fatura }}</a>
+                                    <a href="{% url 'detalhe_fatura' fatura.id %}"><strong>{{ fatura.numero_fatura }}</strong></a>
                                 </td>
                                 <td>{{ fatura.cliente.nome }}</td>
-                                <td>{{ fatura.data_emissao }}</td>
-                                <td>{{ fatura.atualizado_em|date:"d/m/Y H:i" }}</td>
-                                <td>{{ fatura.total_final|floatformat:2 }} CFA</td>
+                                <td>{{ fatura.criado_em|date:"d/m/Y H:i" }}</td>
+                                <td>{{ fatura.utilizador.username|default:"N/A" }}</td>
                                 <td>
+                                    {% if fatura.foi_modificada %}
+                                        {{ fatura.atualizado_em|date:"d/m/Y H:i" }}
+                                    {% else %}
+                                        <span class="text-muted">--</span>
+                                    {% endif %}
+                                </td>
+                                <td> {# <-- NOVA CÉLULA #}
+                                    {% if fatura.modificado_por %}
+                                        {{ fatura.modificado_por.username }}
+                                    {% else %}
+                                        <span class="text-muted">--</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-end fw-bold">{{ fatura.valor_a_pagar|floatformat:2|intcomma }} CFA</td>
+                                <td class="text-center">
                                     <form action="{% url 'toggle_fatura_paga' fatura.id %}" method="post" class="d-inline">
                                         {% csrf_token %}
                                         {% if fatura.paga %}
-                                            <button type="submit" class="btn btn-success btn-sm">{% trans "Sim" %}</button>
+                                            <button type="submit" class="btn btn-success btn-sm px-2 py-1">{% trans "Sim" %}</button>
                                         {% else %}
-                                            <button type="submit" class="btn btn-danger btn-sm">{% trans "Não" %}</button>
+                                            <button type="submit" class="btn btn-danger btn-sm px-2 py-1">{% trans "Não" %}</button>
                                         {% endif %}
                                     </form>
                                 </td>
@@ -48,42 +92,18 @@
                             </tr>
                         {% empty %}
                             <tr>
-                                <td colspan="7" class="text-center">{% trans "Nenhuma fatura encontrada." %}</td>
+                                <td colspan="9" class="text-center">{% trans "Nenhuma fatura encontrada." %}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
 
-            <nav aria-label="Navegação das páginas">
-                <ul class="pagination justify-content-center">
-                    {% if page_obj.has_previous %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">{% trans "Anterior" %}</a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">{% trans "Anterior" %}</a>
-                        </li>
-                    {% endif %}
-
-                    <li class="page-item active" aria-current="page">
-                        <span class="page-link">
-                            {% trans "Página" %} {{ page_obj.number }} {% trans "de" %} {{ page_obj.paginator.num_pages }}
-                        </span>
-                    </li>
-
-                    {% if page_obj.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">{% trans "Próxima" %}</a>
-                        </li>
-                    {% else %}
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">{% trans "Próxima" %}</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
-            </div>
+            {% if page_obj.has_other_pages %}
+                 {% with request.GET.urlencode as params %}
+                    {% include 'stock/pagination.html' with params=params %}
+                {% endwith %}
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

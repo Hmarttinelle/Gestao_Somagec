@@ -1,6 +1,7 @@
 {% extends "stock/base.html" %}
 {% load i18n %}
 {% load l10n %}
+{% load humanize %} {# <-- Adicionado para formatar números #}
 
 {% block title %}{% trans "Estoque de Produtos" %}{% endblock %}
 
@@ -10,28 +11,44 @@
         <a href="{% url 'adicionar_produto' %}" class="btn btn-primary">{% trans "Adicionar Novo Produto" %}</a>
     </div>
 
-    <div class="card">
+    <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped table-hover">
+                <table class="table table-striped table-hover align-middle table-sm">
                     <thead class="table-light">
                         <tr>
                             <th>{% trans "Nome" %}</th>
-                            <th>{% trans "Calibre" %}</th>
                             <th class="text-end">{% trans "Estoque Atual" %}</th>
-                            <th>{% trans "Unidade" %}</th>
                             <th class="text-end">{% trans "Preço" %}</th>
+                            <th>{% trans "Criação" %}</th>
+                            <th>{% trans "Criado por" %}</th>
+                            <th>{% trans "Modificação" %}</th>
+                            <th>{% trans "Modificado por" %}</th>
                             <th class="text-end">{% trans "Ações" %}</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for produto in page_obj %}
                             <tr>
-                                <td>{{ produto.nome }}</td>
-                                <td>{{ produto.calibre }}</td>
-                                <td class="text-end">{{ produto.estoque_atual|floatformat:2 }}</td>
-                                <td>{{ produto.get_unidade_medida_display }}</td>
-                                <td class="text-end">{{ produto.preco_por_unidade|floatformat:2 }} CFA</td>
+                                <td>{{ produto.nome }}{% if produto.calibre %} ({{ produto.calibre }}){% endif %}</td>
+                                <td class="text-end">{{ produto.estoque_atual|floatformat:2|intcomma }} {{ produto.get_unidade_medida_display }}</td>
+                                <td class="text-end">{{ produto.preco_por_unidade|floatformat:2|intcomma }} CFA</td>
+                                <td>{{ produto.criado_em|date:"d/m/Y H:i" }}</td>
+                                <td>{{ produto.utilizador.username|default:"--" }}</td>
+                                <td>
+                                    {% if produto.foi_modificado %}
+                                        {{ produto.atualizado_em|date:"d/m/Y H:i" }}
+                                    {% else %}
+                                        <span class="text-muted">--</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if produto.modificado_por %}
+                                        {{ produto.modificado_por.username }}
+                                    {% else %}
+                                        <span class="text-muted">--</span>
+                                    {% endif %}
+                                </td>
                                 <td class="text-end">
                                     <a href="{% url 'editar_produto' produto.id %}" class="btn btn-warning btn-sm">{% trans "Editar" %}</a>
                                     <a href="{% url 'apagar_produto' produto.id %}" class="btn btn-danger btn-sm">{% trans "Apagar" %}</a>
@@ -39,14 +56,16 @@
                             </tr>
                         {% empty %}
                             <tr>
-                                <td colspan="6" class="text-center">{% trans "Nenhum produto encontrado." %}</td>
+                                <td colspan="8" class="text-center">{% trans "Nenhum produto encontrado." %}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
 
-            {% include 'stock/pagination.html' %}
+            {% if page_obj.has_other_pages %}
+                {% include 'stock/pagination.html' %}
+            {% endif %}
         </div>
     </div>
 {% endblock %}

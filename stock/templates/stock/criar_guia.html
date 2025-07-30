@@ -1,0 +1,196 @@
+{% extends "stock/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Criar Nova Guia de Transporte" %}{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">{% trans "Criar Nova Guia de Transporte" %}</h1>
+
+    <form id="guia-form" method="post" novalidate>
+        {% csrf_token %}
+
+        <!-- Card Detalhes Gerais -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="h5 mb-0">{% trans "Detalhes da Guia" %}</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <!-- Cliente -->
+                    <div class="col-md-6 mb-3">
+                        <label for="cliente" class="form-label">{% trans "Cliente" %}:</label>
+                        <select name="cliente" id="cliente" class="form-select" required>
+                            <option value="">{% trans "Selecione um cliente..." %}</option>
+                            {% for cliente in clientes %}
+                                <option value="{{ cliente.id }}" data-endereco="{{ cliente.endereco }}">{{ cliente.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <!-- Matrícula -->
+                    <div class="col-md-6 mb-3">
+                        <label for="matricula_veiculo" class="form-label">{% trans "Matrícula do Veículo" %}:</label>
+                        <input type="text" name="matricula_veiculo" id="matricula_veiculo" class="form-control">
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Morada de Carga -->
+                    <div class="col-md-6 mb-3">
+                        <label for="morada_carga" class="form-label">{% trans "Morada de Carga" %}:</label>
+                        <textarea name="morada_carga" id="morada_carga" class="form-control" rows="2">{% if dados_empresa %}{{ dados_empresa.endereco }}{% endif %}</textarea>
+                    </div>
+                    <!-- Morada de Descarga -->
+                    <div class="col-md-6 mb-3">
+                        <label for="morada_descarga" class="form-label">{% trans "Morada de Descarga" %}:</label>
+                        <textarea name="morada_descarga" id="morada_descarga" class="form-control" rows="2"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Adicionar Itens -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="h5 mb-0">{% trans "Adicionar Itens" %}</h3>
+            </div>
+            <div class="card-body">
+                <div class="row align-items-end">
+                    <div class="col-lg-7 col-md-12 mb-3">
+                        <label for="produto" class="form-label">{% trans "Produto" %}:</label>
+                        <select id="produto" class="form-select">
+                            {% for produto in produtos %}
+                                <option value="{{ produto.id }}">
+                                    {{ produto.nome }}{% if produto.calibre %} ({{ produto.calibre }}){% endif %} - Estoque: {{ produto.estoque_atual }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <label for="quantidade" class="form-label">{% trans "Quantidade" %}:</label>
+                        <input type="number" id="quantidade" class="form-control" step="0.01" value="1" min="0.01">
+                    </div>
+                    <div class="col-lg-2 col-md-6 mb-3">
+                        <label class="form-label d-none d-md-block">&nbsp;</label>
+                        <button type="button" id="add-item-btn" class="btn btn-success w-100">
+                            <i class="fas fa-plus-circle me-2"></i>{% trans "Adicionar" %}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Itens da Guia -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="h5 mb-0">{% trans "Itens da Guia" %}</h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="table-light">
+                            <tr>
+                                <th>{% trans "Produto" %}</th>
+                                <th class="text-end" style="width: 150px;">{% trans "Quantidade" %}</th>
+                                <th class="text-center" style="width: 80px;">{% trans "Ação" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody id="guia-items">
+                            <!-- Linhas de itens serão adicionadas aqui via JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="empty-cart-message" class="text-center text-muted py-4">
+                    <p>{% trans "Ainda não há itens na guia." %}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{% url 'lista_guias' %}" class="btn btn-secondary">{% trans "Cancelar" %}</a>
+            <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-save me-2"></i>{% trans "Gerar Guia" %}
+            </button>
+        </div>
+    </form>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const guiaForm = document.getElementById('guia-form');
+        const produtoSelect = document.getElementById('produto');
+        const quantidadeInput = document.getElementById('quantidade');
+        const addItemBtn = document.getElementById('add-item-btn');
+        const guiaItemsTableBody = document.getElementById('guia-items');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const clienteSelect = document.getElementById('cliente');
+        const moradaDescargaTextarea = document.getElementById('morada_descarga');
+
+        clienteSelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            moradaDescargaTextarea.value = selectedOption.dataset.endereco || '';
+        });
+
+        addItemBtn.addEventListener('click', adicionarItem);
+        guiaItemsTableBody.addEventListener('click', function(e) {
+            if (e.target.closest('.btn-del')) {
+                e.target.closest('tr').remove();
+                checkEmpty();
+            }
+        });
+        guiaForm.addEventListener('submit', prepararEnvioDoFormulario);
+
+        function checkEmpty() {
+            emptyCartMessage.style.display = guiaItemsTableBody.querySelectorAll('tr').length > 0 ? 'none' : 'block';
+        }
+
+        function adicionarItem() {
+            const selectedOption = produtoSelect.options[produtoSelect.selectedIndex];
+            const produtoId = selectedOption.value;
+            const produtoNome = selectedOption.text.split(' - ')[0].trim();
+            const quantidade = parseFloat(quantidadeInput.value);
+
+            if (!produtoId || isNaN(quantidade) || quantidade <= 0 || guiaItemsTableBody.querySelector(`tr[data-produto-id="${produtoId}"]`)) {
+                return;
+            }
+
+            const newRow = document.createElement('tr');
+            newRow.dataset.produtoId = produtoId;
+            newRow.innerHTML = `
+                <td>${produtoNome}</td>
+                <td class="quantidade text-end">${quantidade.toFixed(2)}</td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-danger btn-sm btn-del" title="{% trans 'Remover Item' %}">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+            `;
+            guiaItemsTableBody.appendChild(newRow);
+            quantidadeInput.value = '1';
+            produtoSelect.focus();
+            checkEmpty();
+        }
+
+        function prepararEnvioDoFormulario(e) {
+            guiaForm.querySelectorAll('input[type="hidden"][name="items[]"]').forEach(input => input.remove());
+
+            if (guiaItemsTableBody.querySelectorAll('tr').length === 0) {
+                e.preventDefault();
+                alert("{% trans 'A guia deve ter pelo menos um item.' %}");
+                return;
+            }
+
+            guiaItemsTableBody.querySelectorAll('tr').forEach(function(row) {
+                const itemData = {
+                    'produto_id': row.dataset.produtoId,
+                    'quantidade': row.querySelector('.quantidade').textContent,
+                };
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'items[]';
+                hiddenInput.value = JSON.stringify(itemData);
+                guiaForm.appendChild(hiddenInput);
+            });
+        }
+        
+        checkEmpty();
+    });
+    </script>
+{% endblock %}

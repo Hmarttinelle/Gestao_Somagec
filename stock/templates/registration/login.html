@@ -5,10 +5,19 @@
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">{% trans "Login" %}</h2>
+    <div class="col-md-6 col-lg-4">
+
+        {# --- BLOCO DO LOGOTIPO ADICIONADO --- #}
+        <div class="text-center mb-4">
+            {% if dados_empresa.logotipo %}
+                <img src="{{ dados_empresa.logotipo.url }}" alt="Logotipo da Empresa" style="max-width: 150px; height: auto;">
+            {% endif %}
+        </div>
+        {# --- FIM DO BLOCO DO LOGOTIPO --- #}
+
+        <div class="card shadow-sm">
+            <div class="card-header text-center">
+                <h2 class="card-title h4 mb-0">{% trans "Aceder ao Sistema" %}</h2>
             </div>
             <div class="card-body">
 
@@ -22,16 +31,16 @@
                     {% csrf_token %}
                     
                     <div class="mb-3">
-                        <label for="id_username" class="form-label">{{ form.username.label_tag }}</label>
+                        <label for="id_username" class="form-label">{% trans "Nome de utilizador" %}</label>
                         <input type="text" name="username" id="id_username" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="id_password" class="form-label">{{ form.password.label_tag }}</label>
+                        <label for="id_password" class="form-label">{% trans "Palavra-passe" %}</label>
                         <input type="password" name="password" id="id_password" class="form-control" required>
                     </div>
 
-                    <div class="d-grid">
+                    <div class="d-grid mt-4">
                         <button type="submit" class="btn btn-primary">{% trans "Entrar" %}</button>
                     </div>
                 </form>

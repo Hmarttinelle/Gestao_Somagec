@@ -1,0 +1,53 @@
+{% extends "stock/base.html" %}
+{% load i18n %}
+
+{% block title %}{% blocktrans %}Editar Guia de Transporte {{ guia.numero_guia }}{% endblocktrans %}{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">{% blocktrans %}Editar Guia de Transporte <span class="text-muted">#{{ guia.numero_guia }}</span>{% endblocktrans %}</h1>
+
+    {# ALTERAÇÃO AQUI: Geramos o URL antes do parágrafo e guardamos na variável 'url_fatura' #}
+    {% url 'detalhe_fatura' guia.fatura.id as url_fatura %}
+
+    {# Agora usamos a variável 'url_fatura' dentro do link #}
+    <p class="lead">{% blocktrans %}Fatura de Origem: <a href="{{ url_fatura }}">#{{ guia.fatura.numero_fatura }}</a>{% endblocktrans %}</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="h5 mb-0">{% trans "Detalhes do Transporte" %}</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="morada_carga" class="form-label">{% trans "Morada de Carga" %}:</label>
+                        <textarea name="morada_carga" id="morada_carga" class="form-control" rows="3">{{ guia.morada_carga }}</textarea>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="morada_descarga" class="form-label">{% trans "Morada de Descarga" %}:</label>
+                        <textarea name="morada_descarga" id="morada_descarga" class="form-control" rows="3">{{ guia.morada_descarga }}</textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="matricula_veiculo" class="form-label">{% trans "Matrícula do Veículo" %}:</label>
+                        <input type="text" name="matricula_veiculo" id="matricula_veiculo" class="form-control" value="{{ guia.matricula_veiculo }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="alert alert-warning">
+            <strong>{% trans "Nota:" %}</strong> {% trans "Os itens desta guia são baseados na fatura de origem e não podem ser alterados aqui. Para alterar os itens, por favor, edite a fatura correspondente." %}
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{% url 'detalhe_guia' guia.id %}" class="btn btn-secondary">{% trans "Cancelar" %}</a>
+            <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-save me-2"></i>{% trans "Guardar Alterações" %}
+            </button>
+        </div>
+    </form>
+{% endblock %}

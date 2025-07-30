@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load l10n %}
 {% load static %}
+{% load humanize %}
 
 <!DOCTYPE html>
 <html lang="{{ request.LANGUAGE_CODE }}">
@@ -12,22 +13,27 @@
         .page { width: 21cm; min-height: 29.7cm; padding: 1.5cm; margin: 1cm auto; background: white; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; }
         .main-content { flex-grow: 1; }
         .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-        .company-logo img { max-height: 135px; max-width: 450px; }
+        .company-logo img { max-height: 150px; max-width: 400px; object-fit: contain; }
         .invoice-info { text-align: right; }
         .invoice-info h1 { margin: 0; font-size: 28px; color: #333; }
         .details-row { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 20px; border-bottom: 2px solid #000; margin-bottom: 40px; }
-        .company-contact-details, .customer-details { text-align: left; }
+        .company-contact-details, .customer-details { text-align: left; width: 48%; }
         .customer-details { text-align: right; }
         .items-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
-        .items-table thead th { background-color: #f2f2f2; border-bottom: 2px solid #ddd; }
-        .items-table th, .items-table td { border: 1px solid #ddd; padding: 10px; text-align: left; vertical-align: top; }
+        .items-table thead th { background-color: #f2f2f2; border-bottom: 2px solid #ddd; padding: 10px; text-align: left; }
+        .items-table td { border: 1px solid #ddd; padding: 10px; text-align: left; vertical-align: top; }
         .totals-section { display: flex; justify-content: flex-end; }
-        .totals-table { width: 45%; }
-        .totals-table td { padding: 8px; }
-        .totals-table .total-final td { font-weight: bold; font-size: 1.3em; border-top: 2px solid #000; }
+        .totals-table { width: 50%; border-collapse: collapse; }
+        .totals-table td { padding: 8px; border-bottom: 1px solid #eee; }
+        .totals-table .total-final-row td { font-weight: bold; font-size: 1.3em; border-top: 2px solid #000; background-color: #343a40; color: white; }
         .signature-section { margin-top: auto; padding-top: 50px; text-align: center; }
         .signature-line { border-bottom: 1px solid #555; width: 250px; margin: 0 auto; }
-        .footer { padding-top: 15px; border-top: 1px solid #ccc; font-size: 12px; text-align: center; color: #555; }
+        
+        .footer-container { padding-top: 20px; margin-top: 20px; border-top: 1px solid #ccc; font-size: 11px; color: #555; }
+        .footer-columns { display: flex; justify-content: space-between; align-items: flex-start; text-align: left; }
+        .footer-column { width: 48%; vertical-align: top; }
+        .footer-meta { text-align: center; margin-top: 20px; font-size: 10px; color: #888; }
+
         @page { size: A4; margin: 0; }
         @media print { body, .page { margin: 0; box-shadow: none; border: none; background: white; } }
     </style>
@@ -44,7 +50,7 @@
                         <h1>{% trans "FATURA" %}</h1>
                         <p>
                             <strong>Nº: {{ fatura.numero_fatura }}</strong><br>
-                            {% trans "Data" %}: {{ fatura.data_emissao }}
+                            <strong>{% trans "Data" %}:</strong> {{ fatura.data_emissao|date:"d/m/Y" }}
                         </p>
                     </div>
                 </div>
@@ -68,37 +74,59 @@
                     <thead>
                         <tr>
                             <th>{% trans "Produto / Serviço" %}</th>
-                            <th style="text-align: right;">{% trans "Qtd." %}</th>
-                            <th style="text-align: right;">{% trans "Preço Unit." %}</th>
-                            <th style="text-align: right;">{% trans "Subtotal" %}</th>
+                            <th style="text-align: right; width: 20%;">{% trans "Qtd." %}</th>
+                            <th style="text-align: right; width: 20%;">{% trans "Preço Unit." %}</th>
+                            <th style="text-align: right; width: 20%;">{% trans "Subtotal" %}</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for item in fatura.itens.all %}
                         <tr>
-                            <td>{{ item.produto.nome }} ({{ item.produto.calibre }})</td>
-                            <td align="right">{{ item.quantidade|floatformat:2 }} {{ item.produto.get_unidade_medida_display }}</td>
-                            <td align="right">{{ item.preco_unitario|floatformat:2 }} CFA</td>
-                            <td align="right">{{ item.subtotal|floatformat:2 }} CFA</td>
+                            <td>{{ item.produto.nome }}{% if item.produto.calibre %} ({{ item.produto.calibre }}){% endif %}</td>
+                            <td align="right" style="white-space: nowrap;">
+                                {{ item.quantidade|floatformat:2|intcomma }} {{ item.produto.get_unidade_medida_display }}
+                            </td>
+                            <td align="right" style="white-space: nowrap;">{{ item.preco_unitario|floatformat:2|intcomma }} CFA</td>
+                            <td align="right" style="white-space: nowrap;">{{ item.subtotal|floatformat:2|intcomma }} CFA</td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
 
                 <div class="totals-section">
-                    <table class="totals-table">
+                     <table class="totals-table">
                         <tbody>
                             <tr>
                                 <td>{% trans "Subtotal" %}:</td>
-                                <td align="right">{{ fatura.subtotal|floatformat:2 }} CFA</td>
+                                <td align="right" style="white-space: nowrap;">{{ fatura.subtotal|floatformat:2|intcomma }} CFA</td>
+                            </tr>
+                            {% if fatura.desconto > 0 %}
+                            <tr style="color: #dc3545;">
+                                <td>{% trans "Desconto" %} ({{ fatura.desconto|floatformat:2 }}%):</td>
+                                <td align="right" style="white-space: nowrap;">- {{ fatura.valor_desconto|floatformat:2|intcomma }} CFA</td>
                             </tr>
                             <tr>
-                                <td>{% trans "IGV" %} ({{ fatura.taxa_igv|floatformat:2 }}%):</td>
-                                <td align="right">{{ fatura.valor_igv|floatformat:2 }} CFA</td>
+                                <td>{% trans "Subtotal c/ Desconto" %}:</td>
+                                <td align="right" style="white-space: nowrap;">{{ fatura.subtotal_apos_desconto|floatformat:2|intcomma }} CFA</td>
                             </tr>
-                            <tr class="total-final">
-                                <td>{% trans "Total" %}:</td>
-                                <td align="right">{{ fatura.total_final|floatformat:2 }} CFA</td>
+                            {% endif %}
+                            <tr>
+                                <td>{% trans "IGV" %} ({{ fatura.taxa_igv|floatformat:2 }}%):</td>
+                                <td align="right" style="white-space: nowrap;">{{ fatura.valor_igv|floatformat:2|intcomma }} CFA</td>
+                            </tr>
+                            <tr style="border-top: 1px solid #ccc;">
+                                <td style="font-weight: bold;">{% trans "Total Geral" %}:</td>
+                                <td align="right" style="font-weight: bold; white-space: nowrap;">{{ fatura.total_geral|floatformat:2|intcomma }} CFA</td>
+                            </tr>
+                            {% if fatura.adiantamento > 0 %}
+                            <tr style="color: #198754;">
+                                <td>{% trans "Adiantamento" %}:</td>
+                                <td align="right" style="white-space: nowrap;">- {{ fatura.adiantamento|floatformat:2|intcomma }} CFA</td>
+                            </tr>
+                            {% endif %}
+                            <tr class="total-final-row">
+                                <td>{% trans "VALOR A PAGAR" %}:</td>
+                                <td align="right" style="white-space: nowrap;">{{ fatura.valor_a_pagar|floatformat:2|intcomma }} CFA</td>
                             </tr>
                         </tbody>
                     </table>
@@ -116,10 +144,28 @@
         </div>
 
         {% if dados_empresa %}
-            <div class="footer">
-                <p>{{ dados_empresa.endereco|linebreaksbr }}</p>
-                <p>{% trans "Contactos" %}: {{ dados_empresa.telefone }} / {{ dados_empresa.email }} | {% trans "Processado por" %}: {{ fatura.utilizador.username|default:"N/A" }}</p>
+        <div class="footer-container">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    {% if dados_empresa.dados_pagamento %}
+                        <strong>{% trans "Dados de Pagamento" %}:</strong>
+                        <div style="margin-top: 5px;">{{ dados_empresa.dados_pagamento|linebreaksbr }}</div>
+                    {% endif %}
+                </div>
+                <div class="footer-column" style="text-align: right;">
+                    <strong>{{ dados_empresa.nome_empresa }}</strong>
+                    {% if dados_empresa.endereco %}
+                        <div style="margin-top: 5px;">
+                            <strong>{% trans "Endereço" %}:</strong><br>
+                            {{ dados_empresa.endereco|linebreaksbr }}
+                        </div>
+                    {% endif %}
+                </div>
             </div>
+            <div class="footer-meta">
+                 {% trans "Processado por" %}: {{ fatura.utilizador.username|default:"N/A" }}{% if fatura.modificado_por %} | {% trans "Modificado por" %}: {{ fatura.modificado_por.username }}{% endif %}
+            </div>
+        </div>
         {% endif %}
     </div>
 </body>

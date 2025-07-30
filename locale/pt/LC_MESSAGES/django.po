@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-22 18:26+0100\n"
+"POT-Creation-Date: 2025-07-30 05:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,218 +18,1507 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\gestao_pedreira\settings.py:20
+#: .\gestao_pedreira\settings.py:27
 msgid "Português"
 msgstr ""
 
-#: .\gestao_pedreira\settings.py:21
+#: .\gestao_pedreira\settings.py:28
 msgid "Inglês"
 msgstr ""
 
-#: .\gestao_pedreira\settings.py:22
+#: .\gestao_pedreira\settings.py:29
 msgid "Francês"
 msgstr ""
 
-#: .\stock\models.py:9
-msgid "Tonelada"
+#: .\stock\admin.py:25
+msgid "Resetar numeração para faturas selecionadas (usar com cuidado)"
 msgstr ""
 
-#: .\stock\models.py:10
-msgid "Metro Cúbico"
+#: .\stock\admin.py:47
+msgid "Subtotal (CFA)"
 msgstr ""
 
-#: .\stock\models.py:11 .\stock\templates\stock\lista_produtos.html:24
-msgid "Unidade"
+#: .\stock\admin.py:63
+msgid "Total Geral (CFA)"
 msgstr ""
 
-#: .\stock\models.py:13 .\stock\models.py:26
-msgid "nome"
+#: .\stock\admin.py:70
+msgid "Valor a Pagar (CFA)"
 msgstr ""
 
-#: .\stock\models.py:14
-msgid "calibre"
-msgstr ""
-
-#: .\stock\models.py:15
-msgid "descrição"
-msgstr ""
-
-#: .\stock\models.py:16
-msgid "unidade de medida"
-msgstr ""
-
-#: .\stock\models.py:17
-msgid "estoque atual"
-msgstr ""
-
-#: .\stock\models.py:18
-msgid "preço por unidade"
-msgstr ""
-
-#: .\stock\models.py:27
-msgid "NIF/Contribuinte"
-msgstr ""
-
-#: .\stock\models.py:28
-msgid "endereço"
-msgstr ""
-
-#: .\stock\models.py:29
-msgid "telefone"
-msgstr ""
-
-#: .\stock\models.py:30
-msgid "email"
-msgstr ""
-
-#: .\stock\models.py:36
-msgid "cliente"
-msgstr ""
-
-#: .\stock\models.py:37
-msgid "data de emissão"
-msgstr ""
-
-#: .\stock\models.py:38
-msgid "número da fatura"
-msgstr ""
-
-#: .\stock\models.py:39
-msgid "valor total"
-msgstr ""
-
-#: .\stock\models.py:40
-msgid "paga"
-msgstr ""
-
-#: .\stock\models.py:50
-msgid "produto"
-msgstr ""
-
-#: .\stock\models.py:51
-msgid "quantidade"
-msgstr ""
-
-#: .\stock\models.py:52
-msgid "preço unitário"
-msgstr ""
-
-#: .\stock\templates\stock\criar_fatura.html:7
-#: .\stock\templates\stock\criar_fatura.html:17
-#: .\stock\templates\stock\home.html:39
-msgid "Criar Nova Fatura"
-msgstr ""
-
-#: .\stock\templates\stock\criar_fatura.html:24
-#: .\stock\templates\stock\lista_faturas.html:24
+#: .\stock\admin.py:89 .\stock\models.py:55
+#: .\stock\templates\stock\criar_fatura.html:21
+#: .\stock\templates\stock\criar_guia.html:21
+#: .\stock\templates\stock\detalhe_fatura.html:77
+#: .\stock\templates\stock\detalhe_guia.html:51
+#: .\stock\templates\stock\editar_fatura.html:21
+#: .\stock\templates\stock\home.html:171
+#: .\stock\templates\stock\lista_faturas.html:45
+#: .\stock\templates\stock\lista_guias.html:22
 msgid "Cliente"
 msgstr ""
 
-#: .\stock\templates\stock\criar_fatura.html:31
+#: .\stock\admin.py:105
+msgid "Alertas"
+msgstr ""
+
+#: .\stock\admin.py:106
+msgid "Configurações de Envio de Email"
+msgstr ""
+
+#: .\stock\admin.py:108
+msgid ""
+"Insira aqui as credenciais do email que será usado para enviar faturas e "
+"guias."
+msgstr ""
+
+#: .\stock\admin.py:118
+msgid "Executar Backup por Email Agora"
+msgstr ""
+
+#: .\stock\admin.py:122
+msgid "Nenhuma configuração de backup selecionada."
+msgstr ""
+
+#: .\stock\admin.py:129
+msgid "Email de destino para backups não configurado."
+msgstr ""
+
+#: .\stock\admin.py:133
+msgid ""
+"Email de envio ou palavra-passe não configurados nas Configurações Gerais."
+msgstr ""
+
+#: .\stock\admin.py:151
+msgid "Backup do Sistema Pedreira - {}"
+msgstr ""
+
+#: .\stock\admin.py:152 .\stock\management\commands\run_backup.py:92
+msgid ""
+"Em anexo seguem os ficheiros de backup do sistema (base de dados e ficheiros "
+"de media)."
+msgstr ""
+
+#: .\stock\admin.py:173
+msgid "Sucesso"
+msgstr ""
+
+#: .\stock\admin.py:174
+msgid "Backup enviado por email com sucesso para {}!"
+msgstr ""
+
+#: .\stock\admin.py:177
+msgid "Falhou: {}"
+msgstr ""
+
+#: .\stock\admin.py:178
+msgid "Ocorreu um erro durante o backup: {}"
+msgstr ""
+
+#: .\stock\admin.py:188
+msgid "Configuração do Backup"
+msgstr ""
+
+#: .\stock\admin.py:189 .\stock\models.py:216
+msgid "Estado do Último Backup"
+msgstr ""
+
+#: .\stock\management\commands\run_backup.py:91
+msgid "Backup Automático do Sistema Pedreira - {}"
+msgstr ""
+
+#: .\stock\management\commands\run_backup.py:105
+msgid "Sucesso via Comando"
+msgstr ""
+
+#: .\stock\management\commands\run_backup.py:109
+msgid "Falhou via Comando: {}"
+msgstr ""
+
+#: .\stock\models.py:13
+msgid "Tonelada"
+msgstr ""
+
+#: .\stock\models.py:13
+msgid "Metro Cúbico"
+msgstr ""
+
+#: .\stock\models.py:13
+msgid "Unidade"
+msgstr ""
+
+#: .\stock\models.py:14 .\stock\models.py:37
+msgid "nome"
+msgstr ""
+
+#: .\stock\models.py:15
+msgid "calibre"
+msgstr ""
+
+#: .\stock\models.py:16
+msgid "descrição"
+msgstr ""
+
+#: .\stock\models.py:17
+msgid "unidade de medida"
+msgstr ""
+
+#: .\stock\models.py:18
+msgid "estoque atual"
+msgstr ""
+
+#: .\stock\models.py:19
+msgid "preço por unidade"
+msgstr ""
+
+#: .\stock\models.py:33 .\stock\templates\stock\criar_fatura.html:65
+#: .\stock\templates\stock\criar_fatura.html:98
+#: .\stock\templates\stock\criar_guia.html:58
+#: .\stock\templates\stock\criar_guia.html:91
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:54
+#: .\stock\templates\stock\detalhe_fatura.html:88
+#: .\stock\templates\stock\detalhe_guia.html:80
+#: .\stock\templates\stock\editar_fatura.html:66
+#: .\stock\templates\stock\editar_fatura.html:99
+#: .\stock\templates\stock\home.html:136 .\stock\templates\stock\home.html:204
 msgid "Produto"
 msgstr ""
 
-#: .\stock\templates\stock\criar_fatura.html:38
-msgid "Quantidade"
+#: .\stock\models.py:34
+msgid "Produtos"
 msgstr ""
 
-#: .\stock\templates\stock\criar_fatura.html:41
-msgid "Criar Fatura"
+#: .\stock\models.py:38
+msgid "NIF/Contribuinte"
 msgstr ""
 
-#: .\stock\templates\stock\criar_fatura.html:44
-#: .\stock\templates\stock\lista_faturas.html:53
-#: .\stock\templates\stock\lista_produtos.html:45
-msgid "Voltar à Página Principal"
+#: .\stock\models.py:39
+msgid "endereço"
 msgstr ""
 
-#: .\stock\templates\stock\home.html:7
-msgid "Gestão de Pedreira"
+#: .\stock\models.py:40
+msgid "telefone"
 msgstr ""
 
-#: .\stock\templates\stock\home.html:33
-msgid "Página Principal"
+#: .\stock\models.py:41
+msgid "email"
 msgstr ""
 
-#: .\stock\templates\stock\home.html:34
-msgid "Bem-vindo ao sistema de gestão da pedreira."
+#: .\stock\models.py:56 .\stock\templates\stock\base.html:46
+#: .\stock\templates\stock\lista_clientes.html:9
+msgid "Clientes"
 msgstr ""
 
-#: .\stock\templates\stock\home.html:37
-msgid "Ações Rápidas"
+#: .\stock\models.py:59
+msgid "cliente"
 msgstr ""
 
-#: .\stock\templates\stock\home.html:40
-msgid "Ver Estoque de Produtos"
-msgstr ""
-
-#: .\stock\templates\stock\home.html:41
-msgid "Ver Histórico de Faturas"
-msgstr ""
-
-#: .\stock\templates\stock\home.html:43
-msgid "Ir para o Painel de Administração"
-msgstr ""
-
-#: .\stock\templates\stock\lista_faturas.html:7
-#: .\stock\templates\stock\lista_faturas.html:18
-msgid "Histórico de Faturas"
-msgstr ""
-
-#: .\stock\templates\stock\lista_faturas.html:23
-msgid "Número da Fatura"
-msgstr ""
-
-#: .\stock\templates\stock\lista_faturas.html:25
-msgid "Data de Emissão"
-msgstr ""
-
-#: .\stock\templates\stock\lista_faturas.html:26
-msgid "Valor Total"
-msgstr ""
-
-#: .\stock\templates\stock\lista_faturas.html:27
-msgid "Paga"
-msgstr ""
-
-#: .\stock\templates\stock\lista_faturas.html:39
-msgid "Sim"
-msgstr ""
-
-#: .\stock\templates\stock\lista_faturas.html:41
-msgid "Não"
-msgstr ""
-
+#: .\stock\models.py:60 .\stock\models.py:165
+#: .\stock\templates\stock\lista_clientes.html:47
 #: .\stock\templates\stock\lista_faturas.html:47
-msgid "Nenhuma fatura encontrada."
+#: .\stock\templates\stock\lista_produtos.html:24
+msgid "Criado por"
 msgstr ""
 
-#: .\stock\templates\stock\lista_produtos.html:7
-msgid "Lista de Produtos"
+#: .\stock\models.py:61 .\stock\models.py:166
+msgid "data de emissão"
 msgstr ""
 
-#: .\stock\templates\stock\lista_produtos.html:16
-msgid "Estoque de Produtos"
+#: .\stock\models.py:62 .\stock\templates\stock\fatura_print.html:166
+#: .\stock\templates\stock\lista_clientes.html:49
+#: .\stock\templates\stock\lista_faturas.html:49
+#: .\stock\templates\stock\lista_produtos.html:26
+msgid "Modificado por"
 msgstr ""
 
-#: .\stock\templates\stock\lista_produtos.html:21
+#: .\stock\models.py:63
+msgid "número da fatura"
+msgstr ""
+
+#: .\stock\models.py:64
+msgid "paga"
+msgstr ""
+
+#: .\stock\models.py:65
+msgid "Taxa IGV (%)"
+msgstr ""
+
+#: .\stock\models.py:67
+msgid "desconto (%)"
+msgstr ""
+
+#: .\stock\models.py:67
+msgid "Percentagem de desconto (ex: 5 para 5%)"
+msgstr ""
+
+#: .\stock\models.py:68
+msgid "adiantamento (€)"
+msgstr ""
+
+#: .\stock\models.py:68
+msgid "Valor do adiantamento em euros"
+msgstr ""
+
+#: .\stock\models.py:111 .\stock\templates\stock\detalhe_fatura.html:57
+msgid "Fatura"
+msgstr ""
+
+#: .\stock\models.py:112
+msgid "Faturas"
+msgstr ""
+
+#: .\stock\models.py:116 .\stock\models.py:188
+msgid "produto"
+msgstr ""
+
+#: .\stock\models.py:117 .\stock\models.py:189
+msgid "quantidade"
+msgstr ""
+
+#: .\stock\models.py:118
+msgid "preço unitário"
+msgstr ""
+
+#: .\stock\models.py:129
+msgid "Novo item de fatura"
+msgstr ""
+
+#: .\stock\models.py:132
+msgid "Nome da Empresa"
+msgstr ""
+
+#: .\stock\models.py:133
+msgid "Logotipo"
+msgstr ""
+
+#: .\stock\models.py:134 .\stock\templates\stock\fatura_email.html:134
+#: .\stock\templates\stock\fatura_print.html:159
+#: .\stock\templates\stock\guia_email.html:93
+#: .\stock\templates\stock\guia_print.html:113
+msgid "Endereço"
+msgstr ""
+
+#: .\stock\models.py:135 .\stock\templates\stock\adicionar_cliente.html:19
+#: .\stock\templates\stock\editar_cliente.html:19
+msgid "NIF"
+msgstr ""
+
+#: .\stock\models.py:136 .\stock\templates\stock\adicionar_cliente.html:25
+#: .\stock\templates\stock\editar_cliente.html:25
+#: .\stock\templates\stock\lista_clientes.html:23
+#: .\stock\templates\stock\lista_clientes.html:45
+msgid "Telefone"
+msgstr ""
+
+#: .\stock\models.py:137 .\stock\templates\stock\adicionar_cliente.html:29
+#: .\stock\templates\stock\editar_cliente.html:29
+msgid "Email"
+msgstr ""
+
+#: .\stock\models.py:138 .\stock\templates\stock\fatura_email.html:126
+#: .\stock\templates\stock\fatura_print.html:151
+msgid "Dados de Pagamento"
+msgstr ""
+
+#: .\stock\models.py:143 .\stock\models.py:144
+msgid "Dados da Empresa"
+msgstr ""
+
+#: .\stock\models.py:147
+msgid "Limite para Alerta de Estoque Baixo"
+msgstr ""
+
+#: .\stock\models.py:147
+msgid ""
+"Quando o estoque de um produto for igual ou inferior a este valor, será "
+"mostrado um alerta."
+msgstr ""
+
+#: .\stock\models.py:148
+msgid "Email de Envio"
+msgstr ""
+
+#: .\stock\models.py:148
+msgid ""
+"O endereço de email que será usado para enviar as faturas e guias (ex: "
+"seu.email@gmail.com)."
+msgstr ""
+
+#: .\stock\models.py:149
+msgid "Password de Aplicação do Email"
+msgstr ""
+
+#: .\stock\models.py:149
+msgid ""
+"A palavra-passe de aplicação de 16 caracteres gerada pelo seu provedor de "
+"email (ex: Gmail)."
+msgstr ""
+
+#: .\stock\models.py:152
+msgid "Configurações Gerais"
+msgstr ""
+
+#: .\stock\models.py:156
+msgid "Só pode existir uma instância de Configuração. Edite a existente."
+msgstr ""
+
+#: .\stock\models.py:160
+msgid "Configuração"
+msgstr ""
+
+#: .\stock\models.py:161
+msgid "Configurações"
+msgstr ""
+
+#: .\stock\models.py:164
+msgid "fatura de origem"
+msgstr ""
+
+#: .\stock\models.py:167
+msgid "número da guia"
+msgstr ""
+
+#: .\stock\models.py:168
+msgid "morada de carga"
+msgstr ""
+
+#: .\stock\models.py:168
+msgid "Local onde os bens são carregados."
+msgstr ""
+
+#: .\stock\models.py:169
+msgid "morada de descarga"
+msgstr ""
+
+#: .\stock\models.py:169
+msgid "Local onde os bens são descarregados."
+msgstr ""
+
+#: .\stock\models.py:170
+msgid "matrícula do veículo"
+msgstr ""
+
+#: .\stock\models.py:182 .\stock\templates\stock\detalhe_guia.html:40
+msgid "Guia de Transporte"
+msgstr ""
+
+#: .\stock\models.py:183
+msgid "Guias de Transporte"
+msgstr ""
+
+#: .\stock\models.py:195
+msgid "Item da Guia"
+msgstr ""
+
+#: .\stock\models.py:196 .\stock\templates\stock\criar_guia.html:84
+msgid "Itens da Guia"
+msgstr ""
+
+#: .\stock\models.py:200
+msgid "Manual (apenas através do botão no admin)"
+msgstr ""
+
+#: .\stock\models.py:201
+msgid "Diário"
+msgstr ""
+
+#: .\stock\models.py:202
+msgid "Semanal"
+msgstr ""
+
+#: .\stock\models.py:205
+msgid "Frequência do Backup Automático"
+msgstr ""
+
+#: .\stock\models.py:209
+msgid ""
+"Define a frequência com que os backups automáticos devem ser executados."
+msgstr ""
+
+#: .\stock\models.py:212
+msgid "Email de Destino para Backups"
+msgstr ""
+
+#: .\stock\models.py:213
+msgid "O endereço de email para onde os ficheiros de backup serão enviados."
+msgstr ""
+
+#: .\stock\models.py:218
+msgid "Nunca executado"
+msgstr ""
+
+#: .\stock\models.py:222
+msgid "Data do Último Backup"
+msgstr ""
+
+#: .\stock\models.py:229
+msgid "Configuração de Backup por Email"
+msgstr ""
+
+#: .\stock\models.py:234
+msgid ""
+"Só pode existir uma instância de Configuração de Backup. Edite a existente."
+msgstr ""
+
+#: .\stock\models.py:238 .\stock\models.py:239
+msgid "Configuração de Backup"
+msgstr ""
+
+#: .\stock\templates\registration\login.html:4
+msgid "Login"
+msgstr ""
+
+#: .\stock\templates\registration\login.html:20
+msgid "Aceder ao Sistema"
+msgstr ""
+
+#: .\stock\templates\registration\login.html:26
+msgid ""
+"O seu nome de utilizador e palavra-passe não correspondem. Por favor, tente "
+"novamente."
+msgstr ""
+
+#: .\stock\templates\registration\login.html:34
+msgid "Nome de utilizador"
+msgstr ""
+
+#: .\stock\templates\registration\login.html:39
+msgid "Palavra-passe"
+msgstr ""
+
+#: .\stock\templates\registration\login.html:44
+msgid "Entrar"
+msgstr ""
+
+#: .\stock\templates\stock\adicionar_cliente.html:4
+#: .\stock\templates\stock\adicionar_cliente.html:7
+#: .\stock\templates\stock\lista_clientes.html:11
+msgid "Adicionar Novo Cliente"
+msgstr ""
+
+#: .\stock\templates\stock\adicionar_cliente.html:15
+#: .\stock\templates\stock\editar_cliente.html:15
+#: .\stock\templates\stock\lista_clientes.html:44
+#: .\stock\templates\stock\lista_produtos.html:20
 msgid "Nome"
 msgstr ""
 
-#: .\stock\templates\stock\lista_produtos.html:22
+#: .\stock\templates\stock\adicionar_cliente.html:34
+#: .\stock\templates\stock\editar_cliente.html:34
+msgid "Morada"
+msgstr ""
+
+#: .\stock\templates\stock\adicionar_cliente.html:40
+msgid "Salvar Cliente"
+msgstr ""
+
+#: .\stock\templates\stock\adicionar_cliente.html:41
+#: .\stock\templates\stock\adicionar_produto.html:49
+#: .\stock\templates\stock\cliente_confirm_delete.html:17
+#: .\stock\templates\stock\criar_fatura.html:157
+#: .\stock\templates\stock\criar_guia.html:108
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:72
+#: .\stock\templates\stock\editar_cliente.html:41
+#: .\stock\templates\stock\editar_fatura.html:158
+#: .\stock\templates\stock\editar_guia.html:47
+#: .\stock\templates\stock\editar_produto.html:49
+#: .\stock\templates\stock\produto_confirm_delete.html:18
+msgid "Cancelar"
+msgstr ""
+
+#: .\stock\templates\stock\adicionar_produto.html:4
+#: .\stock\templates\stock\adicionar_produto.html:7
+#: .\stock\templates\stock\lista_produtos.html:11
+msgid "Adicionar Novo Produto"
+msgstr ""
+
+#: .\stock\templates\stock\adicionar_produto.html:15
+#: .\stock\templates\stock\editar_produto.html:15
+msgid "Nome do Produto"
+msgstr ""
+
+#: .\stock\templates\stock\adicionar_produto.html:19
+#: .\stock\templates\stock\editar_produto.html:19
 msgid "Calibre"
 msgstr ""
 
-#: .\stock\templates\stock\lista_produtos.html:23
+#: .\stock\templates\stock\adicionar_produto.html:24
+#: .\stock\templates\stock\editar_produto.html:24
+msgid "Descrição"
+msgstr ""
+
+#: .\stock\templates\stock\adicionar_produto.html:29
+#: .\stock\templates\stock\editar_produto.html:29
+msgid "Unidade de Medida"
+msgstr ""
+
+#: .\stock\templates\stock\adicionar_produto.html:37
+msgid "Estoque Inicial"
+msgstr ""
+
+#: .\stock\templates\stock\adicionar_produto.html:41
+#: .\stock\templates\stock\editar_produto.html:41
+msgid "Preço por Unidade"
+msgstr ""
+
+#: .\stock\templates\stock\adicionar_produto.html:48
+msgid "Salvar Produto"
+msgstr ""
+
+#: .\stock\templates\stock\base.html:43
+msgid "Nova Fatura"
+msgstr ""
+
+#: .\stock\templates\stock\base.html:44
+msgid "Histórico"
+msgstr ""
+
+#: .\stock\templates\stock\base.html:45 .\stock\templates\stock\home.html:137
+msgid "Estoque"
+msgstr ""
+
+#: .\stock\templates\stock\base.html:49
+msgid "Administração"
+msgstr ""
+
+#: .\stock\templates\stock\base.html:68
+msgid "Bem-vindo"
+msgstr ""
+
+#: .\stock\templates\stock\base.html:72
+msgid "Sair"
+msgstr ""
+
+#: .\stock\templates\stock\base.html:96
+msgid "Todos os direitos reservados."
+msgstr ""
+
+#: .\stock\templates\stock\base.html:98
+msgid "Desenvolvido por"
+msgstr ""
+
+#: .\stock\templates\stock\cliente_confirm_delete.html:4
+#: .\stock\templates\stock\produto_confirm_delete.html:4
+msgid "Confirmar Remoção"
+msgstr ""
+
+#: .\stock\templates\stock\cliente_confirm_delete.html:7
+msgid "Apagar Cliente"
+msgstr ""
+
+#: .\stock\templates\stock\cliente_confirm_delete.html:10
+#: .\stock\templates\stock\produto_confirm_delete.html:10
+msgid "Tem a certeza?"
+msgstr ""
+
+#: .\stock\templates\stock\cliente_confirm_delete.html:11
+#, python-format
+msgid ""
+"Você está prestes a apagar permanentemente o cliente "
+"<strong>%(cliente.nome)s</strong>. Esta ação não pode ser desfeita."
+msgstr ""
+
+#: .\stock\templates\stock\cliente_confirm_delete.html:16
+msgid "Sim, apagar cliente"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:4
+#: .\stock\templates\stock\criar_fatura.html:7
+msgid "Criar Nova Fatura"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:15
+#: .\stock\templates\stock\editar_fatura.html:15
+msgid "Detalhes Gerais"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:23
+#: .\stock\templates\stock\criar_guia.html:23
+msgid "Selecione um cliente..."
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:31
+#: .\stock\templates\stock\editar_fatura.html:32
+msgid "Tipo de Imposto"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:34
+#: .\stock\templates\stock\editar_fatura.html:35
+#: .\stock\templates\stock\home.html:97
+msgid "Personalizado"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:35
+#: .\stock\templates\stock\editar_fatura.html:36
+msgid "Isento"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:40
+#: .\stock\templates\stock\editar_fatura.html:41
+#, python-format
+msgid "Taxa IGV (%%)"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:45
+#: .\stock\templates\stock\editar_fatura.html:46
+#, python-format
+msgid "Desconto (%%)"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:50
+#: .\stock\templates\stock\criar_fatura.html:141
+#: .\stock\templates\stock\detalhe_fatura.html:135
+#: .\stock\templates\stock\editar_fatura.html:51
+#: .\stock\templates\stock\editar_fatura.html:142
+#: .\stock\templates\stock\fatura_email.html:108
+#: .\stock\templates\stock\fatura_print.html:123
+msgid "Adiantamento"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:60
+#: .\stock\templates\stock\criar_guia.html:53
+#: .\stock\templates\stock\editar_fatura.html:61
+msgid "Adicionar Itens"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:75
+#: .\stock\templates\stock\criar_guia.html:68
+#: .\stock\templates\stock\criar_guia.html:92
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:55
+#: .\stock\templates\stock\detalhe_fatura.html:89
+#: .\stock\templates\stock\detalhe_guia.html:81
+#: .\stock\templates\stock\editar_fatura.html:76
+#: .\stock\templates\stock\guia_email.html:70
+#: .\stock\templates\stock\guia_print.html:82
+msgid "Quantidade"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:81
+#: .\stock\templates\stock\criar_guia.html:74
+#: .\stock\templates\stock\editar_fatura.html:82
+msgid "Adicionar"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:91
+#: .\stock\templates\stock\editar_fatura.html:92
+msgid "Itens e Totais"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:99
+#: .\stock\templates\stock\editar_fatura.html:100
+#: .\stock\templates\stock\fatura_email.html:63
+#: .\stock\templates\stock\fatura_print.html:77
+msgid "Qtd."
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:100
+#: .\stock\templates\stock\editar_fatura.html:101
+#: .\stock\templates\stock\fatura_email.html:64
+#: .\stock\templates\stock\fatura_print.html:78
+msgid "Preço Unit."
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:101
+#: .\stock\templates\stock\criar_fatura.html:121
+#: .\stock\templates\stock\detalhe_fatura.html:91
+#: .\stock\templates\stock\detalhe_fatura.html:112
+#: .\stock\templates\stock\editar_fatura.html:102
+#: .\stock\templates\stock\editar_fatura.html:122
+#: .\stock\templates\stock\fatura_email.html:65
+#: .\stock\templates\stock\fatura_email.html:85
+#: .\stock\templates\stock\fatura_print.html:79
+#: .\stock\templates\stock\fatura_print.html:100
+msgid "Subtotal"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:102
+#: .\stock\templates\stock\criar_guia.html:93
+#: .\stock\templates\stock\editar_fatura.html:103
+msgid "Ação"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:111
+#: .\stock\templates\stock\editar_fatura.html:112
+msgid "Ainda não há itens na fatura."
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:125
+#: .\stock\templates\stock\detalhe_fatura.html:117
+#: .\stock\templates\stock\editar_fatura.html:126
+#: .\stock\templates\stock\fatura_email.html:90
+#: .\stock\templates\stock\fatura_print.html:105
+msgid "Desconto"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:129
+#: .\stock\templates\stock\editar_fatura.html:130
+msgid "Subtotal c/ Desc."
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:137
+#: .\stock\templates\stock\detalhe_fatura.html:130
+#: .\stock\templates\stock\editar_fatura.html:138
+#: .\stock\templates\stock\fatura_email.html:103
+#: .\stock\templates\stock\fatura_print.html:118
+msgid "Total Geral"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:145
+#: .\stock\templates\stock\detalhe_fatura.html:140
+#: .\stock\templates\stock\editar_fatura.html:146
+#: .\stock\templates\stock\fatura_email.html:113
+#: .\stock\templates\stock\fatura_print.html:128
+msgid "VALOR A PAGAR"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:159
+msgid "Gerar Fatura"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:282
+#: .\stock\templates\stock\editar_fatura.html:272
+msgid "Clique para editar o preço"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:288
+#: .\stock\templates\stock\criar_guia.html:160
+#: .\stock\templates\stock\editar_fatura.html:278
+msgid "Remover Item"
+msgstr ""
+
+#: .\stock\templates\stock\criar_fatura.html:337
+#: .\stock\templates\stock\editar_fatura.html:339 .\stock\views.py:271
+#: .\stock\views.py:322
+msgid "A fatura deve ter pelo menos um item."
+msgstr ""
+
+#: .\stock\templates\stock\criar_guia.html:4
+#: .\stock\templates\stock\criar_guia.html:7
+msgid "Criar Nova Guia de Transporte"
+msgstr ""
+
+#: .\stock\templates\stock\criar_guia.html:15
+msgid "Detalhes da Guia"
+msgstr ""
+
+#: .\stock\templates\stock\criar_guia.html:31
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:37
+#: .\stock\templates\stock\editar_guia.html:35
+msgid "Matrícula do Veículo"
+msgstr ""
+
+#: .\stock\templates\stock\criar_guia.html:38
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:25
+#: .\stock\templates\stock\editar_guia.html:25
+msgid "Morada de Carga"
+msgstr ""
+
+#: .\stock\templates\stock\criar_guia.html:43
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:30
+#: .\stock\templates\stock\editar_guia.html:29
+msgid "Morada de Descarga"
+msgstr ""
+
+#: .\stock\templates\stock\criar_guia.html:102
+msgid "Ainda não há itens na guia."
+msgstr ""
+
+#: .\stock\templates\stock\criar_guia.html:110
+msgid "Gerar Guia"
+msgstr ""
+
+#: .\stock\templates\stock\criar_guia.html:176
+msgid "A guia deve ter pelo menos um item."
+msgstr ""
+
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:4
+#, python-format
+msgid "Criar Guia para Fatura %(fatura.numero_fatura)s"
+msgstr ""
+
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:7
+#, python-format
+msgid ""
+"Criar Guia para Fatura <span class=\"text-muted\">#%(fatura.numero_fatura)s</"
+"span>"
+msgstr ""
+
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:10
+msgid ""
+"Está prestes a criar uma Guia de Transporte com base nos dados da fatura. "
+"Por favor, preencha os detalhes do transporte abaixo."
+msgstr ""
+
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:19
+#: .\stock\templates\stock\editar_guia.html:20
+msgid "Detalhes do Transporte"
+msgstr ""
+
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:47
+msgid "Itens a Transportar (da Fatura)"
+msgstr ""
+
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:74
+msgid "Confirmar e Gerar Guia"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_fatura.html:6
+#, python-format
+msgid "Detalhe da Fatura %(fatura.numero_fatura)s"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_fatura.html:10
+msgid "Detalhe da Fatura"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_fatura.html:14
+msgid "Ver Guia de Transporte"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_fatura.html:18
+msgid "Criar Guia de Transporte"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_fatura.html:25
+#: .\stock\templates\stock\detalhe_guia.html:15
+msgid "Enviar por Email"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_fatura.html:30
+#: .\stock\templates\stock\editar_fatura.html:4
+#: .\stock\templates\stock\editar_fatura.html:7
+msgid "Editar Fatura"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_fatura.html:33
+msgid "Imprimir Fatura"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_fatura.html:51
+msgid "Dados da empresa não configurados."
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_fatura.html:61
+msgid "Data de Criação"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_fatura.html:66
+#, python-format
+msgid "Modificado em: %(mod_date)s"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_fatura.html:90
+msgid "Preço Unitário"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_fatura.html:121
+#: .\stock\templates\stock\fatura_email.html:94
+#: .\stock\templates\stock\fatura_print.html:109
+msgid "Subtotal c/ Desconto"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_fatura.html:126
+#: .\stock\templates\stock\fatura_email.html:99
+#: .\stock\templates\stock\fatura_print.html:114
+msgid "IGV"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_fatura.html:151
+#: .\stock\templates\stock\detalhe_guia.html:97
+#: .\stock\templates\stock\fatura_email.html:142
+#: .\stock\templates\stock\fatura_print.html:166
+#: .\stock\templates\stock\guia_email.html:101
+#: .\stock\templates\stock\guia_print.html:118
+msgid "Processado por"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_fatura.html:154
+msgid "Pagamento"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_guia.html:5
+#, python-format
+msgid "Detalhe da Guia %(guia.numero_guia)s"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_guia.html:9
+msgid "Detalhe da Guia de Transporte"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_guia.html:21
+msgid "Editar Guia"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_guia.html:24
+msgid "Imprimir Guia"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_guia.html:42
+#: .\stock\templates\stock\lista_faturas.html:23
+#: .\stock\templates\stock\lista_guias.html:23
+msgid "Data de Emissão"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_guia.html:56
+msgid "Local de Carga"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_guia.html:60
+msgid "Local de Descarga"
+msgstr ""
+
+#: .\stock\templates\stock\detalhe_guia.html:66
+msgid "Veículo"
+msgstr ""
+
+#: .\stock\templates\stock\editar_cliente.html:4
+#: .\stock\templates\stock\editar_cliente.html:7
+msgid "Editar Cliente"
+msgstr ""
+
+#: .\stock\templates\stock\editar_cliente.html:40
+#: .\stock\templates\stock\editar_produto.html:48
+msgid "Salvar Alterações"
+msgstr ""
+
+#: .\stock\templates\stock\editar_fatura.html:160
+#: .\stock\templates\stock\editar_guia.html:49
+msgid "Guardar Alterações"
+msgstr ""
+
+#: .\stock\templates\stock\editar_guia.html:4
+#, python-format
+msgid "Editar Guia de Transporte %(guia.numero_guia)s"
+msgstr ""
+
+#: .\stock\templates\stock\editar_guia.html:7
+#, python-format
+msgid ""
+"Editar Guia de Transporte <span class=\"text-muted\">#%(guia.numero_guia)s</"
+"span>"
+msgstr ""
+
+#: .\stock\templates\stock\editar_guia.html:13
+#, python-format
+msgid ""
+"Fatura de Origem: <a href=\"%(url_fatura)s\">#%(guia.fatura.numero_fatura)s</"
+"a>"
+msgstr ""
+
+#: .\stock\templates\stock\editar_guia.html:43
+msgid "Nota:"
+msgstr ""
+
+#: .\stock\templates\stock\editar_guia.html:43
+msgid ""
+"Os itens desta guia são baseados na fatura de origem e não podem ser "
+"alterados aqui. Para alterar os itens, por favor, edite a fatura "
+"correspondente."
+msgstr ""
+
+#: .\stock\templates\stock\editar_produto.html:4
+#: .\stock\templates\stock\editar_produto.html:7
+msgid "Editar Produto"
+msgstr ""
+
+#: .\stock\templates\stock\editar_produto.html:37
+#: .\stock\templates\stock\lista_produtos.html:21
 msgid "Estoque Atual"
 msgstr ""
 
+#: .\stock\templates\stock\fatura_email.html:9
+#: .\stock\templates\stock\fatura_print.html:10
+#, python-format
+msgid "Fatura %(fatura.numero_fatura)s"
+msgstr ""
+
+#: .\stock\templates\stock\fatura_email.html:29
+#: .\stock\templates\stock\fatura_print.html:50
+msgid "FATURA"
+msgstr ""
+
+#: .\stock\templates\stock\fatura_email.html:31
+#: .\stock\templates\stock\fatura_print.html:53
+#: .\stock\templates\stock\guia_email.html:31
+#: .\stock\templates\stock\guia_print.html:52
+msgid "Data"
+msgstr ""
+
+#: .\stock\templates\stock\fatura_email.html:48
+#: .\stock\templates\stock\fatura_print.html:66
+msgid "Faturado a"
+msgstr ""
+
+#: .\stock\templates\stock\fatura_email.html:62
+#: .\stock\templates\stock\fatura_print.html:76
+#: .\stock\templates\stock\guia_email.html:69
+#: .\stock\templates\stock\guia_print.html:81
+msgid "Produto / Serviço"
+msgstr ""
+
+#: .\stock\templates\stock\fatura_print.html:61
+msgid "Tel"
+msgstr ""
+
+#: .\stock\templates\stock\fatura_print.html:135
+msgid "Erro: Dados da empresa não configurados."
+msgstr ""
+
+#: .\stock\templates\stock\fatura_print.html:136
+msgid ""
+"Por favor, vá ao painel de administração e insira os dados da sua empresa."
+msgstr ""
+
+#: .\stock\templates\stock\fatura_print.html:143
+msgid "Assinatura e Carimbo"
+msgstr ""
+
+#: .\stock\templates\stock\guia_email.html:9
+#: .\stock\templates\stock\guia_print.html:9
+#, python-format
+msgid "Guia de Transporte %(guia.numero_guia)s"
+msgstr ""
+
+#: .\stock\templates\stock\guia_email.html:29
+#: .\stock\templates\stock\guia_print.html:49
+msgid "GUIA DE TRANSPORTE"
+msgstr ""
+
+#: .\stock\templates\stock\guia_email.html:43
+#: .\stock\templates\stock\guia_print.html:59
+msgid "Expedidor"
+msgstr ""
+
+#: .\stock\templates\stock\guia_email.html:49
+#: .\stock\templates\stock\guia_print.html:65
+msgid "Destinatário"
+msgstr ""
+
+#: .\stock\templates\stock\guia_email.html:55
+#: .\stock\templates\stock\guia_print.html:71
+msgid "Transporte"
+msgstr ""
+
+#: .\stock\templates\stock\guia_email.html:56
+#: .\stock\templates\stock\guia_print.html:72
+#: .\stock\templates\stock\lista_guias.html:24
+msgid "Matrícula"
+msgstr ""
+
+#: .\stock\templates\stock\guia_email.html:57
+#: .\stock\templates\stock\guia_print.html:73
+msgid "Carga"
+msgstr ""
+
+#: .\stock\templates\stock\guia_email.html:58
+#: .\stock\templates\stock\guia_print.html:74
+msgid "Descarga"
+msgstr ""
+
+#: .\stock\templates\stock\guia_print.html:100
+msgid "Assinatura do Expedidor"
+msgstr ""
+
+#: .\stock\templates\stock\guia_print.html:104
+msgid "Assinatura do Destinatário"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:6
+msgid "Dashboard"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:17
+msgid "Por Pagar"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:23 .\stock\templates\stock\home.html:39
+#, python-format
+msgid "%(counter)s fatura"
+msgid_plural "%(counter)s faturas"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\stock\templates\stock\home.html:33
+msgid "Já Pago"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:49
+msgid "Faturação (Mês Atual)"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:55
+#, python-format
+msgid "%(counter)s fatura este mês"
+msgid_plural "%(counter)s faturas este mês"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\stock\templates\stock\home.html:65
+msgid "Total de Clientes"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:79
+msgid "Análise de Vendas"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:84
+msgid "Estado"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:86
+msgid "Todas"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:87
+msgid "Pagas"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:88
+msgid "Não Pagas"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:92
+msgid "Período"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:94
+msgid "Mês Atual (Diário)"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:95
+msgid "Últimos 3 Meses"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:96
+msgid "Últimos 6 Meses"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:103
+msgid "Início"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:107
+msgid "Fim"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:128
+msgid "Estoque Baixo"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:138
+#: .\stock\templates\stock\lista_clientes.html:50
+#: .\stock\templates\stock\lista_faturas.html:52
+#: .\stock\templates\stock\lista_guias.html:25
+#: .\stock\templates\stock\lista_produtos.html:27
+msgid "Ações"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:155
+msgid "Nenhum produto com estoque baixo."
+msgstr ""
+
+#: .\stock\templates\stock\home.html:163
+msgid "Top 10 Clientes (Últimos 30 dias)"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:172
+msgid "Total Gasto"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:184 .\stock\templates\stock\home.html:217
+msgid "Não há dados de vendas nos últimos 30 dias."
+msgstr ""
+
+#: .\stock\templates\stock\home.html:196
+msgid "Top 10 Produtos (Últimos 30 dias)"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:205
+msgid "Total Vendido"
+msgstr ""
+
+#: .\stock\templates\stock\home.html:256
+msgid "Faturação"
+msgstr ""
+
+#: .\stock\templates\stock\lista_clientes.html:5
+msgid "Lista de Clientes"
+msgstr ""
+
+#: .\stock\templates\stock\lista_clientes.html:19
+#: .\stock\templates\stock\lista_faturas.html:19
+msgid "Nome do Cliente"
+msgstr ""
+
+#: .\stock\templates\stock\lista_clientes.html:28
+#: .\stock\templates\stock\lista_faturas.html:28
+msgid "Pesquisar"
+msgstr ""
+
+#: .\stock\templates\stock\lista_clientes.html:31
+#: .\stock\templates\stock\lista_faturas.html:31
+msgid "Limpar"
+msgstr ""
+
+#: .\stock\templates\stock\lista_clientes.html:46
+#: .\stock\templates\stock\lista_faturas.html:46
+#: .\stock\templates\stock\lista_produtos.html:23
+msgid "Criação"
+msgstr ""
+
+#: .\stock\templates\stock\lista_clientes.html:48
+#: .\stock\templates\stock\lista_faturas.html:48
 #: .\stock\templates\stock\lista_produtos.html:25
+msgid "Modificação"
+msgstr ""
+
+#: .\stock\templates\stock\lista_clientes.html:75
+#: .\stock\templates\stock\lista_faturas.html:90
+#: .\stock\templates\stock\lista_produtos.html:53
+msgid "Editar"
+msgstr ""
+
+#: .\stock\templates\stock\lista_clientes.html:76
+#: .\stock\templates\stock\lista_produtos.html:54
+msgid "Apagar"
+msgstr ""
+
+#: .\stock\templates\stock\lista_clientes.html:81
+msgid "Nenhum cliente encontrado."
+msgstr ""
+
+#: .\stock\templates\stock\lista_faturas.html:6
+#: .\stock\templates\stock\lista_faturas.html:9
+msgid "Histórico de Faturas"
+msgstr ""
+
+#: .\stock\templates\stock\lista_faturas.html:15
+#: .\stock\templates\stock\lista_faturas.html:44
+msgid "Nº Fatura"
+msgstr ""
+
+#: .\stock\templates\stock\lista_faturas.html:50
+msgid "Valor a Pagar"
+msgstr ""
+
+#: .\stock\templates\stock\lista_faturas.html:51
+msgid "Paga"
+msgstr ""
+
+#: .\stock\templates\stock\lista_faturas.html:83
+msgid "Sim"
+msgstr ""
+
+#: .\stock\templates\stock\lista_faturas.html:85
+msgid "Não"
+msgstr ""
+
+#: .\stock\templates\stock\lista_faturas.html:95
+msgid "Nenhuma fatura encontrada."
+msgstr ""
+
+#: .\stock\templates\stock\lista_guias.html:5
+#: .\stock\templates\stock\lista_guias.html:9
+msgid "Histórico de Guias de Transporte"
+msgstr ""
+
+#: .\stock\templates\stock\lista_guias.html:11
+msgid "Nova Guia de Transporte"
+msgstr ""
+
+#: .\stock\templates\stock\lista_guias.html:21
+msgid "Nº Guia"
+msgstr ""
+
+#: .\stock\templates\stock\lista_guias.html:43
+msgid "Nenhuma guia de transporte encontrada."
+msgstr ""
+
+#: .\stock\templates\stock\lista_produtos.html:6
+#: .\stock\templates\stock\lista_produtos.html:10
+msgid "Estoque de Produtos"
+msgstr ""
+
+#: .\stock\templates\stock\lista_produtos.html:22
 msgid "Preço"
 msgstr ""
 
-#: .\stock\templates\stock\lista_produtos.html:39
+#: .\stock\templates\stock\lista_produtos.html:59
 msgid "Nenhum produto encontrado."
+msgstr ""
+
+#: .\stock\templates\stock\pagination.html:15
+#: .\stock\templates\stock\pagination.html:19
+msgid "Anterior"
+msgstr ""
+
+#: .\stock\templates\stock\pagination.html:39
+#: .\stock\templates\stock\pagination.html:43
+msgid "Próxima"
+msgstr ""
+
+#: .\stock\templates\stock\produto_confirm_delete.html:7
+msgid "Apagar Produto"
+msgstr ""
+
+#: .\stock\templates\stock\produto_confirm_delete.html:11
+#, python-format
+msgid ""
+"Você está prestes a apagar permanentemente o produto "
+"<strong>%(produto.nome)s</strong>. Esta ação não pode ser desfeita."
+msgstr ""
+
+#: .\stock\templates\stock\produto_confirm_delete.html:12
+msgid ""
+"Apagar um produto não afeta as faturas antigas onde ele foi usado, mas "
+"remove-o da lista para futuras vendas."
+msgstr ""
+
+#: .\stock\templates\stock\produto_confirm_delete.html:17
+msgid "Sim, apagar produto"
+msgstr ""
+
+#: .\stock\views.py:161
+#, python-brace-format
+msgid "O cliente '{nome}' foi adicionado com sucesso!"
+msgstr ""
+
+#: .\stock\views.py:177
+#, python-brace-format
+msgid "Os dados do cliente '{nome}' foram atualizados com sucesso!"
+msgstr ""
+
+#: .\stock\views.py:189
+#, python-brace-format
+msgid "O cliente '{nome}' foi apagado com sucesso."
+msgstr ""
+
+#: .\stock\views.py:191
+#, python-brace-format
+msgid ""
+"O cliente '{nome}' não pode ser apagado porque já tem faturas associadas a "
+"ele."
+msgstr ""
+
+#: .\stock\views.py:219
+#, python-brace-format
+msgid "O produto '{nome}' foi adicionado com sucesso!"
+msgstr ""
+
+#: .\stock\views.py:237
+#, python-brace-format
+msgid "O produto '{nome}' foi atualizado com sucesso!"
+msgstr ""
+
+#: .\stock\views.py:249
+#, python-brace-format
+msgid "O produto '{nome}' foi apagado com sucesso."
+msgstr ""
+
+#: .\stock\views.py:251
+#, python-brace-format
+msgid ""
+"O produto '{nome}' não pode ser apagado porque já está associado a faturas "
+"existentes."
+msgstr ""
+
+#: .\stock\views.py:266
+msgid "Por favor, selecione um cliente."
+msgstr ""
+
+#: .\stock\views.py:290 .\stock\views.py:340
+#, python-brace-format
+msgid "Estoque insuficiente para {produto_nome}. Disponível: {estoque}"
+msgstr ""
+
+#: .\stock\views.py:294
+#, python-brace-format
+msgid "Fatura {numero} criada com sucesso!"
+msgstr ""
+
+#: .\stock\views.py:297
+#, python-brace-format
+msgid "Ocorreu um erro ao gerar a fatura: {erro}"
+msgstr ""
+
+#: .\stock\views.py:315
+msgid "O campo cliente não pode estar vazio."
+msgstr ""
+
+#: .\stock\views.py:346
+#, python-brace-format
+msgid "Fatura {numero} atualizada com sucesso!"
+msgstr ""
+
+#: .\stock\views.py:349 .\stock\views.py:500
+#, python-brace-format
+msgid "Ocorreu um erro ao salvar as alterações: {erro}"
+msgstr ""
+
+#: .\stock\views.py:425
+#, python-brace-format
+msgid "A fatura {numero} foi marcada como PAGA."
+msgstr ""
+
+#: .\stock\views.py:427
+#, python-brace-format
+msgid "A fatura {numero} foi marcada como NÃO PAGA."
+msgstr ""
+
+#: .\stock\views.py:452
+msgid "Já existe uma guia de transporte para esta fatura."
+msgstr ""
+
+#: .\stock\views.py:471
+#, python-brace-format
+msgid ""
+"Guia de Transporte {numero} criada com sucesso a partir da fatura "
+"{fatura_num}."
+msgstr ""
+
+#: .\stock\views.py:474
+#, python-brace-format
+msgid "Ocorreu um erro ao gerar a guia: {erro}"
+msgstr ""
+
+#: .\stock\views.py:497
+#, python-brace-format
+msgid "Guia de Transporte {numero} atualizada com sucesso!"
+msgstr ""
+
+#: .\stock\views.py:517 .\stock\views.py:545
+#, python-brace-format
+msgid "O cliente '{nome}' não tem um endereço de email associado."
+msgstr ""
+
+#: .\stock\views.py:522 .\stock\views.py:550
+msgid ""
+"As credenciais de email não estão configuradas na área de administração."
+msgstr ""
+
+#: .\stock\views.py:530
+#, python-brace-format
+msgid "Fatura Nº {numero_fatura} da {nome_empresa}"
+msgstr ""
+
+#: .\stock\views.py:535
+#, python-brace-format
+msgid "Fatura enviada com sucesso para {email}."
+msgstr ""
+
+#: .\stock\views.py:537 .\stock\views.py:565
+#, python-brace-format
+msgid "Ocorreu um erro ao enviar o email: {erro}"
+msgstr ""
+
+#: .\stock\views.py:558
+#, python-brace-format
+msgid "Guia de Transporte Nº {numero_guia} da {nome_empresa}"
+msgstr ""
+
+#: .\stock\views.py:563
+#, python-brace-format
+msgid "Guia de Transporte enviada com sucesso para {email}."
 msgstr ""
 
 #: .\venv\Lib\site-packages\django\contrib\messages\apps.py:16

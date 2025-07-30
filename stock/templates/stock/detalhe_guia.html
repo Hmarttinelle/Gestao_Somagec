@@ -1,0 +1,102 @@
+{% extends "stock/base.html" %}
+{% load i18n %}
+{% load l10n %}
+
+{% block title %}{% blocktrans %}Detalhe da Guia {{ guia.numero_guia }}{% endblocktrans %}{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-between align-items-center mb-4 no-print">
+        <h1>{% blocktrans %}Detalhe da Guia de Transporte{% endblocktrans %}</h1>
+        <div>
+            {% if guia.cliente.email %}
+                <form action="{% url 'enviar_guia_email' guia.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-envelope me-1"></i> {% trans "Enviar por Email" %}
+                    </button>
+                </form>
+            {% endif %}
+
+            <a href="{% url 'editar_guia' guia.id %}" class="btn btn-warning">
+                <i class="fas fa-edit me-1"></i> {% trans "Editar Guia" %}
+            </a>
+            <a href="{% url 'guia_print' guia.id %}" target="_blank" class="btn btn-primary">
+                <i class="fas fa-print me-1"></i> {% trans "Imprimir Guia" %}
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-5">
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    {% if dados_empresa.logotipo %}
+                        <img src="{{ dados_empresa.logotipo.url }}" alt="{{ dados_empresa.nome_empresa }}" style="max-height: 100px; max-width: 300px;">
+                    {% else %}
+                        <h2 class="h3">{{ dados_empresa.nome_empresa }}</h2>
+                    {% endif %}
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <h2 class="h3 text-uppercase">{% trans "Guia de Transporte" %}</h2>
+                    <p class="mb-0"><strong>#{{ guia.numero_guia }}</strong></p>
+                    <p>{% trans "Data de Emissão" %}: {{ guia.data_emissao }}</p>
+                </div>
+            </div>
+            
+            <hr class="my-4">
+
+            {# --- ALTERAÇÃO NESTA SECÇÃO --- #}
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <h4 class="h5">{% trans "Cliente" %}</h4>
+                    <p class="mb-0"><strong>{{ guia.cliente.nome }}</strong></p>
+                    {% if guia.cliente.nif %}<p class="mb-0">NIF: {{ guia.cliente.nif }}</p>{% endif %}
+                </div>
+                <div class="col-md-3">
+                    <h4 class="h5">{% trans "Local de Carga" %}</h4>
+                    <p>{{ guia.morada_carga|linebreaksbr }}</p>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="h5">{% trans "Local de Descarga" %}</h4>
+                    <p>{{ guia.morada_descarga|linebreaksbr }}</p>
+                </div>
+                {# --- NOVA COLUNA ADICIONADA PARA A MATRÍCULA --- #}
+                <div class="col-md-3">
+                    {% if guia.matricula_veiculo %}
+                        <h4 class="h5">{% trans "Veículo" %}</h4>
+                        <p class="mb-0">
+                            <i class="fas fa-truck me-2" aria-hidden="true"></i>{# Ícone para melhorar o visual #}
+                            <strong>{{ guia.matricula_veiculo }}</strong>
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+            {# --- FIM DA ALTERAÇÃO --- #}
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="table-light">
+                        <tr>
+                            <th>{% trans "Produto" %}</th>
+                            <th class="text-end">{% trans "Quantidade" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in guia.itens.all %}
+                        <tr>
+                            <td>{{ item.produto.nome }}{% if item.produto.calibre %} ({{ item.produto.calibre }}){% endif %}</td>
+                            <td class="text-end">{{ item.quantidade|floatformat:2 }} {{ item.produto.get_unidade_medida_display }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="text-center mt-5 border-top pt-3">
+                <p class="small">
+                    {% trans "Processado por" %}: {{ guia.utilizador.username|default:"N/A" }}
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

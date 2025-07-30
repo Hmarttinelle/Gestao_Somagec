@@ -1,0 +1,78 @@
+{% extends "stock/base.html" %}
+{% load i18n %}
+
+{% block title %}{% blocktrans %}Criar Guia para Fatura {{ fatura.numero_fatura }}{% endblocktrans %}{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">{% blocktrans %}Criar Guia para Fatura <span class="text-muted">#{{ fatura.numero_fatura }}</span>{% endblocktrans %}</h1>
+
+    <div class="alert alert-info">
+        {% blocktrans %}Está prestes a criar uma Guia de Transporte com base nos dados da fatura. Por favor, preencha os detalhes do transporte abaixo.{% endblocktrans %}
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- Card Detalhes do Transporte -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="h5 mb-0">{% trans "Detalhes do Transporte" %}</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <!-- Morada de Carga -->
+                    <div class="col-md-6 mb-3">
+                        <label for="morada_carga" class="form-label">{% trans "Morada de Carga" %}:</label>
+                        <textarea name="morada_carga" id="morada_carga" class="form-control" rows="3">{% if dados_empresa %}{{ dados_empresa.endereco }}{% endif %}</textarea>
+                    </div>
+                    <!-- Morada de Descarga -->
+                    <div class="col-md-6 mb-3">
+                        <label for="morada_descarga" class="form-label">{% trans "Morada de Descarga" %}:</label>
+                        <textarea name="morada_descarga" id="morada_descarga" class="form-control" rows="3">{{ fatura.cliente.endereco }}</textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Matrícula -->
+                    <div class="col-md-6 mb-3">
+                        <label for="matricula_veiculo" class="form-label">{% trans "Matrícula do Veículo" %}:</label>
+                        <input type="text" name="matricula_veiculo" id="matricula_veiculo" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Itens (Apenas para visualização) -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2 class="h5 mb-0">{% trans "Itens a Transportar (da Fatura)" %}</h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="table-light">
+                            <tr>
+                                <th>{% trans "Produto" %}</th>
+                                <th class="text-end">{% trans "Quantidade" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in fatura.itens.all %}
+                            <tr>
+                                <td>{{ item.produto.nome }}{% if item.produto.calibre %} ({{ item.produto.calibre }}){% endif %}</td>
+                                <td class="text-end">{{ item.quantidade|floatformat:2 }} {{ item.produto.get_unidade_medida_display }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{% url 'detalhe_fatura' fatura.id %}" class="btn btn-secondary">{% trans "Cancelar" %}</a>
+            <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-check-circle me-2"></i>{% trans "Confirmar e Gerar Guia" %}
+            </button>
+        </div>
+    </form>
+{% endblock %}

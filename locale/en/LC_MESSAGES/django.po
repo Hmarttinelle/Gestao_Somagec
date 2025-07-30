@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SOMAGEC MINING BISSAU 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-27 05:03+0100\n"
-"PO-Revision-Date: 2025-07-27 05:05+0100\n"
+"POT-Creation-Date: 2025-07-30 05:16+0100\n"
+"PO-Revision-Date: 2025-07-30 18:45+0100\n"
 "Last-Translator: Gemini <ai@google.com>\n"
 "Language-Team: English <en@li.org>\n"
 "Language: en\n"
@@ -17,208 +17,478 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\gestao_pedreira\settings.py:20
+#: .\gestao_pedreira\settings.py:27
 msgid "Português"
 msgstr "Portuguese"
 
-#: .\gestao_pedreira\settings.py:21
+#: .\gestao_pedreira\settings.py:28
 msgid "Inglês"
 msgstr "English"
 
-#: .\gestao_pedreira\settings.py:22
+#: .\gestao_pedreira\settings.py:29
 msgid "Francês"
 msgstr "French"
 
-#: .\stock\models.py:10
-msgid "Tonelada"
-msgstr "Ton"
+#: .\stock\admin.py:25
+msgid "Resetar numeração para faturas selecionadas (usar com cuidado)"
+msgstr "Reset numbering for selected invoices (use with care)"
 
-#: .\stock\models.py:10
-msgid "Metro Cúbico"
-msgstr "Cubic Meter"
+#: .\stock\admin.py:47
+msgid "Subtotal (CFA)"
+msgstr "Subtotal (CFA)"
 
-#: .\stock\models.py:10 .\stock\templates\stock\lista_produtos.html:22
-msgid "Unidade"
-msgstr "Unit"
+#: .\stock\admin.py:63
+msgid "Total Geral (CFA)"
+msgstr "Grand Total (CFA)"
 
-#: .\stock\models.py:11 .\stock\models.py:24
-msgid "nome"
-msgstr "name"
+#: .\stock\admin.py:70
+msgid "Valor a Pagar (CFA)"
+msgstr "Amount Due (CFA)"
 
-#: .\stock\models.py:12
-msgid "calibre"
-msgstr "size"
-
-#: .\stock\models.py:13
-msgid "descrição"
-msgstr "description"
-
-#: .\stock\models.py:14
-msgid "unidade de medida"
-msgstr "unit of measurement"
-
-#: .\stock\models.py:15
-msgid "estoque atual"
-msgstr "current stock"
-
-#: .\stock\models.py:16
-msgid "preço por unidade"
-msgstr "price per unit"
-
-#: .\stock\models.py:20 .\stock\templates\stock\criar_fatura.html:55
-#: .\stock\templates\stock\criar_fatura.html:84
-#: .\stock\templates\stock\detalhe_fatura.html:54
-#: .\stock\templates\stock\editar_fatura.html:58
-#: .\stock\templates\stock\editar_fatura.html:87
-#: .\stock\templates\stock\home.html:75
-msgid "Produto"
-msgstr "Product"
-
-#: .\stock\models.py:21
-msgid "Produtos"
-msgstr "Products"
-
-#: .\stock\models.py:25
-msgid "NIF/Contribuinte"
-msgstr "VAT ID"
-
-#: .\stock\models.py:26
-msgid "endereço"
-msgstr "address"
-
-#: .\stock\models.py:27
-msgid "telefone"
-msgstr "phone"
-
-#: .\stock\models.py:28
-msgid "email"
-msgstr "email"
-
-#: .\stock\models.py:32 .\stock\templates\stock\criar_fatura.html:25
-#: .\stock\templates\stock\detalhe_fatura.html:43
-#: .\stock\templates\stock\editar_fatura.html:26
-#: .\stock\templates\stock\lista_faturas.html:17
+#: .\stock\admin.py:89 .\stock\models.py:55
+#: .\stock\templates\stock\criar_fatura.html:21
+#: .\stock\templates\stock\criar_guia.html:21
+#: .\stock\templates\stock\detalhe_fatura.html:77
+#: .\stock\templates\stock\detalhe_guia.html:51
+#: .\stock\templates\stock\editar_fatura.html:21
+#: .\stock\templates\stock\home.html:171
+#: .\stock\templates\stock\lista_faturas.html:45
+#: .\stock\templates\stock\lista_guias.html:22
 msgid "Cliente"
 msgstr "Client"
 
-#: .\stock\models.py:33 .\stock\templates\stock\base.html:39
-#: .\stock\templates\stock\lista_clientes.html:8
+#: .\stock\admin.py:105
+msgid "Alertas"
+msgstr "Alerts"
+
+#: .\stock\admin.py:106
+msgid "Configurações de Envio de Email"
+msgstr "Email Sending Settings"
+
+#: .\stock\admin.py:108
+msgid "Insira aqui as credenciais do email que será usado para enviar faturas e guias."
+msgstr "Enter the credentials for the email that will be used to send invoices and delivery notes here."
+
+#: .\stock\admin.py:118
+msgid "Executar Backup por Email Agora"
+msgstr "Run Email Backup Now"
+
+#: .\stock\admin.py:122
+msgid "Nenhuma configuração de backup selecionada."
+msgstr "No backup configuration selected."
+
+#: .\stock\admin.py:129
+msgid "Email de destino para backups não configurado."
+msgstr "Destination email for backups not configured."
+
+#: .\stock\admin.py:133
+msgid "Email de envio ou palavra-passe não configurados nas Configurações Gerais."
+msgstr "Sending email or password not configured in General Settings."
+
+#: .\stock\admin.py:151
+msgid "Backup do Sistema Pedreira - {}"
+msgstr "Quarry System Backup - {}"
+
+#: .\stock\admin.py:152 .\stock\management\commands\run_backup.py:92
+msgid "Em anexo seguem os ficheiros de backup do sistema (base de dados e ficheiros de media)."
+msgstr "Attached are the system backup files (database and media files)."
+
+#: .\stock\admin.py:173
+msgid "Sucesso"
+msgstr "Success"
+
+#: .\stock\admin.py:174
+msgid "Backup enviado por email com sucesso para {}!"
+msgstr "Backup successfully sent by email to {}!"
+
+#: .\stock\admin.py:177
+msgid "Falhou: {}"
+msgstr "Failed: {}"
+
+#: .\stock\admin.py:178
+msgid "Ocorreu um erro durante o backup: {}"
+msgstr "An error occurred during backup: {}"
+
+#: .\stock\admin.py:188
+msgid "Configuração do Backup"
+msgstr "Backup Configuration"
+
+#: .\stock\admin.py:189 .\stock\models.py:216
+msgid "Estado do Último Backup"
+msgstr "Last Backup Status"
+
+#: .\stock\management\commands\run_backup.py:91
+msgid "Backup Automático do Sistema Pedreira - {}"
+msgstr "Automatic Quarry System Backup - {}"
+
+#: .\stock\management\commands\run_backup.py:105
+msgid "Sucesso via Comando"
+msgstr "Success via Command"
+
+#: .\stock\management\commands\run_backup.py:109
+msgid "Falhou via Comando: {}"
+msgstr "Failed via Command: {}"
+
+#: .\stock\models.py:13
+msgid "Tonelada"
+msgstr "Ton"
+
+#: .\stock\models.py:13
+msgid "Metro Cúbico"
+msgstr "Cubic Meter"
+
+#: .\stock\models.py:13
+msgid "Unidade"
+msgstr "Unit"
+
+#: .\stock\models.py:14 .\stock\models.py:37
+msgid "nome"
+msgstr "name"
+
+#: .\stock\models.py:15
+msgid "calibre"
+msgstr "size"
+
+#: .\stock\models.py:16
+msgid "descrição"
+msgstr "description"
+
+#: .\stock\models.py:17
+msgid "unidade de medida"
+msgstr "unit of measurement"
+
+#: .\stock\models.py:18
+msgid "estoque atual"
+msgstr "current stock"
+
+#: .\stock\models.py:19
+msgid "preço por unidade"
+msgstr "price per unit"
+
+#: .\stock\models.py:33 .\stock\templates\stock\criar_fatura.html:65
+#: .\stock\templates\stock\criar_fatura.html:98
+#: .\stock\templates\stock\criar_guia.html:58
+#: .\stock\templates\stock\criar_guia.html:91
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:54
+#: .\stock\templates\stock\detalhe_fatura.html:88
+#: .\stock\templates\stock\detalhe_guia.html:80
+#: .\stock\templates\stock\editar_fatura.html:66
+#: .\stock\templates\stock\editar_fatura.html:99
+#: .\stock\templates\stock\home.html:136 .\stock\templates\stock\home.html:204
+msgid "Produto"
+msgstr "Product"
+
+#: .\stock\models.py:34
+msgid "Produtos"
+msgstr "Products"
+
+#: .\stock\models.py:38
+msgid "NIF/Contribuinte"
+msgstr "VAT ID"
+
+#: .\stock\models.py:39
+msgid "endereço"
+msgstr "address"
+
+#: .\stock\models.py:40
+msgid "telefone"
+msgstr "phone"
+
+#: .\stock\models.py:41
+msgid "email"
+msgstr "email"
+
+#: .\stock\models.py:56 .\stock\templates\stock\base.html:46
+#: .\stock\templates\stock\lista_clientes.html:9
 msgid "Clientes"
 msgstr "Clients"
 
-#: .\stock\models.py:36
+#: .\stock\models.py:59
 msgid "cliente"
 msgstr "client"
 
-#: .\stock\models.py:37
+#: .\stock\models.py:60 .\stock\models.py:165
+#: .\stock\templates\stock\lista_clientes.html:47
+#: .\stock\templates\stock\lista_faturas.html:47
+#: .\stock\templates\stock\lista_produtos.html:24
 msgid "Criado por"
 msgstr "Created by"
 
-#: .\stock\models.py:38
+#: .\stock\models.py:61 .\stock\models.py:166
 msgid "data de emissão"
 msgstr "issue date"
 
-#: .\stock\models.py:39
+#: .\stock\models.py:62 .\stock\templates\stock\fatura_print.html:166
+#: .\stock\templates\stock\lista_clientes.html:49
+#: .\stock\templates\stock\lista_faturas.html:49
+#: .\stock\templates\stock\lista_produtos.html:26
+msgid "Modificado por"
+msgstr "Modified by"
+
+#: .\stock\models.py:63
 msgid "número da fatura"
 msgstr "invoice number"
 
-#: .\stock\models.py:40
+#: .\stock\models.py:64
 msgid "paga"
 msgstr "paid"
 
-#: .\stock\models.py:41
+#: .\stock\models.py:65
 msgid "Taxa IGV (%)"
 msgstr "VAT Rate (%)"
 
-#: .\stock\models.py:54 .\stock\templates\stock\detalhe_fatura.html:33
+#: .\stock\models.py:67
+msgid "desconto (%)"
+msgstr "discount (%)"
+
+#: .\stock\models.py:67
+msgid "Percentagem de desconto (ex: 5 para 5%)"
+msgstr "Discount percentage (e.g., 5 for 5%)"
+
+#: .\stock\models.py:68
+msgid "adiantamento (€)"
+msgstr "advance payment (€)"
+
+#: .\stock\models.py:68
+msgid "Valor do adiantamento em euros"
+msgstr "Advance payment amount in euros"
+
+#: .\stock\models.py:111 .\stock\templates\stock\detalhe_fatura.html:57
 msgid "Fatura"
 msgstr "Invoice"
 
-#: .\stock\models.py:55
+#: .\stock\models.py:112
 msgid "Faturas"
 msgstr "Invoices"
 
-#: .\stock\models.py:59
+#: .\stock\models.py:116 .\stock\models.py:188
 msgid "produto"
 msgstr "product"
 
-#: .\stock\models.py:60
+#: .\stock\models.py:117 .\stock\models.py:189
 msgid "quantidade"
 msgstr "quantity"
 
-#: .\stock\models.py:61
+#: .\stock\models.py:118
 msgid "preço unitário"
 msgstr "unit price"
 
-#: .\stock\models.py:67
+#: .\stock\models.py:129
+msgid "Novo item de fatura"
+msgstr "New invoice item"
+
+#: .\stock\models.py:132
 msgid "Nome da Empresa"
 msgstr "Company Name"
 
-#: .\stock\models.py:68
+#: .\stock\models.py:133
 msgid "Logotipo"
 msgstr "Logo"
 
-#: .\stock\models.py:69
+#: .\stock\models.py:134 .\stock\templates\stock\fatura_email.html:134
+#: .\stock\templates\stock\fatura_print.html:159
+#: .\stock\templates\stock\guia_email.html:93
+#: .\stock\templates\stock\guia_print.html:113
 msgid "Endereço"
 msgstr "Address"
 
-#: .\stock\models.py:70 .\stock\templates\stock\adicionar_cliente.html:19
+#: .\stock\models.py:135 .\stock\templates\stock\adicionar_cliente.html:19
 #: .\stock\templates\stock\editar_cliente.html:19
-#: .\stock\templates\stock\lista_clientes.html:19
 msgid "NIF"
 msgstr "VAT ID"
 
-#: .\stock\models.py:71 .\stock\templates\stock\adicionar_cliente.html:25
+#: .\stock\models.py:136 .\stock\templates\stock\adicionar_cliente.html:25
 #: .\stock\templates\stock\editar_cliente.html:25
-#: .\stock\templates\stock\lista_clientes.html:20
+#: .\stock\templates\stock\lista_clientes.html:23
+#: .\stock\templates\stock\lista_clientes.html:45
 msgid "Telefone"
 msgstr "Phone"
 
-#: .\stock\models.py:72 .\stock\templates\stock\adicionar_cliente.html:29
+#: .\stock\models.py:137 .\stock\templates\stock\adicionar_cliente.html:29
 #: .\stock\templates\stock\editar_cliente.html:29
-#: .\stock\templates\stock\lista_clientes.html:21
 msgid "Email"
 msgstr "Email"
 
-#: .\stock\models.py:73
+#: .\stock\models.py:138 .\stock\templates\stock\fatura_email.html:126
+#: .\stock\templates\stock\fatura_print.html:151
 msgid "Dados de Pagamento"
 msgstr "Payment Details"
 
-#: .\stock\models.py:76 .\stock\models.py:77
+#: .\stock\models.py:143 .\stock\models.py:144
 msgid "Dados da Empresa"
 msgstr "Company Details"
 
+#: .\stock\models.py:147
+msgid "Limite para Alerta de Estoque Baixo"
+msgstr "Low Stock Alert Threshold"
+
+#: .\stock\models.py:147
+msgid "Quando o estoque de um produto for igual ou inferior a este valor, será mostrado um alerta."
+msgstr "When a product's stock is equal to or less than this value, an alert will be shown."
+
+#: .\stock\models.py:148
+msgid "Email de Envio"
+msgstr "Sending Email"
+
+#: .\stock\models.py:148
+msgid "O endereço de email que será usado para enviar as faturas e guias (ex: seu.email@gmail.com)."
+msgstr "The email address that will be used to send invoices and delivery notes (e.g., your.email@gmail.com)."
+
+#: .\stock\models.py:149
+msgid "Password de Aplicação do Email"
+msgstr "Email Application Password"
+
+#: .\stock\models.py:149
+msgid "A palavra-passe de aplicação de 16 caracteres gerada pelo seu provedor de email (ex: Gmail)."
+msgstr "The 16-character application password generated by your email provider (e.g., Gmail)."
+
+#: .\stock\models.py:152
+msgid "Configurações Gerais"
+msgstr "General Settings"
+
+#: .\stock\models.py:156
+msgid "Só pode existir uma instância de Configuração. Edite a existente."
+msgstr "Only one instance of Configuration can exist. Edit the existing one."
+
+#: .\stock\models.py:160
+msgid "Configuração"
+msgstr "Configuration"
+
+#: .\stock\models.py:161
+msgid "Configurações"
+msgstr "Settings"
+
+#: .\stock\models.py:164
+msgid "fatura de origem"
+msgstr "source invoice"
+
+#: .\stock\models.py:167
+msgid "número da guia"
+msgstr "delivery note number"
+
+#: .\stock\models.py:168
+msgid "morada de carga"
+msgstr "loading address"
+
+#: .\stock\models.py:168
+msgid "Local onde os bens são carregados."
+msgstr "Location where goods are loaded."
+
+#: .\stock\models.py:169
+msgid "morada de descarga"
+msgstr "unloading address"
+
+#: .\stock\models.py:169
+msgid "Local onde os bens são descarregados."
+msgstr "Location where goods are unloaded."
+
+#: .\stock\models.py:170
+msgid "matrícula do veículo"
+msgstr "vehicle registration"
+
+#: .\stock\models.py:182 .\stock\templates\stock\detalhe_guia.html:40
+msgid "Guia de Transporte"
+msgstr "Delivery Note"
+
+#: .\stock\models.py:183
+msgid "Guias de Transporte"
+msgstr "Delivery Notes"
+
+#: .\stock\models.py:195
+msgid "Item da Guia"
+msgstr "Delivery Note Item"
+
+#: .\stock\models.py:196 .\stock\templates\stock\criar_guia.html:84
+msgid "Itens da Guia"
+msgstr "Delivery Note Items"
+
+#: .\stock\models.py:200
+msgid "Manual (apenas através do botão no admin)"
+msgstr "Manual (only via button in admin)"
+
+#: .\stock\models.py:201
+msgid "Diário"
+msgstr "Daily"
+
+#: .\stock\models.py:202
+msgid "Semanal"
+msgstr "Weekly"
+
+#: .\stock\models.py:205
+msgid "Frequência do Backup Automático"
+msgstr "Automatic Backup Frequency"
+
+#: .\stock\models.py:209
+msgid "Define a frequência com que os backups automáticos devem ser executados."
+msgstr "Defines the frequency at which automatic backups should be run."
+
+#: .\stock\models.py:212
+msgid "Email de Destino para Backups"
+msgstr "Destination Email for Backups"
+
+#: .\stock\models.py:213
+msgid "O endereço de email para onde os ficheiros de backup serão enviados."
+msgstr "The email address where the backup files will be sent."
+
+#: .\stock\models.py:218
+msgid "Nunca executado"
+msgstr "Never executed"
+
+#: .\stock\models.py:222
+msgid "Data do Último Backup"
+msgstr "Last Backup Date"
+
+#: .\stock\models.py:229
+msgid "Configuração de Backup por Email"
+msgstr "Email Backup Configuration"
+
+#: .\stock\models.py:234
+msgid "Só pode existir uma instância de Configuração de Backup. Edite a existente."
+msgstr "Only one instance of Backup Configuration can exist. Edit the existing one."
+
+#: .\stock\models.py:238 .\stock\models.py:239
+msgid "Configuração de Backup"
+msgstr "Backup Configuration"
+
 #: .\stock\templates\registration\login.html:4
-#: .\stock\templates\registration\login.html:11
 msgid "Login"
 msgstr "Login"
 
-#: .\stock\templates\registration\login.html:17
-msgid ""
-"O seu nome de utilizador e palavra-passe não correspondem. Por favor, tente "
-"novamente."
+#: .\stock\templates\registration\login.html:20
+msgid "Aceder ao Sistema"
+msgstr "Access System"
+
+#: .\stock\templates\registration\login.html:26
+msgid "O seu nome de utilizador e palavra-passe não correspondem. Por favor, tente novamente."
 msgstr "Your username and password didn't match. Please try again."
 
-#: .\stock\templates\registration\login.html:35
+#: .\stock\templates\registration\login.html:34
+msgid "Nome de utilizador"
+msgstr "Username"
+
+#: .\stock\templates\registration\login.html:39
+msgid "Palavra-passe"
+msgstr "Password"
+
+#: .\stock\templates\registration\login.html:44
 msgid "Entrar"
 msgstr "Sign in"
 
 #: .\stock\templates\stock\adicionar_cliente.html:4
 #: .\stock\templates\stock\adicionar_cliente.html:7
-#: .\stock\templates\stock\lista_clientes.html:9
+#: .\stock\templates\stock\lista_clientes.html:11
 msgid "Adicionar Novo Cliente"
 msgstr "Add New Client"
 
 #: .\stock\templates\stock\adicionar_cliente.html:15
 #: .\stock\templates\stock\editar_cliente.html:15
-#: .\stock\templates\stock\lista_clientes.html:18
-#: .\stock\templates\stock\lista_produtos.html:19
+#: .\stock\templates\stock\lista_clientes.html:44
+#: .\stock\templates\stock\lista_produtos.html:20
 msgid "Nome"
 msgstr "Name"
 
 #: .\stock\templates\stock\adicionar_cliente.html:34
 #: .\stock\templates\stock\editar_cliente.html:34
-#: .\stock\templates\stock\lista_clientes.html:22
 msgid "Morada"
 msgstr "Address"
 
@@ -229,8 +499,12 @@ msgstr "Save Client"
 #: .\stock\templates\stock\adicionar_cliente.html:41
 #: .\stock\templates\stock\adicionar_produto.html:49
 #: .\stock\templates\stock\cliente_confirm_delete.html:17
+#: .\stock\templates\stock\criar_fatura.html:157
+#: .\stock\templates\stock\criar_guia.html:108
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:72
 #: .\stock\templates\stock\editar_cliente.html:41
-#: .\stock\templates\stock\editar_fatura.html:111
+#: .\stock\templates\stock\editar_fatura.html:158
+#: .\stock\templates\stock\editar_guia.html:47
 #: .\stock\templates\stock\editar_produto.html:49
 #: .\stock\templates\stock\produto_confirm_delete.html:18
 msgid "Cancelar"
@@ -238,7 +512,7 @@ msgstr "Cancel"
 
 #: .\stock\templates\stock\adicionar_produto.html:4
 #: .\stock\templates\stock\adicionar_produto.html:7
-#: .\stock\templates\stock\lista_produtos.html:10
+#: .\stock\templates\stock\lista_produtos.html:11
 msgid "Adicionar Novo Produto"
 msgstr "Add New Product"
 
@@ -249,7 +523,6 @@ msgstr "Product Name"
 
 #: .\stock\templates\stock\adicionar_produto.html:19
 #: .\stock\templates\stock\editar_produto.html:19
-#: .\stock\templates\stock\lista_produtos.html:20
 msgid "Calibre"
 msgstr "Size"
 
@@ -276,29 +549,37 @@ msgstr "Price per Unit"
 msgid "Salvar Produto"
 msgstr "Save Product"
 
-#: .\stock\templates\stock\base.html:36
+#: .\stock\templates\stock\base.html:43
 msgid "Nova Fatura"
 msgstr "New Invoice"
 
-#: .\stock\templates\stock\base.html:37
+#: .\stock\templates\stock\base.html:44
 msgid "Histórico"
 msgstr "History"
 
-#: .\stock\templates\stock\base.html:38
+#: .\stock\templates\stock\base.html:45 .\stock\templates\stock\home.html:137
 msgid "Estoque"
 msgstr "Stock"
 
-#: .\stock\templates\stock\base.html:40
+#: .\stock\templates\stock\base.html:49
 msgid "Administração"
 msgstr "Administration"
 
-#: .\stock\templates\stock\base.html:58
+#: .\stock\templates\stock\base.html:68
 msgid "Bem-vindo"
 msgstr "Welcome"
 
-#: .\stock\templates\stock\base.html:62
+#: .\stock\templates\stock\base.html:72
 msgid "Sair"
 msgstr "Logout"
+
+#: .\stock\templates\stock\base.html:96
+msgid "Todos os direitos reservados."
+msgstr "All rights reserved."
+
+#: .\stock\templates\stock\base.html:98
+msgid "Desenvolvido por"
+msgstr "Developed by"
 
 #: .\stock\templates\stock\cliente_confirm_delete.html:4
 #: .\stock\templates\stock\produto_confirm_delete.html:4
@@ -316,11 +597,8 @@ msgstr "Are you sure?"
 
 #: .\stock\templates\stock\cliente_confirm_delete.html:11
 #, python-format
-msgid ""
-"Você está prestes a apagar permanentemente o cliente "
-"<strong>%(cliente.nome)s</strong>. Esta ação não pode ser desfeita."
-msgstr ""
-"You are about to permanently delete the client <strong>%(cliente.nome)s</strong>. This action cannot be undone."
+msgid "Você está prestes a apagar permanentemente o cliente <strong>%(cliente.nome)s</strong>. Esta ação não pode ser desfeita."
+msgstr "You are about to permanently delete the client <strong>%(cliente.nome)s</strong>. This action cannot be undone."
 
 #: .\stock\templates\stock\cliente_confirm_delete.html:16
 msgid "Sim, apagar cliente"
@@ -331,135 +609,345 @@ msgstr "Yes, delete client"
 msgid "Criar Nova Fatura"
 msgstr "Create New Invoice"
 
-#: .\stock\templates\stock\criar_fatura.html:20
-#: .\stock\templates\stock\editar_fatura.html:21
+#: .\stock\templates\stock\criar_fatura.html:15
+#: .\stock\templates\stock\editar_fatura.html:15
 msgid "Detalhes Gerais"
 msgstr "General Details"
 
-#: .\stock\templates\stock\criar_fatura.html:33
-#: .\stock\templates\stock\editar_fatura.html:36
+#: .\stock\templates\stock\criar_fatura.html:23
+#: .\stock\templates\stock\criar_guia.html:23
+msgid "Selecione um cliente..."
+msgstr "Select a client..."
+
+#: .\stock\templates\stock\criar_fatura.html:31
+#: .\stock\templates\stock\editar_fatura.html:32
 msgid "Tipo de Imposto"
 msgstr "Tax Type"
 
-#: .\stock\templates\stock\criar_fatura.html:36
-#: .\stock\templates\stock\editar_fatura.html:40
+#: .\stock\templates\stock\criar_fatura.html:34
+#: .\stock\templates\stock\editar_fatura.html:35
+#: .\stock\templates\stock\home.html:97
 msgid "Personalizado"
 msgstr "Custom"
 
-#: .\stock\templates\stock\criar_fatura.html:37
-#: .\stock\templates\stock\editar_fatura.html:39
+#: .\stock\templates\stock\criar_fatura.html:35
+#: .\stock\templates\stock\editar_fatura.html:36
 msgid "Isento"
 msgstr "Exempt"
 
-#: .\stock\templates\stock\criar_fatura.html:41
-#: .\stock\templates\stock\editar_fatura.html:44
+#: .\stock\templates\stock\criar_fatura.html:40
+#: .\stock\templates\stock\editar_fatura.html:41
 #, python-format
-msgid "Taxa (%%)"
-msgstr "Rate (%%)"
+msgid "Taxa IGV (%%)"
+msgstr "VAT Rate (%%)"
+
+#: .\stock\templates\stock\criar_fatura.html:45
+#: .\stock\templates\stock\editar_fatura.html:46
+#, python-format
+msgid "Desconto (%%)"
+msgstr "Discount (%%)"
 
 #: .\stock\templates\stock\criar_fatura.html:50
-#: .\stock\templates\stock\editar_fatura.html:53
+#: .\stock\templates\stock\criar_fatura.html:141
+#: .\stock\templates\stock\detalhe_fatura.html:135
+#: .\stock\templates\stock\editar_fatura.html:51
+#: .\stock\templates\stock\editar_fatura.html:142
+#: .\stock\templates\stock\fatura_email.html:108
+#: .\stock\templates\stock\fatura_print.html:123
+msgid "Adiantamento"
+msgstr "Advance Payment"
+
+#: .\stock\templates\stock\criar_fatura.html:60
+#: .\stock\templates\stock\criar_guia.html:53
+#: .\stock\templates\stock\editar_fatura.html:61
 msgid "Adicionar Itens"
 msgstr "Add Items"
 
-#: .\stock\templates\stock\criar_fatura.html:65
-#: .\stock\templates\stock\detalhe_fatura.html:55
-#: .\stock\templates\stock\editar_fatura.html:68
+#: .\stock\templates\stock\criar_fatura.html:75
+#: .\stock\templates\stock\criar_guia.html:68
+#: .\stock\templates\stock\criar_guia.html:92
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:55
+#: .\stock\templates\stock\detalhe_fatura.html:89
+#: .\stock\templates\stock\detalhe_guia.html:81
+#: .\stock\templates\stock\editar_fatura.html:76
+#: .\stock\templates\stock\guia_email.html:70
+#: .\stock\templates\stock\guia_print.html:82
 msgid "Quantidade"
 msgstr "Quantity"
 
-#: .\stock\templates\stock\criar_fatura.html:69
-#: .\stock\templates\stock\editar_fatura.html:72
+#: .\stock\templates\stock\criar_fatura.html:81
+#: .\stock\templates\stock\criar_guia.html:74
+#: .\stock\templates\stock\editar_fatura.html:82
 msgid "Adicionar"
 msgstr "Add"
 
-#: .\stock\templates\stock\criar_fatura.html:77
-#: .\stock\templates\stock\editar_fatura.html:80
-msgid "Itens da Fatura"
-msgstr "Invoice Items"
+#: .\stock\templates\stock\criar_fatura.html:91
+#: .\stock\templates\stock\editar_fatura.html:92
+msgid "Itens e Totais"
+msgstr "Items and Totals"
 
-#: .\stock\templates\stock\criar_fatura.html:85
-#: .\stock\templates\stock\editar_fatura.html:88
-#: .\stock\templates\stock\fatura_print.html:71
+#: .\stock\templates\stock\criar_fatura.html:99
+#: .\stock\templates\stock\editar_fatura.html:100
+#: .\stock\templates\stock\fatura_email.html:63
+#: .\stock\templates\stock\fatura_print.html:77
 msgid "Qtd."
 msgstr "Qty."
 
-#: .\stock\templates\stock\criar_fatura.html:86
-#: .\stock\templates\stock\editar_fatura.html:89
-#: .\stock\templates\stock\fatura_print.html:72
+#: .\stock\templates\stock\criar_fatura.html:100
+#: .\stock\templates\stock\editar_fatura.html:101
+#: .\stock\templates\stock\fatura_email.html:64
+#: .\stock\templates\stock\fatura_print.html:78
 msgid "Preço Unit."
 msgstr "Unit Price"
 
-#: .\stock\templates\stock\criar_fatura.html:87
-#: .\stock\templates\stock\criar_fatura.html:97
-#: .\stock\templates\stock\detalhe_fatura.html:57
-#: .\stock\templates\stock\detalhe_fatura.html:78
-#: .\stock\templates\stock\editar_fatura.html:90
-#: .\stock\templates\stock\editar_fatura.html:100
-#: .\stock\templates\stock\fatura_print.html:73
-#: .\stock\templates\stock\fatura_print.html:92
+#: .\stock\templates\stock\criar_fatura.html:101
+#: .\stock\templates\stock\criar_fatura.html:121
+#: .\stock\templates\stock\detalhe_fatura.html:91
+#: .\stock\templates\stock\detalhe_fatura.html:112
+#: .\stock\templates\stock\editar_fatura.html:102
+#: .\stock\templates\stock\editar_fatura.html:122
+#: .\stock\templates\stock\fatura_email.html:65
+#: .\stock\templates\stock\fatura_email.html:85
+#: .\stock\templates\stock\fatura_print.html:79
+#: .\stock\templates\stock\fatura_print.html:100
 msgid "Subtotal"
 msgstr "Subtotal"
 
-#: .\stock\templates\stock\criar_fatura.html:88
-#: .\stock\templates\stock\editar_fatura.html:91
+#: .\stock\templates\stock\criar_fatura.html:102
+#: .\stock\templates\stock\criar_guia.html:93
+#: .\stock\templates\stock\editar_fatura.html:103
 msgid "Ação"
 msgstr "Action"
 
-#: .\stock\templates\stock\criar_fatura.html:100
-#: .\stock\templates\stock\detalhe_fatura.html:86
-#: .\stock\templates\stock\editar_fatura.html:103
-#: .\stock\templates\stock\fatura_print.html:100
-msgid "Total"
-msgstr "Total"
+#: .\stock\templates\stock\criar_fatura.html:111
+#: .\stock\templates\stock\editar_fatura.html:112
+msgid "Ainda não há itens na fatura."
+msgstr "There are no items on the invoice yet."
 
-#: .\stock\templates\stock\criar_fatura.html:107
+#: .\stock\templates\stock\criar_fatura.html:125
+#: .\stock\templates\stock\detalhe_fatura.html:117
+#: .\stock\templates\stock\editar_fatura.html:126
+#: .\stock\templates\stock\fatura_email.html:90
+#: .\stock\templates\stock\fatura_print.html:105
+msgid "Desconto"
+msgstr "Discount"
+
+#: .\stock\templates\stock\criar_fatura.html:129
+#: .\stock\templates\stock\editar_fatura.html:130
+msgid "Subtotal c/ Desc."
+msgstr "Subtotal w/ Discount"
+
+#: .\stock\templates\stock\criar_fatura.html:137
+#: .\stock\templates\stock\detalhe_fatura.html:130
+#: .\stock\templates\stock\editar_fatura.html:138
+#: .\stock\templates\stock\fatura_email.html:103
+#: .\stock\templates\stock\fatura_print.html:118
+msgid "Total Geral"
+msgstr "Grand Total"
+
+#: .\stock\templates\stock\criar_fatura.html:145
+#: .\stock\templates\stock\detalhe_fatura.html:140
+#: .\stock\templates\stock\editar_fatura.html:146
+#: .\stock\templates\stock\fatura_email.html:113
+#: .\stock\templates\stock\fatura_print.html:128
+msgid "VALOR A PAGAR"
+msgstr "AMOUNT DUE"
+
+#: .\stock\templates\stock\criar_fatura.html:159
 msgid "Gerar Fatura"
 msgstr "Generate Invoice"
 
-#: .\stock\templates\stock\detalhe_fatura.html:5
+#: .\stock\templates\stock\criar_fatura.html:282
+#: .\stock\templates\stock\editar_fatura.html:272
+msgid "Clique para editar o preço"
+msgstr "Click to edit price"
+
+#: .\stock\templates\stock\criar_fatura.html:288
+#: .\stock\templates\stock\criar_guia.html:160
+#: .\stock\templates\stock\editar_fatura.html:278
+msgid "Remover Item"
+msgstr "Remove Item"
+
+#: .\stock\templates\stock\criar_fatura.html:337
+#: .\stock\templates\stock\editar_fatura.html:339 .\stock\views.py:271
+#: .\stock\views.py:322
+msgid "A fatura deve ter pelo menos um item."
+msgstr "The invoice must have at least one item."
+
+#: .\stock\templates\stock\criar_guia.html:4
+#: .\stock\templates\stock\criar_guia.html:7
+msgid "Criar Nova Guia de Transporte"
+msgstr "Create New Delivery Note"
+
+#: .\stock\templates\stock\criar_guia.html:15
+msgid "Detalhes da Guia"
+msgstr "Delivery Note Details"
+
+#: .\stock\templates\stock\criar_guia.html:31
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:37
+#: .\stock\templates\stock\editar_guia.html:35
+msgid "Matrícula do Veículo"
+msgstr "Vehicle Registration"
+
+#: .\stock\templates\stock\criar_guia.html:38
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:25
+#: .\stock\templates\stock\editar_guia.html:25
+msgid "Morada de Carga"
+msgstr "Loading Address"
+
+#: .\stock\templates\stock\criar_guia.html:43
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:30
+#: .\stock\templates\stock\editar_guia.html:29
+msgid "Morada de Descarga"
+msgstr "Unloading Address"
+
+#: .\stock\templates\stock\criar_guia.html:102
+msgid "Ainda não há itens na guia."
+msgstr "There are no items on the delivery note yet."
+
+#: .\stock\templates\stock\criar_guia.html:110
+msgid "Gerar Guia"
+msgstr "Generate Note"
+
+#: .\stock\templates\stock\criar_guia.html:176
+msgid "A guia deve ter pelo menos um item."
+msgstr "The delivery note must have at least one item."
+
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:4
+#, python-format
+msgid "Criar Guia para Fatura %(fatura.numero_fatura)s"
+msgstr "Create Delivery Note for Invoice %(fatura.numero_fatura)s"
+
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:7
+#, python-format
+msgid "Criar Guia para Fatura <span class=\"text-muted\">#%(fatura.numero_fatura)s</span>"
+msgstr "Create Delivery Note for Invoice <span class=\"text-muted\">#%(fatura.numero_fatura)s</span>"
+
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:10
+msgid "Está prestes a criar uma Guia de Transporte com base nos dados da fatura. Por favor, preencha os detalhes do transporte abaixo."
+msgstr "You are about to create a Delivery Note based on the invoice data. Please fill in the transport details below."
+
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:19
+#: .\stock\templates\stock\editar_guia.html:20
+msgid "Detalhes do Transporte"
+msgstr "Transport Details"
+
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:47
+msgid "Itens a Transportar (da Fatura)"
+msgstr "Items to Transport (from Invoice)"
+
+#: .\stock\templates\stock\criar_guia_desde_fatura.html:74
+msgid "Confirmar e Gerar Guia"
+msgstr "Confirm and Generate Note"
+
+#: .\stock\templates\stock\detalhe_fatura.html:6
 #, python-format
 msgid "Detalhe da Fatura %(fatura.numero_fatura)s"
 msgstr "Invoice Detail %(fatura.numero_fatura)s"
 
-#: .\stock\templates\stock\detalhe_fatura.html:9
+#: .\stock\templates\stock\detalhe_fatura.html:10
 msgid "Detalhe da Fatura"
 msgstr "Invoice Detail"
 
-#: .\stock\templates\stock\detalhe_fatura.html:12
+#: .\stock\templates\stock\detalhe_fatura.html:14
+msgid "Ver Guia de Transporte"
+msgstr "View Delivery Note"
+
+#: .\stock\templates\stock\detalhe_fatura.html:18
+msgid "Criar Guia de Transporte"
+msgstr "Create Delivery Note"
+
+#: .\stock\templates\stock\detalhe_fatura.html:25
+#: .\stock\templates\stock\detalhe_guia.html:15
+msgid "Enviar por Email"
+msgstr "Send by Email"
+
+#: .\stock\templates\stock\detalhe_fatura.html:30
+#: .\stock\templates\stock\editar_fatura.html:4
+#: .\stock\templates\stock\editar_fatura.html:7
 msgid "Editar Fatura"
 msgstr "Edit Invoice"
 
-#: .\stock\templates\stock\detalhe_fatura.html:15
+#: .\stock\templates\stock\detalhe_fatura.html:33
 msgid "Imprimir Fatura"
 msgstr "Print Invoice"
 
-#: .\stock\templates\stock\detalhe_fatura.html:29
+#: .\stock\templates\stock\detalhe_fatura.html:51
 msgid "Dados da empresa não configurados."
 msgstr "Company details not configured."
 
-#: .\stock\templates\stock\detalhe_fatura.html:35
-#: .\stock\templates\stock\lista_faturas.html:18
-msgid "Data de Emissão"
-msgstr "Issue Date"
+#: .\stock\templates\stock\detalhe_fatura.html:61
+msgid "Data de Criação"
+msgstr "Creation Date"
 
-#: .\stock\templates\stock\detalhe_fatura.html:56
+#: .\stock\templates\stock\detalhe_fatura.html:66
+#, python-format
+msgid "Modificado em: %(mod_date)s"
+msgstr "Modified on: %(mod_date)s"
+
+#: .\stock\templates\stock\detalhe_fatura.html:90
 msgid "Preço Unitário"
 msgstr "Unit Price"
 
-#: .\stock\templates\stock\detalhe_fatura.html:82
-#: .\stock\templates\stock\fatura_print.html:96
+#: .\stock\templates\stock\detalhe_fatura.html:121
+#: .\stock\templates\stock\fatura_email.html:94
+#: .\stock\templates\stock\fatura_print.html:109
+msgid "Subtotal c/ Desconto"
+msgstr "Subtotal w/ Discount"
+
+#: .\stock\templates\stock\detalhe_fatura.html:126
+#: .\stock\templates\stock\fatura_email.html:99
+#: .\stock\templates\stock\fatura_print.html:114
 msgid "IGV"
 msgstr "VAT"
 
-#: .\stock\templates\stock\detalhe_fatura.html:97
-#: .\stock\templates\stock\fatura_print.html:121
+#: .\stock\templates\stock\detalhe_fatura.html:151
+#: .\stock\templates\stock\detalhe_guia.html:97
+#: .\stock\templates\stock\fatura_email.html:142
+#: .\stock\templates\stock\fatura_print.html:166
+#: .\stock\templates\stock\guia_email.html:101
+#: .\stock\templates\stock\guia_print.html:118
 msgid "Processado por"
 msgstr "Processed by"
 
-#: .\stock\templates\stock\detalhe_fatura.html:100
+#: .\stock\templates\stock\detalhe_fatura.html:154
 msgid "Pagamento"
 msgstr "Payment"
+
+#: .\stock\templates\stock\detalhe_guia.html:5
+#, python-format
+msgid "Detalhe da Guia %(guia.numero_guia)s"
+msgstr "Delivery Note Detail %(guia.numero_guia)s"
+
+#: .\stock\templates\stock\detalhe_guia.html:9
+msgid "Detalhe da Guia de Transporte"
+msgstr "Delivery Note Detail"
+
+#: .\stock\templates\stock\detalhe_guia.html:21
+msgid "Editar Guia"
+msgstr "Edit Delivery Note"
+
+#: .\stock\templates\stock\detalhe_guia.html:24
+msgid "Imprimir Guia"
+msgstr "Print Delivery Note"
+
+#: .\stock\templates\stock\detalhe_guia.html:42
+#: .\stock\templates\stock\lista_faturas.html:23
+#: .\stock\templates\stock\lista_guias.html:23
+msgid "Data de Emissão"
+msgstr "Issue Date"
+
+#: .\stock\templates\stock\detalhe_guia.html:56
+msgid "Local de Carga"
+msgstr "Loading Location"
+
+#: .\stock\templates\stock\detalhe_guia.html:60
+msgid "Local de Descarga"
+msgstr "Unloading Location"
+
+#: .\stock\templates\stock\detalhe_guia.html:66
+msgid "Veículo"
+msgstr "Vehicle"
 
 #: .\stock\templates\stock\editar_cliente.html:4
 #: .\stock\templates\stock\editar_cliente.html:7
@@ -467,16 +955,37 @@ msgid "Editar Cliente"
 msgstr "Edit Client"
 
 #: .\stock\templates\stock\editar_cliente.html:40
-#: .\stock\templates\stock\editar_fatura.html:110
 #: .\stock\templates\stock\editar_produto.html:48
 msgid "Salvar Alterações"
 msgstr "Save Changes"
 
-#: .\stock\templates\stock\editar_fatura.html:5
-#: .\stock\templates\stock\editar_fatura.html:8
+#: .\stock\templates\stock\editar_fatura.html:160
+#: .\stock\templates\stock\editar_guia.html:49
+msgid "Guardar Alterações"
+msgstr "Save Changes"
+
+#: .\stock\templates\stock\editar_guia.html:4
 #, python-format
-msgid "Editar Fatura %(fatura.numero_fatura)s"
-msgstr "Edit Invoice %(fatura.numero_fatura)s"
+msgid "Editar Guia de Transporte %(guia.numero_guia)s"
+msgstr "Edit Delivery Note %(guia.numero_guia)s"
+
+#: .\stock\templates\stock\editar_guia.html:7
+#, python-format
+msgid "Editar Guia de Transporte <span class=\"text-muted\">#%(guia.numero_guia)s</span>"
+msgstr "Edit Delivery Note <span class=\"text-muted\">#%(guia.numero_guia)s</span>"
+
+#: .\stock\templates\stock\editar_guia.html:13
+#, python-format
+msgid "Fatura de Origem: <a href=\"%(url_fatura)s\">#%(guia.fatura.numero_fatura)s</a>"
+msgstr "Source Invoice: <a href=\"%(url_fatura)s\">#%(guia.fatura.numero_fatura)s</a>"
+
+#: .\stock\templates\stock\editar_guia.html:43
+msgid "Nota:"
+msgstr "Note:"
+
+#: .\stock\templates\stock\editar_guia.html:43
+msgid "Os itens desta guia são baseados na fatura de origem e não podem ser alterados aqui. Para alterar os itens, por favor, edite a fatura correspondente."
+msgstr "The items on this note are based on the source invoice and cannot be changed here. To change the items, please edit the corresponding invoice."
 
 #: .\stock\templates\stock\editar_produto.html:4
 #: .\stock\templates\stock\editar_produto.html:7
@@ -484,196 +993,339 @@ msgid "Editar Produto"
 msgstr "Edit Product"
 
 #: .\stock\templates\stock\editar_produto.html:37
-#: .\stock\templates\stock\home.html:76
 #: .\stock\templates\stock\lista_produtos.html:21
 msgid "Estoque Atual"
 msgstr "Current Stock"
 
-#: .\stock\templates\stock\fatura_print.html:9
+#: .\stock\templates\stock\fatura_email.html:9
+#: .\stock\templates\stock\fatura_print.html:10
 #, python-format
 msgid "Fatura %(fatura.numero_fatura)s"
 msgstr "Invoice %(fatura.numero_fatura)s"
 
-#: .\stock\templates\stock\fatura_print.html:44
+#: .\stock\templates\stock\fatura_email.html:29
+#: .\stock\templates\stock\fatura_print.html:50
 msgid "FATURA"
 msgstr "INVOICE"
 
-#: .\stock\templates\stock\fatura_print.html:47
+#: .\stock\templates\stock\fatura_email.html:31
+#: .\stock\templates\stock\fatura_print.html:53
+#: .\stock\templates\stock\guia_email.html:31
+#: .\stock\templates\stock\guia_print.html:52
 msgid "Data"
 msgstr "Date"
 
-#: .\stock\templates\stock\fatura_print.html:55
-msgid "Tel"
-msgstr "Tel"
-
-#: .\stock\templates\stock\fatura_print.html:60
+#: .\stock\templates\stock\fatura_email.html:48
+#: .\stock\templates\stock\fatura_print.html:66
 msgid "Faturado a"
 msgstr "Billed to"
 
-#: .\stock\templates\stock\fatura_print.html:70
+#: .\stock\templates\stock\fatura_email.html:62
+#: .\stock\templates\stock\fatura_print.html:76
+#: .\stock\templates\stock\guia_email.html:69
+#: .\stock\templates\stock\guia_print.html:81
 msgid "Produto / Serviço"
 msgstr "Product / Service"
 
-#: .\stock\templates\stock\fatura_print.html:107
+#: .\stock\templates\stock\fatura_print.html:61
+msgid "Tel"
+msgstr "Tel"
+
+#: .\stock\templates\stock\fatura_print.html:135
 msgid "Erro: Dados da empresa não configurados."
 msgstr "Error: Company details not configured."
 
-#: .\stock\templates\stock\fatura_print.html:108
-msgid ""
-"Por favor, vá ao painel de administração e insira os dados da sua empresa."
+#: .\stock\templates\stock\fatura_print.html:136
+msgid "Por favor, vá ao painel de administração e insira os dados da sua empresa."
 msgstr "Please go to the administration panel and enter your company details."
 
-#: .\stock\templates\stock\fatura_print.html:115
+#: .\stock\templates\stock\fatura_print.html:143
 msgid "Assinatura e Carimbo"
 msgstr "Signature and Stamp"
 
-#: .\stock\templates\stock\fatura_print.html:121
-msgid "Contactos"
-msgstr "Contacts"
+#: .\stock\templates\stock\guia_email.html:9
+#: .\stock\templates\stock\guia_print.html:9
+#, python-format
+msgid "Guia de Transporte %(guia.numero_guia)s"
+msgstr "Delivery Note %(guia.numero_guia)s"
 
-#: .\stock\templates\stock\home.html:5
+#: .\stock\templates\stock\guia_email.html:29
+#: .\stock\templates\stock\guia_print.html:49
+msgid "GUIA DE TRANSPORTE"
+msgstr "DELIVERY NOTE"
+
+#: .\stock\templates\stock\guia_email.html:43
+#: .\stock\templates\stock\guia_print.html:59
+msgid "Expedidor"
+msgstr "Shipper"
+
+#: .\stock\templates\stock\guia_email.html:49
+#: .\stock\templates\stock\guia_print.html:65
+msgid "Destinatário"
+msgstr "Consignee"
+
+#: .\stock\templates\stock\guia_email.html:55
+#: .\stock\templates\stock\guia_print.html:71
+msgid "Transporte"
+msgstr "Transport"
+
+#: .\stock\templates\stock\guia_email.html:56
+#: .\stock\templates\stock\guia_print.html:72
+#: .\stock\templates\stock\lista_guias.html:24
+msgid "Matrícula"
+msgstr "Registration"
+
+#: .\stock\templates\stock\guia_email.html:57
+#: .\stock\templates\stock\guia_print.html:73
+msgid "Carga"
+msgstr "Loading"
+
+#: .\stock\templates\stock\guia_email.html:58
+#: .\stock\templates\stock\guia_print.html:74
+msgid "Descarga"
+msgstr "Unloading"
+
+#: .\stock\templates\stock\guia_print.html:100
+msgid "Assinatura do Expedidor"
+msgstr "Shipper's Signature"
+
+#: .\stock\templates\stock\guia_print.html:104
+msgid "Assinatura do Destinatário"
+msgstr "Consignee's Signature"
+
+#: .\stock\templates\stock\home.html:6
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: .\stock\templates\stock\home.html:14
-msgid "Total Faturado (Mês)"
-msgstr "Total Invoiced (Month)"
+#: .\stock\templates\stock\home.html:17
+msgid "Por Pagar"
+msgstr "To Pay"
 
-#: .\stock\templates\stock\home.html:22
-msgid "Nº de Faturas (Mês)"
-msgstr "No. of Invoices (Month)"
+#: .\stock\templates\stock\home.html:23 .\stock\templates\stock\home.html:39
+#, python-format
+msgid "%(counter)s fatura"
+msgid_plural "%(counter)s faturas"
+msgstr[0] "%(counter)s invoice"
+msgstr[1] "%(counter)s invoices"
 
-#: .\stock\templates\stock\home.html:30
+#: .\stock\templates\stock\home.html:33
+msgid "Já Pago"
+msgstr "Already Paid"
+
+#: .\stock\templates\stock\home.html:49
+msgid "Faturação (Mês Atual)"
+msgstr "Invoicing (Current Month)"
+
+#: .\stock\templates\stock\home.html:55
+#, python-format
+msgid "%(counter)s fatura este mês"
+msgid_plural "%(counter)s faturas este mês"
+msgstr[0] "%(counter)s invoice this month"
+msgstr[1] "%(counter)s invoices this month"
+
+#: .\stock\templates\stock\home.html:65
 msgid "Total de Clientes"
 msgstr "Total Clients"
 
-#: .\stock\templates\stock\home.html:42
+#: .\stock\templates\stock\home.html:79
 msgid "Análise de Vendas"
 msgstr "Sales Analysis"
 
-#: .\stock\templates\stock\home.html:45
-msgid "Últimos 6 Meses"
-msgstr "Last 6 Months"
+#: .\stock\templates\stock\home.html:84
+msgid "Estado"
+msgstr "Status"
 
-#: .\stock\templates\stock\home.html:46
-msgid "Últimos 3 Meses"
-msgstr "Last 3 Months"
+#: .\stock\templates\stock\home.html:86
+msgid "Todas"
+msgstr "All"
 
-#: .\stock\templates\stock\home.html:47
+#: .\stock\templates\stock\home.html:87
+msgid "Pagas"
+msgstr "Paid"
+
+#: .\stock\templates\stock\home.html:88
+msgid "Não Pagas"
+msgstr "Unpaid"
+
+#: .\stock\templates\stock\home.html:92
+msgid "Período"
+msgstr "Period"
+
+#: .\stock\templates\stock\home.html:94
 msgid "Mês Atual (Diário)"
 msgstr "Current Month (Daily)"
 
-#: .\stock\templates\stock\home.html:48
-msgid "Período Personalizado"
-msgstr "Custom Period"
+#: .\stock\templates\stock\home.html:95
+msgid "Últimos 3 Meses"
+msgstr "Last 3 Months"
 
-#: .\stock\templates\stock\home.html:56
-msgid "Filtrar"
-msgstr "Filter"
+#: .\stock\templates\stock\home.html:96
+msgid "Últimos 6 Meses"
+msgstr "Last 6 Months"
 
-#: .\stock\templates\stock\home.html:68
-#, python-format
-msgid "Estoque Baixo (<= %(limite_estoque_baixo)s)"
-msgstr "Low Stock (<= %(limite_estoque_baixo)s)"
+#: .\stock\templates\stock\home.html:103
+msgid "Início"
+msgstr "Start"
 
-#: .\stock\templates\stock\home.html:77
-#: .\stock\templates\stock\lista_clientes.html:23
-#: .\stock\templates\stock\lista_faturas.html:22
-#: .\stock\templates\stock\lista_produtos.html:24
+#: .\stock\templates\stock\home.html:107
+msgid "Fim"
+msgstr "End"
+
+#: .\stock\templates\stock\home.html:128
+msgid "Estoque Baixo"
+msgstr "Low Stock"
+
+#: .\stock\templates\stock\home.html:138
+#: .\stock\templates\stock\lista_clientes.html:50
+#: .\stock\templates\stock\lista_faturas.html:52
+#: .\stock\templates\stock\lista_guias.html:25
+#: .\stock\templates\stock\lista_produtos.html:27
 msgid "Ações"
 msgstr "Actions"
 
-#: .\stock\templates\stock\home.html:86
-#: .\stock\templates\stock\lista_clientes.html:35
-#: .\stock\templates\stock\lista_faturas.html:46
-#: .\stock\templates\stock\lista_produtos.html:36
-msgid "Editar"
-msgstr "Edit"
-
-#: .\stock\templates\stock\home.html:91
+#: .\stock\templates\stock\home.html:155
 msgid "Nenhum produto com estoque baixo."
 msgstr "No products with low stock."
 
-#: .\stock\templates\stock\home.html:117
-msgid "Total Faturado"
-msgstr "Total Invoiced"
+#: .\stock\templates\stock\home.html:163
+msgid "Top 10 Clientes (Últimos 30 dias)"
+msgstr "Top 10 Clients (Last 30 days)"
 
-#: .\stock\templates\stock\lista_clientes.html:4
-msgid "Gestão de Clientes"
-msgstr "Client Management"
+#: .\stock\templates\stock\home.html:172
+msgid "Total Gasto"
+msgstr "Total Spent"
 
-#: .\stock\templates\stock\lista_clientes.html:36
-#: .\stock\templates\stock\lista_produtos.html:37
+#: .\stock\templates\stock\home.html:184 .\stock\templates\stock\home.html:217
+msgid "Não há dados de vendas nos últimos 30 dias."
+msgstr "No sales data for the last 30 days."
+
+#: .\stock\templates\stock\home.html:196
+msgid "Top 10 Produtos (Últimos 30 dias)"
+msgstr "Top 10 Products (Last 30 days)"
+
+#: .\stock\templates\stock\home.html:205
+msgid "Total Vendido"
+msgstr "Total Sold"
+
+#: .\stock\templates\stock\home.html:256
+msgid "Faturação"
+msgstr "Invoicing"
+
+#: .\stock\templates\stock\lista_clientes.html:5
+msgid "Lista de Clientes"
+msgstr "Client List"
+
+#: .\stock\templates\stock\lista_clientes.html:19
+#: .\stock\templates\stock\lista_faturas.html:19
+msgid "Nome do Cliente"
+msgstr "Client Name"
+
+#: .\stock\templates\stock\lista_clientes.html:28
+#: .\stock\templates\stock\lista_faturas.html:28
+msgid "Pesquisar"
+msgstr "Search"
+
+#: .\stock\templates\stock\lista_clientes.html:31
+#: .\stock\templates\stock\lista_faturas.html:31
+msgid "Limpar"
+msgstr "Clear"
+
+#: .\stock\templates\stock\lista_clientes.html:46
+#: .\stock\templates\stock\lista_faturas.html:46
+#: .\stock\templates\stock\lista_produtos.html:23
+msgid "Criação"
+msgstr "Creation"
+
+#: .\stock\templates\stock\lista_clientes.html:48
+#: .\stock\templates\stock\lista_faturas.html:48
+#: .\stock\templates\stock\lista_produtos.html:25
+msgid "Modificação"
+msgstr "Modification"
+
+#: .\stock\templates\stock\lista_clientes.html:75
+#: .\stock\templates\stock\lista_faturas.html:90
+#: .\stock\templates\stock\lista_produtos.html:53
+msgid "Editar"
+msgstr "Edit"
+
+#: .\stock\templates\stock\lista_clientes.html:76
+#: .\stock\templates\stock\lista_produtos.html:54
 msgid "Apagar"
 msgstr "Delete"
 
-#: .\stock\templates\stock\lista_clientes.html:41
+#: .\stock\templates\stock\lista_clientes.html:81
 msgid "Nenhum cliente encontrado."
-msgstr "No clients found."
+msgstr "No client found."
 
-#: .\stock\templates\stock\lista_faturas.html:5
-#: .\stock\templates\stock\lista_faturas.html:8
+#: .\stock\templates\stock\lista_faturas.html:6
+#: .\stock\templates\stock\lista_faturas.html:9
 msgid "Histórico de Faturas"
 msgstr "Invoice History"
 
-#: .\stock\templates\stock\lista_faturas.html:16
-msgid "Número da Fatura"
-msgstr "Invoice Number"
+#: .\stock\templates\stock\lista_faturas.html:15
+#: .\stock\templates\stock\lista_faturas.html:44
+msgid "Nº Fatura"
+msgstr "Invoice No."
 
-#: .\stock\templates\stock\lista_faturas.html:19
-msgid "Última Modificação"
-msgstr "Last Modified"
+#: .\stock\templates\stock\lista_faturas.html:50
+msgid "Valor a Pagar"
+msgstr "Amount Due"
 
-#: .\stock\templates\stock\lista_faturas.html:20
-msgid "Valor Total"
-msgstr "Total Value"
-
-#: .\stock\templates\stock\lista_faturas.html:21
+#: .\stock\templates\stock\lista_faturas.html:51
 msgid "Paga"
 msgstr "Paid"
 
-#: .\stock\templates\stock\lista_faturas.html:39
+#: .\stock\templates\stock\lista_faturas.html:83
 msgid "Sim"
 msgstr "Yes"
 
-#: .\stock\templates\stock\lista_faturas.html:41
+#: .\stock\templates\stock\lista_faturas.html:85
 msgid "Não"
 msgstr "No"
 
-#: .\stock\templates\stock\lista_faturas.html:51
+#: .\stock\templates\stock\lista_faturas.html:95
 msgid "Nenhuma fatura encontrada."
-msgstr "No invoices found."
+msgstr "No invoice found."
 
-#: .\stock\templates\stock\pagination.html:8
-#: .\stock\templates\stock\pagination.html:12
-msgid "Anterior"
-msgstr "Previous"
+#: .\stock\templates\stock\lista_guias.html:5
+#: .\stock\templates\stock\lista_guias.html:9
+msgid "Histórico de Guias de Transporte"
+msgstr "Delivery Notes History"
 
-#: .\stock\templates\stock\pagination.html:18
-msgid "Página"
-msgstr "Page"
+#: .\stock\templates\stock\lista_guias.html:11
+msgid "Nova Guia de Transporte"
+msgstr "New Delivery Note"
 
-#: .\stock\templates\stock\pagination.html:18
-msgid "de"
-msgstr "of"
+#: .\stock\templates\stock\lista_guias.html:21
+msgid "Nº Guia"
+msgstr "Note No."
 
-#: .\stock\templates\stock\pagination.html:24
-#: .\stock\templates\stock\pagination.html:28
-msgid "Próxima"
-msgstr "Next"
+#: .\stock\templates\stock\lista_guias.html:43
+msgid "Nenhuma guia de transporte encontrada."
+msgstr "No delivery notes found."
 
-#: .\stock\templates\stock\lista_produtos.html:5
-#: .\stock\templates\stock\lista_produtos.html:9
+#: .\stock\templates\stock\lista_produtos.html:6
+#: .\stock\templates\stock\lista_produtos.html:10
 msgid "Estoque de Produtos"
 msgstr "Product Stock"
 
-#: .\stock\templates\stock\lista_produtos.html:23
+#: .\stock\templates\stock\lista_produtos.html:22
 msgid "Preço"
 msgstr "Price"
 
-#: .\stock\templates\stock\lista_produtos.html:42
+#: .\stock\templates\stock\lista_produtos.html:59
 msgid "Nenhum produto encontrado."
 msgstr "No products found."
+
+#: .\stock\templates\stock\pagination.html:15
+#: .\stock\templates\stock\pagination.html:19
+msgid "Anterior"
+msgstr "Previous"
+
+#: .\stock\templates\stock\pagination.html:39
+#: .\stock\templates\stock\pagination.html:43
+msgid "Próxima"
+msgstr "Next"
 
 #: .\stock\templates\stock\produto_confirm_delete.html:7
 msgid "Apagar Produto"
@@ -681,103 +1333,1307 @@ msgstr "Delete Product"
 
 #: .\stock\templates\stock\produto_confirm_delete.html:11
 #, python-format
-msgid ""
-"Você está prestes a apagar permanentemente o produto "
-"<strong>%(produto.nome)s</strong>. Esta ação não pode ser desfeita."
-msgstr ""
-"You are about to permanently delete the product <strong>%(produto.nome)s</strong>. This action cannot be undone."
+msgid "Você está prestes a apagar permanentemente o produto <strong>%(produto.nome)s</strong>. Esta ação não pode ser desfeita."
+msgstr "You are about to permanently delete the product <strong>%(produto.nome)s</strong>. This action cannot be undone."
 
 #: .\stock\templates\stock\produto_confirm_delete.html:12
-msgid ""
-"Apagar um produto não afeta as faturas antigas onde ele foi usado, mas "
-"remove-o da lista para futuras vendas."
-msgstr ""
-"Deleting a product does not affect old invoices where it was used, but it "
-"removes it from the list for future sales."
+msgid "Apagar um produto não afeta as faturas antigas onde ele foi usado, mas remove-o da lista para futuras vendas."
+msgstr "Deleting a product does not affect old invoices where it was used, but it removes it from the list for future sales."
 
 #: .\stock\templates\stock\produto_confirm_delete.html:17
 msgid "Sim, apagar produto"
 msgstr "Yes, delete product"
 
-#: .\stock\views.py:84
+#: .\stock\views.py:161
 #, python-brace-format
 msgid "O cliente '{nome}' foi adicionado com sucesso!"
 msgstr "Client '{nome}' was added successfully!"
 
-#: .\stock\views.py:98
+#: .\stock\views.py:177
 #, python-brace-format
 msgid "Os dados do cliente '{nome}' foram atualizados com sucesso!"
 msgstr "Client data for '{nome}' was updated successfully!"
 
-#: .\stock\views.py:110
+#: .\stock\views.py:189
 #, python-brace-format
 msgid "O cliente '{nome}' foi apagado com sucesso."
 msgstr "Client '{nome}' was deleted successfully."
 
-#: .\stock\views.py:112
+#: .\stock\views.py:191
 #, python-brace-format
-msgid ""
-"O cliente '{nome}' não pode ser apagado porque já tem faturas associadas a "
-"ele."
+msgid "O cliente '{nome}' não pode ser apagado porque já tem faturas associadas a ele."
 msgstr "Client '{nome}' cannot be deleted because they have associated invoices."
 
-#: .\stock\views.py:135
+#: .\stock\views.py:219
 #, python-brace-format
 msgid "O produto '{nome}' foi adicionado com sucesso!"
 msgstr "Product '{nome}' was added successfully!"
 
-#: .\stock\views.py:151
+#: .\stock\views.py:237
 #, python-brace-format
 msgid "O produto '{nome}' foi atualizado com sucesso!"
 msgstr "Product '{nome}' was updated successfully!"
 
-#: .\stock\views.py:163
+#: .\stock\views.py:249
 #, python-brace-format
 msgid "O produto '{nome}' foi apagado com sucesso."
 msgstr "Product '{nome}' was deleted successfully."
 
-#: .\stock\views.py:165
+#: .\stock\views.py:251
 #, python-brace-format
-msgid ""
-"O produto '{nome}' não pode ser apagado porque já está associado a faturas "
-"existentes."
+msgid "O produto '{nome}' não pode ser apagado porque já está associado a faturas existentes."
 msgstr "Product '{nome}' cannot be deleted because it is already associated with existing invoices."
 
-#: .\stock\views.py:183 .\stock\views.py:223
-msgid "A fatura deve ter pelo menos um item."
-msgstr "The invoice must have at least one item."
+#: .\stock\views.py:266
+msgid "Por favor, selecione um cliente."
+msgstr "Please select a client."
 
-#: .\stock\views.py:202 .\stock\views.py:236
+#: .\stock\views.py:290 .\stock\views.py:340
 #, python-brace-format
 msgid "Estoque insuficiente para {produto_nome}. Disponível: {estoque}"
 msgstr "Insufficient stock for {produto_nome}. Available: {estoque}"
 
-#: .\stock\views.py:206
+#: .\stock\views.py:294
 #, python-brace-format
 msgid "Fatura {numero} criada com sucesso!"
 msgstr "Invoice {numero} created successfully!"
 
-#: .\stock\views.py:209
+#: .\stock\views.py:297
 #, python-brace-format
 msgid "Ocorreu um erro ao gerar a fatura: {erro}"
 msgstr "An error occurred while generating the invoice: {erro}"
 
-#: .\stock\views.py:240
+#: .\stock\views.py:315
+msgid "O campo cliente não pode estar vazio."
+msgstr "The client field cannot be empty."
+
+#: .\stock\views.py:346
 #, python-brace-format
 msgid "Fatura {numero} atualizada com sucesso!"
 msgstr "Invoice {numero} updated successfully!"
 
-#: .\stock\views.py:243
+#: .\stock\views.py:349 .\stock\views.py:500
 #, python-brace-format
 msgid "Ocorreu um erro ao salvar as alterações: {erro}"
 msgstr "An error occurred while saving the changes: {erro}"
 
-#: .\stock\views.py:273
+#: .\stock\views.py:425
 #, python-brace-format
 msgid "A fatura {numero} foi marcada como PAGA."
 msgstr "Invoice {numero} has been marked as PAID."
 
-#: .\stock\views.py:275
+#: .\stock\views.py:427
 #, python-brace-format
 msgid "A fatura {numero} foi marcada como NÃO PAGA."
 msgstr "Invoice {numero} has been marked as NOT PAID."
+
+#: .\stock\views.py:452
+msgid "Já existe uma guia de transporte para esta fatura."
+msgstr "A delivery note already exists for this invoice."
+
+#: .\stock\views.py:471
+#, python-brace-format
+msgid "Guia de Transporte {numero} criada com sucesso a partir da fatura {fatura_num}."
+msgstr "Delivery Note {numero} successfully created from invoice {fatura_num}."
+
+#: .\stock\views.py:474
+#, python-brace-format
+msgid "Ocorreu um erro ao gerar a guia: {erro}"
+msgstr "An error occurred while generating the delivery note: {erro}"
+
+#: .\stock\views.py:497
+#, python-brace-format
+msgid "Guia de Transporte {numero} atualizada com sucesso!"
+msgstr "Delivery Note {numero} successfully updated!"
+
+#: .\stock\views.py:517 .\stock\views.py:545
+#, python-brace-format
+msgid "O cliente '{nome}' não tem um endereço de email associado."
+msgstr "The client '{nome}' does not have an associated email address."
+
+#: .\stock\views.py:522 .\stock\views.py:550
+msgid "As credenciais de email não estão configuradas na área de administração."
+msgstr "Email credentials are not configured in the administration area."
+
+#: .\stock\views.py:530
+#, python-brace-format
+msgid "Fatura Nº {numero_fatura} da {nome_empresa}"
+msgstr "Invoice No. {numero_fatura} from {nome_empresa}"
+
+#: .\stock\views.py:535
+#, python-brace-format
+msgid "Fatura enviada com sucesso para {email}."
+msgstr "Invoice successfully sent to {email}."
+
+#: .\stock\views.py:537 .\stock\views.py:565
+#, python-brace-format
+msgid "Ocorreu um erro ao enviar o email: {erro}"
+msgstr "An error occurred while sending the email: {erro}"
+
+#: .\stock\views.py:558
+#, python-brace-format
+msgid "Guia de Transporte Nº {numero_guia} da {nome_empresa}"
+msgstr "Delivery Note No. {numero_guia} from {nome_empresa}"
+
+#: .\stock\views.py:563
+#, python-brace-format
+msgid "Guia de Transporte enviada com sucesso para {email}."
+msgstr "Delivery Note successfully sent to {email}."
+
+#: .\venv\Lib\site-packages\django\contrib\messages\apps.py:16
+msgid "Messages"
+msgstr "Messages"
+
+#: .\venv\Lib\site-packages\django\contrib\sitemaps\apps.py:8
+msgid "Site Maps"
+msgstr "Site Maps"
+
+#: .\venv\Lib\site-packages\django\contrib\staticfiles\apps.py:9
+msgid "Static Files"
+msgstr "Static Files"
+
+#: .\venv\Lib\site-packages\django\contrib\syndication\apps.py:7
+msgid "Syndication"
+msgstr "Syndication"
+
+#. Translators: String used to replace omitted page numbers in elided page
+#. range generated by paginators, e.g. [1, 2, '…', 5, 6, 7, '…', 9, 10].
+#: .\venv\Lib\site-packages\django\core\paginator.py:30
+msgid "…"
+msgstr "…"
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:32
+msgid "That page number is not an integer"
+msgstr "That page number is not an integer"
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:33
+msgid "That page number is less than 1"
+msgstr "That page number is less than 1"
+
+#: .\venv\Lib\site-packages\django\core\paginator.py:34
+msgid "That page contains no results"
+msgstr "That page contains no results"
+
+#: .\venv\Lib\site-packages\django\core\validators.py:22
+msgid "Enter a valid value."
+msgstr "Enter a valid value."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:70
+msgid "Enter a valid domain name."
+msgstr "Enter a valid domain name."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:153
+#: .\venv\Lib\site-packages\django\forms\fields.py:775
+msgid "Enter a valid URL."
+msgstr "Enter a valid URL."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:200
+msgid "Enter a valid integer."
+msgstr "Enter a valid integer."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:211
+msgid "Enter a valid email address."
+msgstr "Enter a valid email address."
+
+#. Translators: "letters" means latin letters: a-z and A-Z.
+#: .\venv\Lib\site-packages\django\core\validators.py:289
+msgid "Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
+msgstr "Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:297
+msgid "Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or hyphens."
+msgstr "Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or hyphens."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:309
+#: .\venv\Lib\site-packages\django\core\validators.py:318
+#: .\venv\Lib\site-packages\django\core\validators.py:332
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2220
+#, python-format
+msgid "Enter a valid %(protocol)s address."
+msgstr "Enter a valid %(protocol)s address."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:311
+msgid "IPv4"
+msgstr "IPv4"
+
+#: .\venv\Lib\site-packages\django\core\validators.py:320
+#: .\venv\Lib\site-packages\django\utils\ipv6.py:43
+msgid "IPv6"
+msgstr "IPv6"
+
+#: .\venv\Lib\site-packages\django\core\validators.py:334
+msgid "IPv4 or IPv6"
+msgstr "IPv4 or IPv6"
+
+#: .\venv\Lib\site-packages\django\core\validators.py:375
+msgid "Enter only digits separated by commas."
+msgstr "Enter only digits separated by commas."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:381
+#, python-format
+msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
+msgstr "Ensure this value is %(limit_value)s (it is %(show_value)s)."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:416
+#, python-format
+msgid "Ensure this value is less than or equal to %(limit_value)s."
+msgstr "Ensure this value is less than or equal to %(limit_value)s."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:425
+#, python-format
+msgid "Ensure this value is greater than or equal to %(limit_value)s."
+msgstr "Ensure this value is greater than or equal to %(limit_value)s."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:434
+#, python-format
+msgid "Ensure this value is a multiple of step size %(limit_value)s."
+msgstr "Ensure this value is a multiple of step size %(limit_value)s."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:441
+#, python-format
+msgid "Ensure this value is a multiple of step size %(limit_value)s, starting from %(offset)s, e.g. %(offset)s, %(valid_value1)s, %(valid_value2)s, and so on."
+msgstr "Ensure this value is a multiple of step size %(limit_value)s, starting from %(offset)s, e.g. %(offset)s, %(valid_value1)s, %(valid_value2)s, and so on."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:473
+#, python-format
+msgid "Ensure this value has at least %(limit_value)d character (it has %(show_value)d)."
+msgid_plural "Ensure this value has at least %(limit_value)d characters (it has %(show_value)d)."
+msgstr[0] "Ensure this value has at least %(limit_value)d character (it has %(show_value)d)."
+msgstr[1] "Ensure this value has at least %(limit_value)d characters (it has %(show_value)d)."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:491
+#, python-format
+msgid "Ensure this value has at most %(limit_value)d character (it has %(show_value)d)."
+msgid_plural "Ensure this value has at most %(limit_value)d characters (it has %(show_value)d)."
+msgstr[0] "Ensure this value has at most %(limit_value)d character (it has %(show_value)d)."
+msgstr[1] "Ensure this value has at most %(limit_value)d characters (it has %(show_value)d)."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:514
+#: .\venv\Lib\site-packages\django\forms\fields.py:366
+#: .\venv\Lib\site-packages\django\forms\fields.py:405
+msgid "Enter a number."
+msgstr "Enter a number."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:516
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit in total."
+msgid_plural "Ensure that there are no more than %(max)s digits in total."
+msgstr[0] "Ensure that there are no more than %(max)s digit in total."
+msgstr[1] "Ensure that there are no more than %(max)s digits in total."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:521
+#, python-format
+msgid "Ensure that there are no more than %(max)s decimal place."
+msgid_plural "Ensure that there are no more than %(max)s decimal places."
+msgstr[0] "Ensure that there are no more than %(max)s decimal place."
+msgstr[1] "Ensure that there are no more than %(max)s decimal places."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:526
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit before the decimal point."
+msgid_plural "Ensure that there are no more than %(max)s digits before the decimal point."
+msgstr[0] "Ensure that there are no more than %(max)s digit before the decimal point."
+msgstr[1] "Ensure that there are no more than %(max)s digits before the decimal point."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:597
+#, python-format
+msgid "File extension “%(extension)s” is not allowed. Allowed extensions are: %(allowed_extensions)s."
+msgstr "File extension “%(extension)s” is not allowed. Allowed extensions are: %(allowed_extensions)s."
+
+#: .\venv\Lib\site-packages\django\core\validators.py:659
+msgid "Null characters are not allowed."
+msgstr "Null characters are not allowed."
+
+#: .\venv\Lib\site-packages\django\db\models\base.py:1600
+#: .\venv\Lib\site-packages\django\forms\models.py:908
+msgid "and"
+msgstr "and"
+
+#: .\venv\Lib\site-packages\django\db\models\base.py:1602
+#, python-format
+msgid "%(model_name)s with this %(field_labels)s already exists."
+msgstr "%(model_name)s with this %(field_labels)s already exists."
+
+#: .\venv\Lib\site-packages\django\db\models\constraints.py:22
+#, python-format
+msgid "Constraint “%(name)s” is violated."
+msgstr "Constraint “%(name)s” is violated."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:134
+#, python-format
+msgid "Value %(value)r is not a valid choice."
+msgstr "Value %(value)r is not a valid choice."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:135
+msgid "This field cannot be null."
+msgstr "This field cannot be null."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:136
+msgid "This field cannot be blank."
+msgstr "This field cannot be blank."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:137
+#, python-format
+msgid "%(model_name)s with this %(field_label)s already exists."
+msgstr "%(model_name)s with this %(field_label)s already exists."
+
+#. Translators: The 'lookup_type' is one of 'date', 'year' or
+#. 'month'. Eg: "Title must be unique for pub_date year"
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:141
+#, python-format
+msgid "%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+msgstr "%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:180
+#, python-format
+msgid "Field of type: %(field_type)s"
+msgstr "Field of type: %(field_type)s"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1162
+#, python-format
+msgid "“%(value)s” value must be either True or False."
+msgstr "“%(value)s” value must be either True or False."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1163
+#, python-format
+msgid "“%(value)s” value must be either True, False, or None."
+msgstr "“%(value)s” value must be either True, False, or None."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1165
+msgid "Boolean (Either True or False)"
+msgstr "Boolean (Either True or False)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1215
+#, python-format
+msgid "String (up to %(max_length)s)"
+msgstr "String (up to %(max_length)s)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1217
+msgid "String (unlimited)"
+msgstr "String (unlimited)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1326
+msgid "Comma-separated integers"
+msgstr "Comma-separated integers"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1427
+#, python-format
+msgid "“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD format."
+msgstr "“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD format."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1431
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1566
+#, python-format
+msgid "“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid date."
+msgstr "“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid date."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1435
+msgid "Date (without time)"
+msgstr "Date (without time)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1562
+#, python-format
+msgid "“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ] format."
+msgstr "“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ] format."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1570
+#, python-format
+msgid "“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]) but it is an invalid date/time."
+msgstr "“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]) but it is an invalid date/time."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1575
+msgid "Date (with time)"
+msgstr "Date (with time)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1702
+#, python-format
+msgid "“%(value)s” value must be a decimal number."
+msgstr "“%(value)s” value must be a decimal number."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1704
+msgid "Decimal number"
+msgstr "Decimal number"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1864
+#, python-format
+msgid "“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[.uuuuuu] format."
+msgstr "“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[.uuuuuu] format."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1868
+msgid "Duration"
+msgstr "Duration"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1920
+msgid "Email address"
+msgstr "Email address"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:1945
+msgid "File path"
+msgstr "File path"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2023
+#, python-format
+msgid "“%(value)s” value must be a float."
+msgstr "“%(value)s” value must be a float."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2025
+msgid "Floating point number"
+msgstr "Floating point number"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2065
+#, python-format
+msgid "“%(value)s” value must be an integer."
+msgstr "“%(value)s” value must be an integer."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2067
+msgid "Integer"
+msgstr "Integer"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2163
+msgid "Big (8 byte) integer"
+msgstr "Big (8 byte) integer"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2180
+msgid "Small integer"
+msgstr "Small integer"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2188
+msgid "IPv4 address"
+msgstr "IPv4 address"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2219
+msgid "IP address"
+msgstr "IP address"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2310
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2311
+#, python-format
+msgid "“%(value)s” value must be either None, True or False."
+msgstr "“%(value)s” value must be either None, True or False."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2313
+msgid "Boolean (Either True, False or None)"
+msgstr "Boolean (Either True, False or None)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2364
+msgid "Positive big integer"
+msgstr "Positive big integer"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2379
+msgid "Positive integer"
+msgstr "Positive integer"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2394
+msgid "Positive small integer"
+msgstr "Positive small integer"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2410
+#, python-format
+msgid "Slug (up to %(max_length)s)"
+msgstr "Slug (up to %(max_length)s)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2446
+msgid "Text"
+msgstr "Text"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2526
+#, python-format
+msgid "“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] format."
+msgstr "“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] format."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2530
+#, python-format
+msgid "“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an invalid time."
+msgstr "“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an invalid time."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2534
+msgid "Time"
+msgstr "Time"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2642
+msgid "URL"
+msgstr "URL"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2666
+msgid "Raw binary data"
+msgstr "Raw binary data"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2731
+#, python-format
+msgid "“%(value)s” is not a valid UUID."
+msgstr "“%(value)s” is not a valid UUID."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\__init__.py:2733
+msgid "Universally unique identifier"
+msgstr "Universally unique identifier"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\files.py:244
+msgid "File"
+msgstr "File"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\files.py:420
+msgid "Image"
+msgstr "Image"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\json.py:24
+msgid "A JSON object"
+msgstr "A JSON object"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\json.py:26
+msgid "Value must be valid JSON."
+msgstr "Value must be valid JSON."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:978
+#, python-format
+msgid "%(model)s instance with %(field)s %(value)r is not a valid choice."
+msgstr "%(model)s instance with %(field)s %(value)r is not a valid choice."
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:981
+msgid "Foreign Key (type determined by related field)"
+msgstr "Foreign Key (type determined by related field)"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1275
+msgid "One-to-one relationship"
+msgstr "One-to-one relationship"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1332
+#, python-format
+msgid "%(from)s-%(to)s relationship"
+msgstr "%(from)s-%(to)s relationship"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1334
+#, python-format
+msgid "%(from)s-%(to)s relationships"
+msgstr "%(from)s-%(to)s relationships"
+
+#: .\venv\Lib\site-packages\django\db\models\fields\related.py:1382
+msgid "Many-to-many relationship"
+msgstr "Many-to-many relationship"
+
+#. Translators: If found as last label character, these punctuation
+#. characters will prevent the default label_suffix to be appended to the label
+#: .\venv\Lib\site-packages\django\forms\boundfield.py:185
+msgid ":?.!"
+msgstr ":?.!"
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:95
+msgid "This field is required."
+msgstr "This field is required."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:315
+msgid "Enter a whole number."
+msgstr "Enter a whole number."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:486
+#: .\venv\Lib\site-packages\django\forms\fields.py:1267
+msgid "Enter a valid date."
+msgstr "Enter a valid date."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:509
+#: .\venv\Lib\site-packages\django\forms\fields.py:1268
+msgid "Enter a valid time."
+msgstr "Enter a valid time."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:536
+msgid "Enter a valid date/time."
+msgstr "Enter a valid date/time."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:570
+msgid "Enter a valid duration."
+msgstr "Enter a valid duration."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:571
+#, python-brace-format
+msgid "The number of days must be between {min_days} and {max_days}."
+msgstr "The number of days must be between {min_days} and {max_days}."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:640
+msgid "No file was submitted. Check the encoding type on the form."
+msgstr "No file was submitted. Check the encoding type on the form."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:641
+msgid "No file was submitted."
+msgstr "No file was submitted."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:642
+msgid "The submitted file is empty."
+msgstr "The submitted file is empty."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:644
+#, python-format
+msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgid_plural "Ensure this filename has at most %(max)d characters (it has %(length)d)."
+msgstr[0] "Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgstr[1] "Ensure this filename has at most %(max)d characters (it has %(length)d)."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:649
+msgid "Please either submit a file or check the clear checkbox, not both."
+msgstr "Please either submit a file or check the clear checkbox, not both."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:717
+msgid "Upload a valid image. The file you uploaded was either not an image or a corrupted image."
+msgstr "Upload a valid image. The file you uploaded was either not an image or a corrupted image."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:889
+#: .\venv\Lib\site-packages\django\forms\fields.py:975
+#: .\venv\Lib\site-packages\django\forms\models.py:1592
+#, python-format
+msgid "Select a valid choice. %(value)s is not one of the available choices."
+msgstr "Select a valid choice. %(value)s is not one of the available choices."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:977
+#: .\venv\Lib\site-packages\django\forms\fields.py:1096
+#: .\venv\Lib\site-packages\django\forms\models.py:1590
+msgid "Enter a list of values."
+msgstr "Enter a list of values."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1097
+msgid "Enter a complete value."
+msgstr "Enter a complete value."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1339
+msgid "Enter a valid UUID."
+msgstr "Enter a valid UUID."
+
+#: .\venv\Lib\site-packages\django\forms\fields.py:1369
+msgid "Enter a valid JSON."
+msgstr "Enter a valid JSON."
+
+#. Translators: This is the default suffix added to form field labels
+#: .\venv\Lib\site-packages\django\forms\forms.py:97
+msgid ":"
+msgstr ":"
+
+#: .\venv\Lib\site-packages\django\forms\forms.py:239
+#, python-format
+msgid "(Hidden field %(name)s) %(error)s"
+msgstr "(Hidden field %(name)s) %(error)s"
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:61
+#, python-format
+msgid "ManagementForm data is missing or has been tampered with. Missing fields: %(field_names)s. You may need to file a bug report if the issue persists."
+msgstr "ManagementForm data is missing or has been tampered with. Missing fields: %(field_names)s. You may need to file a bug report if the issue persists."
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:65
+#, python-format
+msgid "Please submit at most %(num)d form."
+msgid_plural "Please submit at most %(num)d forms."
+msgstr[0] "Please submit at most %(num)d form."
+msgstr[1] "Please submit at most %(num)d forms."
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:70
+#, python-format
+msgid "Please submit at least %(num)d form."
+msgid_plural "Please submit at least %(num)d forms."
+msgstr[0] "Please submit at least %(num)d form."
+msgstr[1] "Please submit at least %(num)d forms."
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:484
+#: .\venv\Lib\site-packages\django\forms\formsets.py:491
+msgid "Order"
+msgstr "Order"
+
+#: .\venv\Lib\site-packages\django\forms\formsets.py:499
+msgid "Delete"
+msgstr "Delete"
+
+#: .\venv\Lib\site-packages\django\forms\models.py:901
+#, python-format
+msgid "Please correct the duplicate data for %(field)s."
+msgstr "Please correct the duplicate data for %(field)s."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:906
+#, python-format
+msgid "Please correct the duplicate data for %(field)s, which must be unique."
+msgstr "Please correct the duplicate data for %(field)s, which must be unique."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:913
+#, python-format
+msgid "Please correct the duplicate data for %(field_name)s which must be unique for the %(lookup)s in %(date_field)s."
+msgstr "Please correct the duplicate data for %(field_name)s which must be unique for the %(lookup)s in %(date_field)s."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:922
+msgid "Please correct the duplicate values below."
+msgstr "Please correct the duplicate values below."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1359
+msgid "The inline value did not match the parent instance."
+msgstr "The inline value did not match the parent instance."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1450
+msgid "Select a valid choice. That choice is not one of the available choices."
+msgstr "Select a valid choice. That choice is not one of the available choices."
+
+#: .\venv\Lib\site-packages\django\forms\models.py:1594
+#, python-format
+msgid "“%(pk)s” is not a valid value."
+msgstr "“%(pk)s” is not a valid value."
+
+#: .\venv\Lib\site-packages\django\forms\utils.py:229
+#, python-format
+msgid "%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it may be ambiguous or it may not exist."
+msgstr "%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it may be ambiguous or it may not exist."
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:527
+msgid "Clear"
+msgstr "Clear"
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:528
+msgid "Currently"
+msgstr "Currently"
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:529
+msgid "Change"
+msgstr "Change"
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:866
+msgid "Unknown"
+msgstr "Unknown"
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:867
+msgid "Yes"
+msgstr "Yes"
+
+#: .\venv\Lib\site-packages\django\forms\widgets.py:868
+msgid "No"
+msgstr "No"
+
+#. Translators: Please do not add spaces around commas.
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:873
+msgid "yes,no,maybe"
+msgstr "yes,no,maybe"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:903
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:920
+#, python-format
+msgid "%(size)d byte"
+msgid_plural "%(size)d bytes"
+msgstr[0] "%(size)d byte"
+msgstr[1] "%(size)d bytes"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:922
+#, python-format
+msgid "%s KB"
+msgstr "%s KB"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:924
+#, python-format
+msgid "%s MB"
+msgstr "%s MB"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:926
+#, python-format
+msgid "%s GB"
+msgstr "%s GB"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:928
+#, python-format
+msgid "%s TB"
+msgstr "%s TB"
+
+#: .\venv\Lib\site-packages\django\template\defaultfilters.py:930
+#, python-format
+msgid "%s PB"
+msgstr "%s PB"
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:74
+msgid "p.m."
+msgstr "p.m."
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:75
+msgid "a.m."
+msgstr "a.m."
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:80
+msgid "PM"
+msgstr "PM"
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:81
+msgid "AM"
+msgstr "AM"
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:153
+msgid "midnight"
+msgstr "midnight"
+
+#: .\venv\Lib\site-packages\django\utils\dateformat.py:155
+msgid "noon"
+msgstr "noon"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:7
+msgid "Monday"
+msgstr "Monday"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:8
+msgid "Tuesday"
+msgstr "Tuesday"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:9
+msgid "Wednesday"
+msgstr "Wednesday"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:10
+msgid "Thursday"
+msgstr "Thursday"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:11
+msgid "Friday"
+msgstr "Friday"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:12
+msgid "Saturday"
+msgstr "Saturday"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:13
+msgid "Sunday"
+msgstr "Sunday"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:16
+msgid "Mon"
+msgstr "Mon"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:17
+msgid "Tue"
+msgstr "Tue"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:18
+msgid "Wed"
+msgstr "Wed"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:19
+msgid "Thu"
+msgstr "Thu"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:20
+msgid "Fri"
+msgstr "Fri"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:21
+msgid "Sat"
+msgstr "Sat"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:22
+msgid "Sun"
+msgstr "Sun"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:25
+msgid "January"
+msgstr "January"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:26
+msgid "February"
+msgstr "February"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:27
+msgid "March"
+msgstr "March"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:28
+msgid "April"
+msgstr "April"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:29
+msgid "May"
+msgstr "May"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:30
+msgid "June"
+msgstr "June"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:31
+msgid "July"
+msgstr "July"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:32
+msgid "August"
+msgstr "August"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:33
+msgid "September"
+msgstr "September"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:34
+msgid "October"
+msgstr "October"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:35
+msgid "November"
+msgstr "November"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:36
+msgid "December"
+msgstr "December"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:39
+msgid "jan"
+msgstr "jan"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:40
+msgid "feb"
+msgstr "feb"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:41
+msgid "mar"
+msgstr "mar"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:42
+msgid "apr"
+msgstr "apr"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:43
+msgid "may"
+msgstr "may"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:44
+msgid "jun"
+msgstr "jun"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:45
+msgid "jul"
+msgstr "jul"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:46
+msgid "aug"
+msgstr "aug"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:47
+msgid "sep"
+msgstr "sep"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:48
+msgid "oct"
+msgstr "oct"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:49
+msgid "nov"
+msgstr "nov"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:50
+msgid "dec"
+msgstr "dec"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:53
+msgctxt "abbrev. month"
+msgid "Jan."
+msgstr "Jan."
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:54
+msgctxt "abbrev. month"
+msgid "Feb."
+msgstr "Feb."
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:55
+msgctxt "abbrev. month"
+msgid "March"
+msgstr "March"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:56
+msgctxt "abbrev. month"
+msgid "April"
+msgstr "April"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:57
+msgctxt "abbrev. month"
+msgid "May"
+msgstr "May"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:58
+msgctxt "abbrev. month"
+msgid "June"
+msgstr "June"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:59
+msgctxt "abbrev. month"
+msgid "July"
+msgstr "July"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:60
+msgctxt "abbrev. month"
+msgid "Aug."
+msgstr "Aug."
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:61
+msgctxt "abbrev. month"
+msgid "Sept."
+msgstr "Sept."
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:62
+msgctxt "abbrev. month"
+msgid "Oct."
+msgstr "Oct."
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:63
+msgctxt "abbrev. month"
+msgid "Nov."
+msgstr "Nov."
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:64
+msgctxt "abbrev. month"
+msgid "Dec."
+msgstr "Dec."
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:67
+msgctxt "alt. month"
+msgid "January"
+msgstr "January"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:68
+msgctxt "alt. month"
+msgid "February"
+msgstr "February"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:69
+msgctxt "alt. month"
+msgid "March"
+msgstr "March"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:70
+msgctxt "alt. month"
+msgid "April"
+msgstr "April"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:71
+msgctxt "alt. month"
+msgid "May"
+msgstr "May"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:72
+msgctxt "alt. month"
+msgid "June"
+msgstr "June"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:73
+msgctxt "alt. month"
+msgid "July"
+msgstr "July"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:74
+msgctxt "alt. month"
+msgid "August"
+msgstr "August"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:75
+msgctxt "alt. month"
+msgid "September"
+msgstr "September"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:76
+msgctxt "alt. month"
+msgid "October"
+msgstr "October"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:77
+msgctxt "alt. month"
+msgid "November"
+msgstr "November"
+
+#: .\venv\Lib\site-packages\django\utils\dates.py:78
+msgctxt "alt. month"
+msgid "December"
+msgstr "December"
+
+#: .\venv\Lib\site-packages\django\utils\ipv6.py:20
+msgid "This is not a valid IPv6 address."
+msgstr "This is not a valid IPv6 address."
+
+#: .\venv\Lib\site-packages\django\utils\text.py:76
+#, python-format
+msgctxt "String to return when truncating text"
+msgid "%(truncated_text)s…"
+msgstr "%(truncated_text)s…"
+
+#: .\venv\Lib\site-packages\django\utils\text.py:287
+msgid "or"
+msgstr "or"
+
+#. Translators: This string is used as a separator between list elements
+#: .\venv\Lib\site-packages\django\utils\text.py:306
+#: .\venv\Lib\site-packages\django\utils\timesince.py:135
+msgid ", "
+msgstr ", "
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:8
+#, python-format
+msgid "%(num)d year"
+msgid_plural "%(num)d years"
+msgstr[0] "%(num)d year"
+msgstr[1] "%(num)d years"
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:9
+#, python-format
+msgid "%(num)d month"
+msgid_plural "%(num)d months"
+msgstr[0] "%(num)d month"
+msgstr[1] "%(num)d months"
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:10
+#, python-format
+msgid "%(num)d week"
+msgid_plural "%(num)d weeks"
+msgstr[0] "%(num)d week"
+msgstr[1] "%(num)d weeks"
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:11
+#, python-format
+msgid "%(num)d day"
+msgid_plural "%(num)d days"
+msgstr[0] "%(num)d day"
+msgstr[1] "%(num)d days"
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:12
+#, python-format
+msgid "%(num)d hour"
+msgid_plural "%(num)d hours"
+msgstr[0] "%(num)d hour"
+msgstr[1] "%(num)d hours"
+
+#: .\venv\Lib\site-packages\django\utils\timesince.py:13
+#, python-format
+msgid "%(num)d minute"
+msgid_plural "%(num)d minutes"
+msgstr[0] "%(num)d minute"
+msgstr[1] "%(num)d minutes"
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:29
+msgid "Forbidden"
+msgstr "Forbidden"
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:30
+msgid "CSRF verification failed. Request aborted."
+msgstr "CSRF verification failed. Request aborted."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:34
+msgid "You are seeing this message because this HTTPS site requires a “Referer header” to be sent by your web browser, but none was sent. This header is required for security reasons, to ensure that your browser is not being hijacked by third parties."
+msgstr "You are seeing this message because this HTTPS site requires a “Referer header” to be sent by your web browser, but none was sent. This header is required for security reasons, to ensure that your browser is not being hijacked by third parties."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:40
+msgid "If you have configured your browser to disable “Referer” headers, please re-enable them, at least for this site, or for HTTPS connections, or for “same-origin” requests."
+msgstr "If you have configured your browser to disable “Referer” headers, please re-enable them, at least for this site, or for HTTPS connections, or for “same-origin” requests."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:45
+msgid "If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or including the “Referrer-Policy: no-referrer” header, please remove them. The CSRF protection requires the “Referer” header to do strict referer checking. If you’re concerned about privacy, use alternatives like <a rel=\"noreferrer\" …> for links to third-party sites."
+msgstr "If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or including the “Referrer-Policy: no-referrer” header, please remove them. The CSRF protection requires the “Referer” header to do strict referer checking. If you’re concerned about privacy, use alternatives like <a rel=\"noreferrer\" …> for links to third-party sites."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:54
+msgid "You are seeing this message because this site requires a CSRF cookie when submitting forms. This cookie is required for security reasons, to ensure that your browser is not being hijacked by third parties."
+msgstr "You are seeing this message because this site requires a CSRF cookie when submitting forms. This cookie is required for security reasons, to ensure that your browser is not being hijacked by third parties."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:60
+msgid "If you have configured your browser to disable cookies, please re-enable them, at least for this site, or for “same-origin” requests."
+msgstr "If you have configured your browser to disable cookies, please re-enable them, at least for this site, or for “same-origin” requests."
+
+#: .\venv\Lib\site-packages\django\views\csrf.py:66
+msgid "More information is available with DEBUG=True."
+msgstr "More information is available with DEBUG=True."
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:44
+msgid "No year specified"
+msgstr "No year specified"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:64
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:115
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:214
+msgid "Date out of range"
+msgstr "Date out of range"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:94
+msgid "No month specified"
+msgstr "No month specified"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:147
+msgid "No day specified"
+msgstr "No day specified"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:194
+msgid "No week specified"
+msgstr "No week specified"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:353
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:384
+#, python-format
+msgid "No %(verbose_name_plural)s available"
+msgstr "No %(verbose_name_plural)s available"
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:680
+#, python-format
+msgid "Future %(verbose_name_plural)s not available because %(class_name)s.allow_future is False."
+msgstr "Future %(verbose_name_plural)s not available because %(class_name)s.allow_future is False."
+
+#: .\venv\Lib\site-packages\django\views\generic\dates.py:720
+#, python-format
+msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
+msgstr "Invalid date string “%(datestr)s” given format “%(format)s”"
+
+#: .\venv\Lib\site-packages\django\views\generic\detail.py:56
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr "No %(verbose_name)s found matching the query"
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:70
+msgid "Page is not “last”, nor can it be converted to an int."
+msgstr "Page is not “last”, nor can it be converted to an int."
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:77
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr "Invalid page (%(page_number)s): %(message)s"
+
+#: .\venv\Lib\site-packages\django\views\generic\list.py:173
+#, python-format
+msgid "Empty list and “%(class_name)s.allow_empty” is False."
+msgstr "Empty list and “%(class_name)s.allow_empty” is False."
+
+#: .\venv\Lib\site-packages\django\views\static.py:49
+msgid "Directory indexes are not allowed here."
+msgstr "Directory indexes are not allowed here."
+
+#: .\venv\Lib\site-packages\django\views\static.py:51
+#, python-format
+msgid "“%(path)s” does not exist"
+msgstr "“%(path)s” does not exist"
+
+#: .\venv\Lib\site-packages\django\views\static.py:68
+#: .\venv\Lib\site-packages\django\views\templates\directory_index.html:8
+#: .\venv\Lib\site-packages\django\views\templates\directory_index.html:11
+#, python-format
+msgid "Index of %(directory)s"
+msgstr "Index of %(directory)s"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:7
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:204
+msgid "The install worked successfully! Congratulations!"
+msgstr "The install worked successfully! Congratulations!"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:206
+#, python-format
+msgid "View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr "View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:208
+#, python-format
+msgid "You are seeing this page because <a href=\"https://docs.djangoproject.com/en/%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener\">DEBUG=True</a> is in your settings file and you have not configured any URLs."
+msgstr "You are seeing this page because <a href=\"https://docs.djangoproject.com/en/%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener\">DEBUG=True</a> is in your settings file and you have not configured any URLs."
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:217
+msgid "Django Documentation"
+msgstr "Django Documentation"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:218
+msgid "Topics, references, &amp; how-to’s"
+msgstr "Topics, references, &amp; how-to’s"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:226
+msgid "Tutorial: A Polling App"
+msgstr "Tutorial: A Polling App"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:227
+msgid "Get started with Django"
+msgstr "Get started with Django"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:235
+msgid "Django Community"
+msgstr "Django Community"
+
+#: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:236
+msgid "Connect, get help, or contribute"
+msgstr "Connect, get help, or contribute"

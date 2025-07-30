@@ -1,6 +1,7 @@
 {% extends "stock/base.html" %}
 {% load i18n %}
 {% load l10n %}
+{% load humanize %}
 
 {% block title %}{% blocktrans %}Detalhe da Fatura {{ fatura.numero_fatura }}{% endblocktrans %}{% endblock %}
 
@@ -8,11 +9,28 @@
     <div class="d-flex justify-content-between align-items-center mb-4 no-print">
         <h1>{% blocktrans %}Detalhe da Fatura{% endblocktrans %}</h1>
         <div>
+            {% if fatura.guia_transporte %}
+                <a href="{% url 'detalhe_guia' fatura.guia_transporte.id %}" class="btn btn-info">
+                    <i class="fas fa-truck me-1"></i> {% trans "Ver Guia de Transporte" %}
+                </a>
+            {% else %}
+                <a href="{% url 'criar_guia_desde_fatura' fatura.id %}" class="btn btn-outline-primary">
+                    <i class="fas fa-plus-circle me-1"></i> {% trans "Criar Guia de Transporte" %}
+                </a>
+            {% endif %}
+            {% if fatura.cliente.email %}
+                <form action="{% url 'enviar_fatura_email' fatura.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-envelope me-1"></i> {% trans "Enviar por Email" %}
+                    </button>
+                </form>
+            {% endif %}
             <a href="{% url 'editar_fatura' fatura.id %}" class="btn btn-warning">
-                {% trans "Editar Fatura" %}
+                <i class="fas fa-edit me-1"></i> {% trans "Editar Fatura" %}
             </a>
             <a href="{% url 'fatura_print' fatura.id %}" target="_blank" class="btn btn-primary">
-                {% trans "Imprimir Fatura" %}
+                <i class="fas fa-print me-1"></i> {% trans "Imprimir Fatura" %}
             </a>
         </div>
     </div>
@@ -22,18 +40,34 @@
             <div class="row mb-5">
                 <div class="col-md-6">
                     {% if dados_empresa %}
-                        <h2 class="h3">{{ dados_empresa.nome_empresa }}</h2>
-                        <p class="mb-0">{{ dados_empresa.endereco|linebreaksbr }}</p>
+                        {% if dados_empresa.logotipo %}
+                            <img src="{{ dados_empresa.logotipo.url }}" alt="{{ dados_empresa.nome_empresa }}" style="max-height: 100px; max-width: 300px;">
+                        {% else %}
+                            <h2 class="h3">{{ dados_empresa.nome_empresa }}</h2>
+                        {% endif %}
+                        <p class="mb-0 mt-3">{{ dados_empresa.endereco|linebreaksbr }}</p>
                         <p>NIF: {{ dados_empresa.nif }}</p>
                     {% else %}
                         <div class="alert alert-warning">{% trans "Dados da empresa não configurados." %}</div>
                     {% endif %}
                 </div>
+                
+                {# --- ALTERAÇÃO NESTA SECÇÃO --- #}
                 <div class="col-md-6 text-md-end">
                     <h2 class="h3 text-uppercase">{% trans "Fatura" %}</h2>
                     <p class="mb-0"><strong>#{{ fatura.numero_fatura }}</strong></p>
-                    <p>{% trans "Data de Emissão" %}: {{ fatura.data_emissao }}</p>
+                    
+                    <p class="mb-0">
+                        {% trans "Data de Criação" %}: {{ fatura.criado_em|date:"d/m/Y H:i" }}
+                    </p>
+
+                    {% if fatura.foi_modificada %}
+                        <p class="small text-muted mb-0">
+                            ({% blocktrans with mod_date=fatura.atualizado_em|date:"d/m/Y H:i" %}Modificado em: {{ mod_date }}{% endblocktrans %})
+                        </p>
+                    {% endif %}
                 </div>
+                {# --- FIM DA ALTERAÇÃO --- #}
             </div>
             
             <hr class="my-4">
@@ -60,10 +94,10 @@
                     <tbody>
                         {% for item in fatura.itens.all %}
                         <tr>
-                            <td>{{ item.produto.nome }} ({{ item.produto.calibre }})</td>
-                            <td class="text-end">{{ item.quantidade|floatformat:2 }} {{ item.produto.get_unidade_medida_display }}</td>
-                            <td class="text-end">{{ item.preco_unitario|floatformat:2 }} CFA</td>
-                            <td class="text-end">{{ item.subtotal|floatformat:2 }} CFA</td>
+                            <td>{{ item.produto.nome }}{% if item.produto.calibre %} ({{ item.produto.calibre }}){% endif %}</td>
+                            <td class="text-end">{{ item.quantidade|floatformat:2|intcomma }} {{ item.produto.get_unidade_medida_display }}</td>
+                            <td class="text-end">{{ item.preco_unitario|floatformat:2|intcomma }} CFA</td>
+                            <td class="text-end">{{ item.subtotal|floatformat:2|intcomma }} CFA</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -71,20 +105,40 @@
             </div>
 
             <div class="row justify-content-end mt-4">
-                <div class="col-md-4">
-                    <table class="table table-sm">
+                <div class="col-md-5">
+                    <table class="table table-sm table-borderless">
                         <tbody>
                             <tr>
                                 <th>{% trans "Subtotal" %}</th>
-                                <td class="text-end">{{ fatura.subtotal|floatformat:2 }} CFA</td>
+                                <td class="text-end">{{ fatura.subtotal|floatformat:2|intcomma }} CFA</td>
+                            </tr>
+                            {% if fatura.desconto > 0 %}
+                            <tr class="text-danger">
+                                <th>{% trans "Desconto" %} ({{ fatura.desconto|floatformat:2 }}%)</th>
+                                <td class="text-end">- {{ fatura.valor_desconto|floatformat:2|intcomma }} CFA</td>
                             </tr>
                             <tr>
-                                <th>{% trans "IGV" %} ({{ fatura.taxa_igv|floatformat:2 }}%)</th>
-                                <td class="text-end">{{ fatura.valor_igv|floatformat:2 }} CFA</td>
+                                <th>{% trans "Subtotal c/ Desconto" %}</th>
+                                <td class="text-end">{{ fatura.subtotal_apos_desconto|floatformat:2|intcomma }} CFA</td>
                             </tr>
-                            <tr class="fw-bold fs-5">
-                                <th>{% trans "Total" %}</th>
-                                <td class="text-end">{{ fatura.total_final|floatformat:2 }} CFA</td>
+                            {% endif %}
+                            <tr>
+                                <th>{% trans "IGV" %} ({{ fatura.taxa_igv|floatformat:2 }}%)</th>
+                                <td class="text-end">{{ fatura.valor_igv|floatformat:2|intcomma }} CFA</td>
+                            </tr>
+                            <tr class="fw-bold border-top">
+                                <th>{% trans "Total Geral" %}</th>
+                                <td class="text-end">{{ fatura.total_geral|floatformat:2|intcomma }} CFA</td>
+                            </tr>
+                            {% if fatura.adiantamento > 0 %}
+                            <tr class="text-success">
+                                <th>{% trans "Adiantamento" %}</th>
+                                <td class="text-end">- {{ fatura.adiantamento|floatformat:2|intcomma }} CFA</td>
+                            </tr>
+                            {% endif %}
+                            <tr class="fw-bold fs-5 bg-dark text-white rounded">
+                                <th class="p-2">{% trans "VALOR A PAGAR" %}</th>
+                                <td class="text-end p-2">{{ fatura.valor_a_pagar|floatformat:2|intcomma }} CFA</td>
                             </tr>
                         </tbody>
                     </table>
@@ -103,12 +157,4 @@
             {% endif %}
         </div>
     </div>
-    
-    <style>
-        @media print {
-            .no-print { display: none !important; }
-            .card { border: none; box-shadow: none; }
-            body { background-color: white; }
-        }
-    </style>
 {% endblock %}

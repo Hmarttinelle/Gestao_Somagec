@@ -6,30 +6,28 @@
 {% block content %}
     <h1 class="mb-4">{% trans "Criar Nova Fatura" %}</h1>
 
-    {% if erro %}
-        <div class="alert alert-danger" role="alert">
-            {{ erro }}
-        </div>
-    {% endif %}
-
-    <form id="invoice-form" method="post">
+    <form id="invoice-form" method="post" novalidate>
         {% csrf_token %}
 
+        <!-- Card Detalhes Gerais -->
         <div class="card mb-4">
             <div class="card-header">
-                <h2>{% trans "Detalhes Gerais" %}</h2>
+                <h2 class="h5 mb-0">{% trans "Detalhes Gerais" %}</h2>
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6 mb-3">
+                    <!-- Cliente -->
+                    <div class="col-lg-4 col-md-12 mb-3">
                         <label for="cliente" class="form-label">{% trans "Cliente" %}:</label>
                         <select name="cliente" id="cliente" class="form-select" required>
+                            <option value="">{% trans "Selecione um cliente..." %}</option>
                             {% for cliente in clientes %}
                                 <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="col-md-3 mb-3">
+                    <!-- Tipo de Imposto -->
+                    <div class="col-lg-2 col-md-4 mb-3">
                         <label for="tax-type" class="form-label">{% trans "Tipo de Imposto" %}</label>
                         <select id="tax-type" class="form-select">
                             <option value="default">IGV (17%)</option>
@@ -37,196 +35,334 @@
                             <option value="exempt">{% trans "Isento" %}</option>
                         </select>
                     </div>
-                    <div class="col-md-3 mb-3" id="custom-tax-group" style="display: none;">
-                        <label for="tax-rate" class="form-label">{% trans "Taxa (%)" %}</label>
+                    <!-- Taxa Personalizada -->
+                    <div class="col-lg-2 col-md-4 mb-3" id="custom-tax-group" style="display: none;">
+                        <label for="tax-rate" class="form-label">{% trans "Taxa IGV (%)" %}</label>
                         <input type="number" id="tax-rate" class="form-control" step="0.01" value="17.00">
+                    </div>
+                    <!-- Desconto -->
+                    <div class="col-lg-2 col-md-4 mb-3">
+                        <label for="desconto" class="form-label">{% trans "Desconto (%)" %}</label>
+                        <input type="number" name="desconto" id="desconto" class="form-control" step="0.01" min="0" value="0">
+                    </div>
+                    <!-- Adiantamento -->
+                    <div class="col-lg-2 col-md-4 mb-3">
+                        <label for="adiantamento" class="form-label">{% trans "Adiantamento" %} (CFA)</label>
+                        <input type="number" name="adiantamento" id="adiantamento" class="form-control" step="0.01" min="0" value="0">
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Card Adicionar Itens -->
         <div class="card mb-4">
             <div class="card-header">
-                <h3>{% trans "Adicionar Itens" %}</h3>
+                <h3 class="h5 mb-0">{% trans "Adicionar Itens" %}</h3>
             </div>
             <div class="card-body">
                 <div class="row align-items-end">
-                    <div class="col-md-7 mb-3">
+                    <div class="col-lg-6 col-md-12 mb-3">
                         <label for="produto" class="form-label">{% trans "Produto" %}:</label>
                         <select id="produto" class="form-select">
                             {% for produto in produtos %}
                                 <option value="{{ produto.id }}" data-price="{{ produto.preco_por_unidade|stringformat:'f' }}">
-                                    {{ produto.nome }} ({{ produto.calibre }}) - Estoque: {{ produto.estoque_atual }}
+                                    {{ produto.nome }}{% if produto.calibre %} ({{ produto.calibre }}){% endif %} - Estoque: {{ produto.estoque_atual }}
                                 </option>
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="col-md-3 mb-3">
+                    <div class="col-lg-3 col-md-6 mb-3">
                         <label for="quantidade" class="form-label">{% trans "Quantidade" %}:</label>
-                        <input type="number" id="quantidade" class="form-control" step="0.01" value="1">
+                        <input type="number" id="quantidade" class="form-control" step="0.01" value="1" min="0.01">
                     </div>
-                    <div class="col-md-2 mb-3">
-                        <button type="button" id="add-item-btn" class="btn btn-success w-100">{% trans "Adicionar" %}</button>
+                    <div class="col-lg-3 col-md-6 mb-3">
+                        <label class="form-label d-none d-md-block">&nbsp;</label>
+                        <button type="button" id="add-item-btn" class="btn btn-success w-100">
+                            <i class="fas fa-plus-circle me-2"></i>{% trans "Adicionar" %}
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Card Itens da Fatura e Totais -->
         <div class="card mb-4">
             <div class="card-header">
-                <h2>{% trans "Itens da Fatura" %}</h2>
+                <h2 class="h5 mb-0">{% trans "Itens e Totais" %}</h2>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table">
-                        <thead>
+                        <thead class="table-light">
                             <tr>
                                 <th>{% trans "Produto" %}</th>
-                                <th>{% trans "Qtd." %}</th>
-                                <th>{% trans "Preço Unit." %}</th>
-                                <th>{% trans "Subtotal" %}</th>
-                                <th>{% trans "Ação" %}</th>
+                                <th class="text-end" style="width: 120px;">{% trans "Qtd." %}</th>
+                                <th class="text-end" style="width: 170px;">{% trans "Preço Unit." %}</th>
+                                <th class="text-end" style="width: 150px;">{% trans "Subtotal" %}</th>
+                                <th class="text-center" style="width: 80px;">{% trans "Ação" %}</th>
                             </tr>
                         </thead>
                         <tbody id="invoice-items">
-                            </tbody>
+                            <!-- Linhas de itens serão adicionadas aqui via JS -->
+                        </tbody>
                     </table>
                 </div>
-                <div class="d-flex justify-content-end mt-3">
-                    <div class="totals" style="width: 280px;">
-                        <p class="fs-5"><strong>{% trans "Subtotal" %}:</strong> <span id="subtotal">0.00</span> CFA</p>
-                        <p class="fs-5"><strong>IGV (<span id="igv-rate-display">17</span>%):</strong> <span id="igv-total">0.00</span> CFA</p>
-                        <hr>
-                        <p class="fs-4"><strong>{% trans "Total" %}:</strong> <span id="total-final">0.00</span> CFA</p>
+                <div id="empty-cart-message" class="text-center text-muted py-4">
+                    <p>{% trans "Ainda não há itens na fatura." %}</p>
+                </div>
+
+                <!-- Secção de Totais -->
+                <div class="row justify-content-end mt-4">
+                    <div class="col-lg-5 col-md-8">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>{% trans "Subtotal" %}</span>
+                                        <strong id="subtotal">0.00 CFA</strong>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center text-danger">
+                                        <span>{% trans "Desconto" %} (<span id="desconto-rate-display">0</span>%)</span>
+                                        <strong id="desconto-total">- 0.00 CFA</strong>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>{% trans "Subtotal c/ Desc." %}</span>
+                                        <strong id="subtotal-com-desconto">0.00 CFA</strong>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>IGV (<span id="igv-rate-display">17</span>%)</span>
+                                        <strong id="igv-total">+ 0.00 CFA</strong>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center fs-5">
+                                        <strong>{% trans "Total Geral" %}</strong>
+                                        <strong id="total-geral">0.00 CFA</strong>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center text-success">
+                                        <span>{% trans "Adiantamento" %}</span>
+                                        <strong id="adiantamento-total">- 0.00 CFA</strong>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white fs-4 rounded-bottom">
+                                        <strong>{% trans "VALOR A PAGAR" %}</strong>
+                                        <strong id="valor-a-pagar">0.00 CFA</strong>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="d-grid">
-            <button type="submit" class="btn btn-primary btn-lg">{% trans "Gerar Fatura" %}</button>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="{% url 'lista_faturas' %}" class="btn btn-secondary">{% trans "Cancelar" %}</a>
+            <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-save me-2"></i>{% trans "Gerar Fatura" %}
+            </button>
         </div>
     </form>
-    
+
     <script>
-        // O CÓDIGO JAVASCRIPT CONTINUA EXATAMENTE O MESMO, NÃO PRECISA DE ALTERAÇÃO
-        {% verbatim %}
-        // ... (todo o seu código JavaScript aqui, sem alterações) ...
-        document.addEventListener('DOMContentLoaded', function() {
-            const invoiceForm = document.getElementById('invoice-form');
-            const produtoSelect = document.getElementById('produto');
-            const quantidadeInput = document.getElementById('quantidade');
-            const addItemBtn = document.getElementById('add-item-btn');
-            const invoiceItemsTable = document.getElementById('invoice-items');
-            const taxTypeSelect = document.getElementById('tax-type');
-            const customTaxGroup = document.getElementById('custom-tax-group');
-            const customTaxRateInput = document.getElementById('tax-rate');
-            const subtotalSpan = document.getElementById('subtotal');
-            const igvRateSpan = document.getElementById('igv-rate-display');
-            const igvTotalSpan = document.getElementById('igv-total');
-            const totalFinalSpan = document.getElementById('total-final');
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Seletores de Elementos ---
+        const invoiceForm = document.getElementById('invoice-form');
+        const produtoSelect = document.getElementById('produto');
+        const quantidadeInput = document.getElementById('quantidade');
+        const addItemBtn = document.getElementById('add-item-btn');
+        const invoiceItemsTableBody = document.getElementById('invoice-items');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const taxTypeSelect = document.getElementById('tax-type');
+        const customTaxGroup = document.getElementById('custom-tax-group');
+        const customTaxRateInput = document.getElementById('tax-rate');
+        const descontoInput = document.getElementById('desconto');
+        const adiantamentoInput = document.getElementById('adiantamento');
+        const subtotalSpan = document.getElementById('subtotal');
+        const descontoRateSpan = document.getElementById('desconto-rate-display');
+        const descontoTotalSpan = document.getElementById('desconto-total');
+        const subtotalComDescontoSpan = document.getElementById('subtotal-com-desconto');
+        const igvRateSpan = document.getElementById('igv-rate-display');
+        const igvTotalSpan = document.getElementById('igv-total');
+        const totalGeralSpan = document.getElementById('total-geral');
+        const adiantamentoTotalSpan = document.getElementById('adiantamento-total');
+        const valorAPagarSpan = document.getElementById('valor-a-pagar');
+
+        // --- Event Listeners ---
+        addItemBtn.addEventListener('click', adicionarItem);
+        taxTypeSelect.addEventListener('change', handleTaxChange);
+        customTaxRateInput.addEventListener('input', atualizarTotais);
+        descontoInput.addEventListener('input', atualizarTotais);
+        adiantamentoInput.addEventListener('input', atualizarTotais);
+        invoiceItemsTableBody.addEventListener('click', handleTableClick);
+        invoiceForm.addEventListener('submit', prepararEnvioDoFormulario);
+
+        // --- Funções ---
+        function handleTaxChange() {
+            customTaxGroup.style.display = (this.value === 'custom') ? 'block' : 'none';
+            atualizarTotais();
+        }
+
+        function handleTableClick(e) {
+            const target = e.target;
+            const row = target.closest('tr');
+
+            // Lógica para apagar item
+            if (target.closest('.btn-del')) {
+                row.remove();
+                atualizarTotais();
+                return;
+            }
+
+            // Lógica para editar preço
+            const priceCell = target.closest('.preco');
+            if (priceCell && !priceCell.querySelector('input')) {
+                editPrice(priceCell);
+            }
+        }
+
+        function editPrice(cell) {
+            const span = cell.querySelector('span');
+            const currentPrice = parseFloat(span.textContent);
             
-            addItemBtn.addEventListener('click', adicionarItem);
-            taxTypeSelect.addEventListener('change', function() {
-                if (this.value === 'custom') {
-                    customTaxGroup.style.display = 'block';
-                } else {
-                    customTaxGroup.style.display = 'none';
-                }
-                atualizarTotais();
-            });
-            customTaxRateInput.addEventListener('input', atualizarTotais);
-            invoiceItemsTable.addEventListener('click', function(e) {
-                if (e.target && e.target.classList.contains('btn-del')) {
-                    e.target.closest('tr').remove();
-                    atualizarTotais();
-                }
-            });
-            invoiceForm.addEventListener('submit', prepararEnvioDoFormulario);
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.className = 'form-control form-control-sm text-end';
+            input.value = currentPrice.toFixed(2);
+            input.step = '0.01';
+            
+            cell.innerHTML = ''; // Limpa a célula (remove span e ícone)
+            cell.appendChild(input);
+            input.focus();
+            input.select();
 
-            function prepararEnvioDoFormulario(e) {
-                const oldItems = invoiceForm.querySelectorAll('input[name="items[]"]');
-                oldItems.forEach(item => item.remove());
-                const todasAsLinhas = invoiceItemsTable.querySelectorAll('tr');
-                if (todasAsLinhas.length === 0) {
-                    e.preventDefault();
-                    alert('Por favor, adicione pelo menos um item à fatura.');
-                    return;
-                }
-                todasAsLinhas.forEach(function(row) {
-                    const produtoId = row.dataset.produtoId;
-                    const quantidade = row.querySelector('.quantidade').textContent;
-                    const preco = row.querySelector('.preco').textContent;
-                    const itemData = {'produto_id': produtoId, 'quantidade': quantidade, 'preco_unitario': preco };
-                    const hiddenInput = document.createElement('input');
-                    hiddenInput.type = 'hidden';
-                    hiddenInput.name = 'items[]';
-                    hiddenInput.value = JSON.stringify(itemData);
-                    invoiceForm.appendChild(hiddenInput);
-                });
-                const taxaIgv = parseFloat(igvRateSpan.textContent);
-                const taxInput = document.createElement('input');
-                taxInput.type = 'hidden';
-                taxInput.name = 'taxa_igv';
-                taxInput.value = taxaIgv;
-                invoiceForm.appendChild(taxInput);
-            }
+            const finishEditing = () => {
+                const newPrice = parseFloat(input.value) || 0;
+                const row = cell.closest('tr');
+                const quantity = parseFloat(row.querySelector('.quantidade').textContent);
+                const newSubtotal = newPrice * quantity;
 
-            function adicionarItem() {
-                const selectedOption = produtoSelect.options[produtoSelect.selectedIndex];
-                const produtoId = selectedOption.value;
-                const produtoNome = selectedOption.text.split(' - ')[0];
-                const precoString = selectedOption.dataset.price.replace(',', '.');
-                const precoUnit = parseFloat(precoString);
-                const quantidade = parseFloat(quantidadeInput.value);
-                if (isNaN(quantidade) || quantidade <= 0) {
-                    alert('Por favor, insira uma quantidade válida.');
-                    return;
-                }
-                const itemExistente = invoiceItemsTable.querySelector(`tr[data-produto-id="${produtoId}"]`);
-                if (itemExistente) {
-                    alert('Este produto já foi adicionado. Por favor, elimine a linha existente para o adicionar novamente com uma nova quantidade.');
-                    return;
-                }
-                const subtotalLinha = quantidade * precoUnit;
-                const newRow = document.createElement('tr');
-                newRow.dataset.produtoId = produtoId;
-                newRow.innerHTML = `
-                    <td>${produtoNome}</td>
-                    <td class="quantidade">${quantidade.toFixed(2)}</td>
-                    <td class="preco">${precoUnit.toFixed(2)}</td>
-                    <td class="subtotal-linha">${subtotalLinha.toFixed(2)}</td>
-                    <td><button type="button" class="btn btn-danger btn-sm btn-del">Eliminar</button></td>
+                cell.innerHTML = `
+                    <span>${newPrice.toFixed(2)}</span>
+                    <i class="fas fa-pencil-alt fa-xs ms-1 text-muted"></i>
                 `;
-                invoiceItemsTable.appendChild(newRow);
-                quantidadeInput.value = '1';
-                produtoSelect.focus();
+                row.querySelector('.subtotal-linha').textContent = newSubtotal.toFixed(2);
                 atualizarTotais();
+            };
+
+            input.addEventListener('blur', finishEditing);
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    finishEditing();
+                } else if (e.key === 'Escape') {
+                    // Cancela a edição, restaurando o valor original
+                    cell.innerHTML = `
+                        <span>${currentPrice.toFixed(2)}</span>
+                        <i class="fas fa-pencil-alt fa-xs ms-1 text-muted"></i>
+                    `;
+                }
+            });
+        }
+
+        function adicionarItem() {
+            const selectedOption = produtoSelect.options[produtoSelect.selectedIndex];
+            const produtoId = selectedOption.value;
+            const produtoNome = selectedOption.text.split(' - ')[0].trim();
+            const precoUnit = parseFloat(selectedOption.dataset.price.replace(',', '.'));
+            const quantidade = parseFloat(quantidadeInput.value);
+
+            if (!produtoId) { return; }
+            if (isNaN(quantidade) || quantidade <= 0) { return; }
+            if (invoiceItemsTableBody.querySelector(`tr[data-produto-id="${produtoId}"]`)) { return; }
+
+            const subtotalLinha = quantidade * precoUnit;
+            const newRow = document.createElement('tr');
+            newRow.dataset.produtoId = produtoId;
+            newRow.innerHTML = `
+                <td>${produtoNome}</td>
+                <td class="quantidade text-end">${quantidade.toFixed(2)}</td>
+                <td class="preco text-end" style="cursor: pointer;" title="{% trans 'Clique para editar o preço' %}">
+                    <span>${precoUnit.toFixed(2)}</span>
+                    <i class="fas fa-pencil-alt fa-xs ms-1 text-muted"></i>
+                </td>
+                <td class="subtotal-linha text-end">${subtotalLinha.toFixed(2)}</td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-danger btn-sm btn-del" title="{% trans 'Remover Item' %}">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+            `;
+            invoiceItemsTableBody.appendChild(newRow);
+            quantidadeInput.value = '1';
+            produtoSelect.focus();
+            atualizarTotais();
+        }
+
+        function atualizarTotais() {
+            let subtotalGeral = 0;
+            invoiceItemsTableBody.querySelectorAll('tr').forEach(row => {
+                const subtotalLinhaEl = row.querySelector('.subtotal-linha');
+                if (subtotalLinhaEl) {
+                    subtotalGeral += parseFloat(subtotalLinhaEl.textContent);
+                }
+            });
+
+            emptyCartMessage.style.display = subtotalGeral > 0 ? 'none' : 'block';
+            const descontoPercent = parseFloat(descontoInput.value) || 0;
+            const valorAdiantamento = parseFloat(adiantamentoInput.value) || 0;
+            let taxaIgv = 0;
+            if (taxTypeSelect.value === 'default') taxaIgv = 17.0;
+            else if (taxTypeSelect.value === 'custom') taxaIgv = parseFloat(customTaxRateInput.value) || 0;
+
+            const valorDesconto = subtotalGeral * (descontoPercent / 100);
+            const subtotalComDesconto = subtotalGeral - valorDesconto;
+            const valorIgv = subtotalComDesconto * (taxaIgv / 100);
+            const totalGeral = subtotalComDesconto + valorIgv;
+            const valorAPagar = totalGeral - valorAdiantamento;
+
+            subtotalSpan.textContent = `${subtotalGeral.toFixed(2)} CFA`;
+            descontoRateSpan.textContent = descontoPercent.toFixed(2);
+            descontoTotalSpan.textContent = `- ${valorDesconto.toFixed(2)} CFA`;
+            subtotalComDescontoSpan.textContent = `${subtotalComDesconto.toFixed(2)} CFA`;
+            igvRateSpan.textContent = taxaIgv.toFixed(2);
+            igvTotalSpan.textContent = `+ ${valorIgv.toFixed(2)} CFA`;
+            totalGeralSpan.textContent = `${totalGeral.toFixed(2)} CFA`;
+            adiantamentoTotalSpan.textContent = `- ${valorAdiantamento.toFixed(2)} CFA`;
+            valorAPagarSpan.textContent = `${Math.max(0, valorAPagar).toFixed(2)} CFA`;
+        }
+
+        function prepararEnvioDoFormulario(e) {
+            invoiceForm.querySelectorAll('input[type="hidden"][name="items[]"], input[type="hidden"][name="taxa_igv"]').forEach(input => input.remove());
+
+            if (invoiceItemsTableBody.querySelectorAll('tr').length === 0) {
+                e.preventDefault();
+                alert("{% trans 'A fatura deve ter pelo menos um item.' %}");
+                return;
             }
 
-            function atualizarTotais() {
-                let subtotalGeral = 0;
-                const todasAsLinhas = invoiceItemsTable.querySelectorAll('tr');
-                todasAsLinhas.forEach(function(row) {
-                    const subtotalLinhaEl = row.querySelector('.subtotal-linha');
-                    if (subtotalLinhaEl) {
-                        subtotalGeral += parseFloat(subtotalLinhaEl.textContent);
-                    }
-                });
-                let taxaIgv = 0;
-                if (taxTypeSelect.value === 'default') {
-                    taxaIgv = 17.0;
-                } else if (taxTypeSelect.value === 'custom') {
-                    taxaIgv = parseFloat(customTaxRateInput.value) || 0;
-                }
-                const valorIgv = subtotalGeral * (taxaIgv / 100);
-                const totalFinal = subtotalGeral + valorIgv;
-                subtotalSpan.textContent = subtotalGeral.toFixed(2);
-                igvRateSpan.textContent = taxaIgv.toFixed(2);
-                igvTotalSpan.textContent = valorIgv.toFixed(2);
-                totalFinalSpan.textContent = totalFinal.toFixed(2);
-            }
-        });
-        {% endverbatim %}
+            invoiceItemsTableBody.querySelectorAll('tr').forEach(function(row) {
+                const itemData = {
+                    'produto_id': row.dataset.produtoId,
+                    'quantidade': row.querySelector('.quantidade').textContent,
+                    'preco_unitario': row.querySelector('.preco span').textContent // ATUALIZADO para ler do span
+                };
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'items[]';
+                hiddenInput.value = JSON.stringify(itemData);
+                invoiceForm.appendChild(hiddenInput);
+            });
+
+            let taxaIgv = 0;
+            if (taxTypeSelect.value === 'default') taxaIgv = 17.0;
+            else if (taxTypeSelect.value === 'custom') taxaIgv = parseFloat(customTaxRateInput.value) || 0;
+            
+            const taxInput = document.createElement('input');
+            taxInput.type = 'hidden';
+            taxInput.name = 'taxa_igv';
+            taxInput.value = taxaIgv.toFixed(2);
+            invoiceForm.appendChild(taxInput);
+        }
+        
+        atualizarTotais();
+    });
     </script>
 {% endblock %}
