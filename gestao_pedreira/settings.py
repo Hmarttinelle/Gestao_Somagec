@@ -1,4 +1,4 @@
-# Ficheiro Completo e Corrigido: gestao_pedreira/settings.py
+# Versão Final
 
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
