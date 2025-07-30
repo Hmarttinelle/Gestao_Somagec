@@ -1,4 +1,4 @@
-# Ficheiro requirements.txt Limpo e Corrigido
+# Ficheiro requirements.txt com a correção
 
 Django==5.2.4
 gunicorn
@@ -9,3 +9,4 @@ python-dateutil
 tzdata
 sqlparse
 asgiref
+Pillow
