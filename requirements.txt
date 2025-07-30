@@ -1,11 +1,11 @@
-asgiref==3.9.1
+# Ficheiro requirements.txt Limpo e Corrigido
+
 Django==5.2.4
-google-api-python-client==2.177.0
-google-auth-httplib2==0.2.0
-google-auth-oauthlib==1.2.2
-Pillow==11.0.0
-python-dateutil==2.9.0.post0
-python-dotenv==1.0.1
-pytz 
-sqlparse==0.5.3
-tzdata==2025.2
+gunicorn
+dj-database-url
+whitenoise
+psycopg2-binary
+python-dateutil
+tzdata
+sqlparse
+asgiref
