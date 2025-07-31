@@ -1,7 +1,7 @@
-# Ficheiro requirements.txt para PythonAnywhere
+# Ficheiro requirements.txt corrigido para MySQL
 Django==5.2.4
 Pillow==11.0.0
-psycopg2-binary==2.9.10
+mysqlclient
 python-dateutil==2.9.0.post0
 sqlparse==0.5.3
 gunicorn==23.0.0
