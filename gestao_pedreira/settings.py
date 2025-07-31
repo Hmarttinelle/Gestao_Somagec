@@ -77,18 +77,22 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 LANGUAGE_CODE = 'pt'
-
-# --- BLOCO DE IDIOMAS ADICIONADO ---
 LANGUAGES = [
     ('pt', _('Português')),
     ('en', _('Inglês')),
     ('fr', _('Francês')),
 ]
-
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 LOCALE_PATHS = [ os.path.join(BASE_DIR, 'locale'), ]
+
+# --- CONFIGURAÇÕES DE FORMATAÇÃO DE NÚMEROS (ADICIONADO) ---
+USE_L10N = True 
+USE_THOUSAND_SEPARATOR = True
+DECIMAL_SEPARATOR = ','
+THOUSAND_SEPARATOR = '.'
+# --- FIM DA ADIÇÃO ---
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
