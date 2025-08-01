@@ -135,6 +135,8 @@
                                 <tr>
                                     <th>{% trans "Produto" %}</th>
                                     <th class="text-end">{% trans "Estoque" %}</th>
+                                    <!-- COLUNA ADICIONADA -->
+                                    <th>{% trans "Unidade" %}</th>
                                     <th class="text-end">{% trans "Ações" %}</th>
                                 </tr>
                             </thead>
@@ -143,6 +145,8 @@
                                 <tr>
                                     <td>{{ produto.nome }}</td>
                                     <td class="text-end fw-bold">{{ produto.estoque_atual|floatformat:2|intcomma }}</td>
+                                    <!-- DADO ADICIONADO -->
+                                    <td>{{ produto.get_unidade_medida_display }}</td>
                                     <td class="text-end">
                                         <a href="{% url 'editar_produto' produto.id %}" class="btn btn-warning btn-sm">Editar</a>
                                     </td>
