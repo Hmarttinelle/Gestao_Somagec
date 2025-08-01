@@ -11,6 +11,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # --- CONFIGURAÇÕES DE SEGURANÇA ---
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-local-key-default')
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+
+# --- LINHA CORRIGIDA ---
+# O seu endereço do PythonAnywhere foi corrigido.
 ALLOWED_HOSTS = ['Somagec.pythonanywhere.com', '127.0.0.1']
 
 # Application definition
