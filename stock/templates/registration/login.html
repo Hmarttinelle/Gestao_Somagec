@@ -1,51 +1,71 @@
 {% extends "stock/base.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block title %}{% trans "Login" %}{% endblock %}
 
+{# Removemos o container do base.html para ter controlo total do layout nesta página #}
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6 col-lg-4">
-
-        {# --- BLOCO DO LOGOTIPO ADICIONADO --- #}
-        <div class="text-center mb-4">
-            {% if dados_empresa.logotipo %}
-                <img src="{{ dados_empresa.logotipo.url }}" alt="Logotipo da Empresa" style="max-width: 150px; height: auto;">
-            {% endif %}
-        </div>
-        {# --- FIM DO BLOCO DO LOGOTIPO --- #}
-
-        <div class="card shadow-sm">
-            <div class="card-header text-center">
-                <h2 class="card-title h4 mb-0">{% trans "Aceder ao Sistema" %}</h2>
-            </div>
-            <div class="card-body">
-
-                {% if form.errors %}
-                    <div class="alert alert-danger">
-                        {% trans "O seu nome de utilizador e palavra-passe não correspondem. Por favor, tente novamente." %}
-                    </div>
-                {% endif %}
-
-                <form method="post" action="{% url 'login' %}">
-                    {% csrf_token %}
-                    
-                    <div class="mb-3">
-                        <label for="id_username" class="form-label">{% trans "Nome de utilizador" %}</label>
-                        <input type="text" name="username" id="id_username" class="form-control" required>
+<div class="container">
+    <div class="row vh-100 d-flex justify-content-center align-items-center">
+        <div class="col-md-7 col-lg-5">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        {% if dados_empresa.logotipo %}
+                            <img src="{{ dados_empresa.logotipo.url }}" alt="Logotipo da Empresa" style="max-width: 180px; height: auto;">
+                        {% else %}
+                            <h2 class="fw-bold">{% if dados_empresa %}{{ dados_empresa.nome_empresa }}{% else %}SOMAGEC MINING BISSAU{% endif %}</h2>
+                        {% endif %}
+                        <p class="text-muted mt-2">{% trans "Aceder ao Sistema" %}</p>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="id_password" class="form-label">{% trans "Palavra-passe" %}</label>
-                        <input type="password" name="password" id="id_password" class="form-control" required>
-                    </div>
+                    {% if form.errors %}
+                        <div class="alert alert-danger text-center">
+                            <small>{% trans "O seu nome de utilizador e palavra-passe não correspondem. Por favor, tente novamente." %}</small>
+                        </div>
+                    {% endif %}
 
-                    <div class="d-grid mt-4">
-                        <button type="submit" class="btn btn-primary">{% trans "Entrar" %}</button>
-                    </div>
-                </form>
+                    <form method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        
+                        <div class="form-floating mb-3">
+                            <input type="text" name="username" id="id_username" class="form-control" placeholder="{% trans "Nome de utilizador" %}" required>
+                            <label for="id_username">{% trans "Nome de utilizador" %}</label>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="password" name="password" id="id_password" class="form-control" placeholder="{% trans "Palavra-passe" %}" required>
+                            <label for="id_password">{% trans "Palavra-passe" %}</label>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">{% trans "Entrar" %}</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_css %}
+{# Adicionamos CSS específico para esta página para centralizar o conteúdo #}
+<style>
+    /* Esconde o footer apenas na página de login para um visual mais limpo */
+    footer {
+        display: none;
+    }
+    /* Remove o padding-top do body para a centralização funcionar corretamente */
+    body {
+        padding-top: 0 !important;
+    }
+     /* Remove o container do conteúdo principal para que o nosso ocupe o espaço todo */
+    main.container {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+</style>
 {% endblock %}

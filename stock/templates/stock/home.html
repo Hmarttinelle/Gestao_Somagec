@@ -5,70 +5,90 @@
 
 {% block title %}{% trans "Dashboard" %}{% endblock %}
 
+{% block extra_css %}
+<style>
+    /* Estilo para transformar o cartão num link clicável sem sublinhado */
+    a.card-link {
+        text-decoration: none;
+        color: inherit;
+    }
+    a.card-link .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+        transition: transform .2s;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
 <h1 class="mb-4">Dashboard</h1>
 
 <div class="row">
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card text-white bg-danger shadow h-100">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <div class="text-uppercase fw-bold">{% trans "Por Pagar" %}</div>
-                        <div class="h5 mb-0 fw-bold">{{ valor_em_divida|floatformat:2|intcomma }} CFA</div>
+        <a href="{% url 'lista_faturas' %}?q_paga=nao" class="card-link">
+            <div class="card text-white bg-danger shadow h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="text-uppercase fw-bold">{% trans "Por Pagar" %}</div>
+                            <div class="h5 mb-0 fw-bold">{{ valor_em_divida|floatformat:2|intcomma }} CFA</div>
+                        </div>
+                        <i class="fas fa-file-invoice-dollar fa-2x text-white-50"></i>
                     </div>
-                    <i class="fas fa-file-invoice-dollar fa-2x text-white-50"></i>
-                </div>
-                <div class="mt-2 text-white-75 small">
-                    {% blocktrans count counter=num_nao_pagas %}{{ counter }} fatura{% plural %}{{ counter }} faturas{% endblocktrans %}
+                    <div class="mt-2 text-white-75 small">{% blocktrans count counter=num_nao_pagas %}{{ counter }} fatura{% plural %}{{ counter }} faturas{% endblocktrans %}</div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
+
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card text-white bg-success shadow h-100">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <div class="text-uppercase fw-bold">{% trans "Já Pago" %}</div>
-                        <div class="h5 mb-0 fw-bold">{{ total_recebido|floatformat:2|intcomma }} CFA</div>
+        <a href="{% url 'lista_faturas' %}?q_paga=sim" class="card-link">
+            <div class="card text-white bg-success shadow h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="text-uppercase fw-bold">{% trans "Já Pago" %}</div>
+                            <div class="h5 mb-0 fw-bold">{{ total_recebido|floatformat:2|intcomma }} CFA</div>
+                        </div>
+                        <i class="fas fa-check-circle fa-2x text-white-50"></i>
                     </div>
-                    <i class="fas fa-check-circle fa-2x text-white-50"></i>
-                </div>
-                 <div class="mt-2 text-white-75 small">
-                    {% blocktrans count counter=num_pagas %}{{ counter }} fatura{% plural %}{{ counter }} faturas{% endblocktrans %}
+                     <div class="mt-2 text-white-75 small">{% blocktrans count counter=num_pagas %}{{ counter }} fatura{% plural %}{{ counter }} faturas{% endblocktrans %}</div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
+
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card text-white bg-primary shadow h-100">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <div class="text-uppercase fw-bold">{% trans "Faturação (Mês Atual)" %}</div>
-                        <div class="h5 mb-0 fw-bold">{{ total_faturado_mes|floatformat:2|intcomma }} CFA</div>
+        <a href="{% url 'lista_faturas' %}?q_periodo=mes_atual" class="card-link">
+            <div class="card text-white bg-primary shadow h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="text-uppercase fw-bold">{% trans "Faturação (Mês Atual)" %}</div>
+                            <div class="h5 mb-0 fw-bold">{{ total_faturado_mes|floatformat:2|intcomma }} CFA</div>
+                        </div>
+                        <i class="fas fa-calendar-alt fa-2x text-white-50"></i>
                     </div>
-                    <i class="fas fa-calendar-alt fa-2x text-white-50"></i>
-                </div>
-                 <div class="mt-2 text-white-75 small">
-                    {% blocktrans count counter=num_faturas_mes %}{{ counter }} fatura este mês{% plural %}{{ counter }} faturas este mês{% endblocktrans %}
+                     <div class="mt-2 text-white-75 small">{% blocktrans count counter=num_faturas_mes %}{{ counter }} fatura este mês{% plural %}{{ counter }} faturas este mês{% endblocktrans %}</div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
+
     <div class="col-lg-3 col-md-6 mb-4">
-        <div class="card text-white bg-info shadow h-100">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <div class="text-uppercase fw-bold">{% trans "Total de Clientes" %}</div>
-                        <div class="h5 mb-0 fw-bold">{{ num_clientes }}</div>
+        <a href="{% url 'lista_clientes' %}" class="card-link">
+            <div class="card text-white bg-info shadow h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="text-uppercase fw-bold">{% trans "Total de Clientes" %}</div>
+                            <div class="h5 mb-0 fw-bold">{{ num_clientes }}</div>
+                        </div>
+                        <i class="fas fa-users fa-2x text-white-50"></i>
                     </div>
-                    <i class="fas fa-users fa-2x text-white-50"></i>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
 </div>
 
@@ -99,57 +119,32 @@
                     </div>
                     <div class="col-md-4" id="custom-date-range" style="display: {% if periodo_selecionado == 'custom' %}flex{% else %}none{% endif %};">
                          <div class="row">
-                            <div class="col-6">
-                                <label for="start_date" class="form-label form-label-sm">{% trans "Início" %}</label>
-                                <input type="date" name="start_date" id="start_date" value="{{ start_date }}" class="form-control form-control-sm" onchange="this.form.submit()">
-                            </div>
-                            <div class="col-6">
-                                <label for="end_date" class="form-label form-label-sm">{% trans "Fim" %}</label>
-                                <input type="date" name="end_date" id="end_date" value="{{ end_date }}" class="form-control form-control-sm" onchange="this.form.submit()">
-                            </div>
+                            <div class="col-6"><label for="start_date" class="form-label form-label-sm">{% trans "Início" %}</label><input type="date" name="start_date" id="start_date" value="{{ start_date }}" class="form-control form-control-sm" onchange="this.form.submit()"></div>
+                            <div class="col-6"><label for="end_date" class="form-label form-label-sm">{% trans "Fim" %}</label><input type="date" name="end_date" id="end_date" value="{{ end_date }}" class="form-control form-control-sm" onchange="this.form.submit()"></div>
                         </div>
                     </div>
-                    <div class="col-md-2 d-none">
-                        <button type="submit" class="btn btn-primary btn-sm w-100">Filtrar</button>
-                    </div>
                 </form>
-                <div class="chart-area" style="height: 320px;">
-                    <canvas id="myAreaChart"></canvas>
-                </div>
+                <div class="chart-area" style="height: 320px;"><canvas id="myAreaChart"></canvas></div>
             </div>
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-lg-4 mb-4">
         <div class="card shadow h-100">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-danger">{% trans "Estoque Baixo" %} (<= {{ limite_estoque_baixo }})</h6>
-            </div>
+            <div class="card-header py-3"><h6 class="m-0 font-weight-bold text-danger">{% trans "Estoque Baixo" %} (<= {{ limite_estoque_baixo }})</h6></div>
             <div class="card-body" style="max-height: 400px; overflow-y: auto;">
                 {% if produtos_estoque_baixo %}
                     <div class="table-responsive">
                         <table class="table table-sm table-hover">
-                            <thead>
-                                <tr>
-                                    <th>{% trans "Produto" %}</th>
-                                    <th class="text-end">{% trans "Estoque" %}</th>
-                                    <!-- COLUNA ADICIONADA -->
-                                    <th>{% trans "Unidade" %}</th>
-                                    <th class="text-end">{% trans "Ações" %}</th>
-                                </tr>
-                            </thead>
+                            <thead><tr><th>{% trans "Produto" %}</th><th class="text-end">{% trans "Estoque" %}</th><th>{% trans "Unidade" %}</th><th class="text-end">{% trans "Ações" %}</th></tr></thead>
                             <tbody>
                             {% for produto in produtos_estoque_baixo %}
                                 <tr>
                                     <td>{{ produto.nome }}</td>
                                     <td class="text-end fw-bold">{{ produto.estoque_atual|floatformat:2|intcomma }}</td>
-                                    <!-- DADO ADICIONADO -->
                                     <td>{{ produto.get_unidade_medida_display }}</td>
-                                    <td class="text-end">
-                                        <a href="{% url 'editar_produto' produto.id %}" class="btn btn-warning btn-sm">Editar</a>
-                                    </td>
+                                    <td class="text-end"><a href="{% url 'editar_produto' produto.id %}" class="btn btn-warning btn-sm">Editar</a></td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -163,19 +158,11 @@
     </div>
     <div class="col-lg-4 mb-4">
         <div class="card shadow h-100">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">{% trans "Top 10 Clientes (Últimos 30 dias)" %}</h6>
-            </div>
+            <div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">{% trans "Top 10 Clientes (Últimos 30 dias)" %}</h6></div>
             <div class="card-body" style="max-height: 400px; overflow-y: auto;">
                 <div class="table-responsive">
                     <table class="table table-sm table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">{% trans "Cliente" %}</th>
-                                <th scope="col" class="text-end">{% trans "Total Gasto" %}</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th scope="col">#</th><th scope="col">{% trans "Cliente" %}</th><th scope="col" class="text-end">{% trans "Total Gasto" %}</th></tr></thead>
                         <tbody>
                             {% for cliente in top_clientes %}
                                 <tr>
@@ -184,9 +171,7 @@
                                     <td class="text-end">{{ cliente.total_gasto|floatformat:2|intcomma }} CFA</td>
                                 </tr>
                             {% empty %}
-                                <tr>
-                                    <td colspan="3" class="text-center">{% trans "Não há dados de vendas nos últimos 30 dias." %}</td>
-                                </tr>
+                                <tr><td colspan="3" class="text-center">{% trans "Não há dados de vendas nos últimos 30 dias." %}</td></tr>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -196,19 +181,11 @@
     </div>
     <div class="col-lg-4 mb-4">
         <div class="card shadow h-100">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">{% trans "Top 10 Produtos (Últimos 30 dias)" %}</h6>
-            </div>
+            <div class="card-header py-3"><h6 class="m-0 font-weight-bold text-primary">{% trans "Top 10 Produtos (Últimos 30 dias)" %}</h6></div>
             <div class="card-body" style="max-height: 400px; overflow-y: auto;">
                 <div class="table-responsive">
                     <table class="table table-sm table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">{% trans "Produto" %}</th>
-                                <th scope="col" class="text-end">{% trans "Total Vendido" %}</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th scope="col">#</th><th scope="col">{% trans "Produto" %}</th><th scope="col" class="text-end">{% trans "Total Vendido" %}</th></tr></thead>
                         <tbody>
                              {% for produto in top_produtos %}
                                 <tr>
@@ -217,9 +194,7 @@
                                     <td class="text-end">{{ produto.total_vendido|floatformat:2|intcomma }} CFA</td>
                                 </tr>
                             {% empty %}
-                                <tr>
-                                    <td colspan="3" class="text-center">{% trans "Não há dados de vendas nos últimos 30 dias." %}</td>
-                                </tr>
+                                <tr><td colspan="3" class="text-center">{% trans "Não há dados de vendas nos últimos 30 dias." %}</td></tr>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -267,14 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
         options: {
             maintainAspectRatio: false,
             scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        callback: function(value, index, values) {
-                            return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'CFA' }).format(value);
-                        }
-                    }
-                }
+                y: { beginAtZero: true, ticks: { callback: function(value, index, values) { return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'CFA' }).format(value); } } }
             },
             plugins: {
                 tooltip: {
@@ -282,9 +250,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         label: function(context) {
                             let label = context.dataset.label || '';
                             if (label) { label += ': '; }
-                            if (context.parsed.y !== null) {
-                                label += new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'CFA' }).format(context.parsed.y);
-                            }
+                            if (context.parsed.y !== null) { label += new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'CFA' }).format(context.parsed.y); }
                             return label;
                         }
                     }

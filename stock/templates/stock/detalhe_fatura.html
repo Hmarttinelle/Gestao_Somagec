@@ -18,6 +18,7 @@
                     <i class="fas fa-plus-circle me-1"></i> {% trans "Criar Guia de Transporte" %}
                 </a>
             {% endif %}
+
             {% if fatura.cliente.email %}
                 <form action="{% url 'enviar_fatura_email' fatura.id %}" method="post" class="d-inline">
                     {% csrf_token %}
@@ -26,6 +27,13 @@
                     </button>
                 </form>
             {% endif %}
+
+            {# --- BOTÃO CORRIGIDO --- #}
+            {# Este botão agora descarrega o PDF da fatura atual #}
+            <a href="{% url 'fatura_pdf' fatura.id %}" class="btn btn-danger">
+                <i class="fas fa-file-pdf me-1"></i> {% trans "PDF Fatura" %}
+            </a>
+            
             <a href="{% url 'editar_fatura' fatura.id %}" class="btn btn-warning">
                 <i class="fas fa-edit me-1"></i> {% trans "Editar Fatura" %}
             </a>
@@ -52,22 +60,14 @@
                     {% endif %}
                 </div>
                 
-                {# --- ALTERAÇÃO NESTA SECÇÃO --- #}
                 <div class="col-md-6 text-md-end">
                     <h2 class="h3 text-uppercase">{% trans "Fatura" %}</h2>
                     <p class="mb-0"><strong>#{{ fatura.numero_fatura }}</strong></p>
-                    
-                    <p class="mb-0">
-                        {% trans "Data de Criação" %}: {{ fatura.criado_em|date:"d/m/Y H:i" }}
-                    </p>
-
+                    <p class="mb-0">{% trans "Data de Criação" %}: {{ fatura.criado_em|date:"d/m/Y H:i" }}</p>
                     {% if fatura.foi_modificada %}
-                        <p class="small text-muted mb-0">
-                            ({% blocktrans with mod_date=fatura.atualizado_em|date:"d/m/Y H:i" %}Modificado em: {{ mod_date }}{% endblocktrans %})
-                        </p>
+                        <p class="small text-muted mb-0">({% blocktrans with mod_date=fatura.atualizado_em|date:"d/m/Y H:i" %}Modificado em: {{ mod_date }}{% endblocktrans %})</p>
                     {% endif %}
                 </div>
-                {# --- FIM DA ALTERAÇÃO --- #}
             </div>
             
             <hr class="my-4">

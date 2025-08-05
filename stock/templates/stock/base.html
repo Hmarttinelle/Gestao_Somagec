@@ -16,21 +16,28 @@
     
     <style>
         body { 
-            background-color: #f8f9fa; 
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            background-color: #f8f9fa;
+            /* Adicionamos padding-top para compensar a altura do header fixo */
+            padding-top: 70px;
         }
-        .navbar-brand img { max-height: 40px; margin-right: 10px; }
-        .nav-link.active { font-weight: bold; }
+        .navbar-brand img { 
+            max-height: 40px; 
+            margin-right: 10px; 
+        }
+        .nav-link.active { 
+            font-weight: bold; 
+        }
         main {
             flex-grow: 1;
         }
     </style>
+    {# Bloco para CSS extra de outras páginas (como a de login) #}
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
+    {# ALTERAÇÃO AQUI: Adicionamos a classe "sticky-top" para fixar o header #}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+        <div class="container">
             <a class="navbar-brand" href="{% url 'home' %}">
                 <img src="{% static 'stock/images/logo.png' %}" alt="Logotipo">
                 SOMAGEC MINING BISSAU
@@ -91,7 +98,7 @@
         {% block content %}
         {% endblock %}
     </main>
-
+    
     <footer class="text-center text-muted mt-auto py-3 bg-light">
         <div class="container">
             <span>&copy; {% now "Y" %} SOMAGEC MINING BISSAU. {% trans "Todos os direitos reservados." %}</span>

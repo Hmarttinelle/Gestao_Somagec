@@ -1,22 +1,14 @@
 # ficheiro: stock/admin.py
-
-
 import os
 import shutil
-import json
 import sqlite3
-from datetime import datetime, date
-from io import BytesIO 
-
+from datetime import date
 from django.conf import settings
 from django.utils import timezone
 from django.contrib import admin, messages
 from django.utils.translation import gettext_lazy as _
 from django import forms
-# A importação que faltava foi adicionada aqui:
 from django.core.mail import EmailMessage, get_connection
-from django.core.exceptions import ValidationError
-
 from .models import (
     Produto, Cliente, Fatura, ItemFatura, DadosEmpresa, Configuracao, 
     GuiaTransporte, ItemGuia, BackupConfig
@@ -88,9 +80,7 @@ class GuiaTransporteAdmin(admin.ModelAdmin):
 
     @admin.display(description=_('Cliente'), ordering='fatura__cliente__nome')
     def get_cliente(self, obj):
-        if obj.fatura:
-            return obj.fatura.cliente
-        return None
+        return obj.fatura.cliente if obj.fatura else None
 
 class ConfiguracaoAdminForm(forms.ModelForm):
     password_remetente = forms.CharField(widget=forms.PasswordInput, required=False)
@@ -108,10 +98,8 @@ class ConfiguracaoAdmin(admin.ModelAdmin):
             'description': _("Insira aqui as credenciais do email que será usado para enviar faturas e guias.")
         }),
     )
-    def has_add_permission(self, request):
-        return not Configuracao.objects.exists()
-    def has_delete_permission(self, request, obj=None):
-        return False
+    def has_add_permission(self, request): return not Configuracao.objects.exists()
+    def has_delete_permission(self, request, obj=None): return False
 
 @admin.register(BackupConfig)
 class BackupConfigAdmin(admin.ModelAdmin):
@@ -121,81 +109,43 @@ class BackupConfigAdmin(admin.ModelAdmin):
         if not config:
             self.message_user(request, _("Nenhuma configuração de backup selecionada."), messages.ERROR)
             return
-
         temp_backup_dir = os.path.join(settings.BASE_DIR, 'temp_backup_dir')
-        
         try:
-            if not config.recipient_email:
-                raise ValueError(_("Email de destino para backups não configurado."))
-            
+            if not config.recipient_email: raise ValueError(_("Email de destino para backups não configurado."))
             email_config = Configuracao.objects.first()
             if not email_config or not email_config.email_remetente or not email_config.password_remetente:
                  raise ValueError(_("Email de envio ou palavra-passe não configurados nas Configurações Gerais."))
-
             os.makedirs(temp_backup_dir, exist_ok=True)
-            timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-
+            timestamp = timezone.now().strftime('%Y-%m-%d_%H-%M-%S')
             db_path = settings.DATABASES['default']['NAME']
-            backup_db_name = f'db_backup_{timestamp}.sqlite3'
-            backup_db_path = os.path.join(temp_backup_dir, backup_db_name)
-            source_conn = sqlite3.connect(db_path)
-            dest_conn = sqlite3.connect(backup_db_path)
-            source_conn.backup(dest_conn)
-            dest_conn.close()
-            source_conn.close()
-
-            media_root = settings.MEDIA_ROOT
-            backup_media_name = f'media_backup_{timestamp}'
-            zip_path = shutil.make_archive(os.path.join(temp_backup_dir, backup_media_name), 'zip', media_root)
-            
+            backup_db_path = os.path.join(temp_backup_dir, f'db_backup_{timestamp}.sqlite3')
+            shutil.copyfile(db_path, backup_db_path)
+            zip_path = shutil.make_archive(os.path.join(temp_backup_dir, f'media_backup_{timestamp}'), 'zip', settings.MEDIA_ROOT)
             subject = _("Backup do Sistema Pedreira - {}").format(timestamp)
             body = _("Em anexo seguem os ficheiros de backup do sistema (base de dados e ficheiros de media).")
-            
-            email = EmailMessage(
-                subject,
-                body,
-                email_config.email_remetente,
-                [config.recipient_email]
-            )
-            
+            email = EmailMessage(subject, body, email_config.email_remetente, [config.recipient_email])
             email.attach_file(backup_db_path)
             email.attach_file(zip_path)
-            
-            connection = get_connection(
-                host=settings.EMAIL_HOST,
-                port=settings.EMAIL_PORT,
-                username=email_config.email_remetente,
-                password=email_config.password_remetente,
-                use_tls=settings.EMAIL_USE_TLS
-            )
+            connection = get_connection(host=settings.EMAIL_HOST, port=settings.EMAIL_PORT, username=email_config.email_remetente, password=email_config.password_remetente, use_tls=settings.EMAIL_USE_TLS)
             connection.send_messages([email])
-
             config.last_backup_status = _("Sucesso")
             self.message_user(request, _("Backup enviado por email com sucesso para {}!").format(config.recipient_email))
-
         except Exception as e:
             config.last_backup_status = _("Falhou: {}").format(str(e))
             self.message_user(request, _("Ocorreu um erro durante o backup: {}").format(e), messages.ERROR)
-        
         finally:
             config.last_backup_time = timezone.now()
             config.save()
-            if os.path.exists(temp_backup_dir):
-                shutil.rmtree(temp_backup_dir)
+            if os.path.exists(temp_backup_dir): shutil.rmtree(temp_backup_dir)
 
     actions = ['run_backup_now']
     fieldsets = (
-        (_('Configuração do Backup'), {'fields': ('recipient_email',)}),
+        (_('Configuração do Backup'), {'fields': ('recipient_email', 'schedule')}),
         (_('Estado do Último Backup'), {'fields': ('last_backup_status', 'last_backup_time',),}),
     )
     readonly_fields = ('last_backup_status', 'last_backup_time')
-
-    def has_add_permission(self, request):
-        return not BackupConfig.objects.exists()
-        
-    def has_delete_permission(self, request, obj=None):
-        return False
-
+    def has_add_permission(self, request): return not BackupConfig.objects.exists()
+    def has_delete_permission(self, request, obj=None): return False
 
 admin.site.register(Produto)
 admin.site.register(Cliente)

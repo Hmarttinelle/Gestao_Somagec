@@ -1,0 +1,115 @@
+{% load i18n l10n humanize %}
+<!DOCTYPE html>
+<html lang="{{ request.LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{% blocktrans %}Guia de Transporte {{ guia.numero_guia }}{% endblocktrans %}</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 1.5cm;
+            @bottom-center {
+                content: element(footer_content);
+            }
+        }
+        body { font-family: 'Helvetica', sans-serif; font-size: 11px; color: #333; line-height: 1.4; }
+        .page-container { display: flex; flex-direction: column; height: calc(29.7cm - 3.5cm); }
+        .main-content { flex-grow: 1; }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 15px; }
+        .company-logo img { max-height: 80px; max-width: 250px; }
+        .document-info { text-align: right; }
+        .document-info h1 { margin: 0; font-size: 24px; }
+        .details-row { display: flex; justify-content: space-between; margin-bottom: 30px; }
+        .details-column { width: 32%; vertical-align: top; }
+        .items-table { width: 100%; border-collapse: collapse; margin-top: 30px; }
+        .items-table th, .items-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        .items-table thead th { background-color: #f2f2f2; }
+        #footer {
+            position: running(footer_content);
+            width: 100%;
+            padding-top: 15px;
+            border-top: 1px solid #ccc;
+            font-size: 10px;
+            color: #555;
+        }
+        .footer-meta { text-align: center; margin-top: 15px; font-size: 9px; color: #888; }
+    </style>
+</head>
+<body>
+    <div id="footer">
+        {% if dados_empresa %}
+        <table style="width: 100%; border: 0; border-collapse: collapse;">
+            <tr>
+                <td style="width: 100%; text-align: center;">
+                    <strong>{{ dados_empresa.nome_empresa }}</strong><br>
+                    {% if dados_empresa.endereco %}
+                        <strong>{% trans "Endereço" %}:</strong> {{ dados_empresa.endereco|linebreaksbr }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center; padding-top: 15px; font-size: 9px; color: #888;">
+                    {% trans "Processado por" %}: {{ guia.utilizador.username|default:"N/A" }}
+                </td>
+            </tr>
+        </table>
+        {% endif %}
+    </div>
+
+    <div class="page-container">
+        <div class="main-content">
+            {% if dados_empresa %}
+                <div class="header">
+                    <div class="company-logo">
+                        {% if logo_uri %}
+                            <img src="{{ logo_uri }}" alt="Logotipo">
+                        {% endif %}
+                    </div>
+                    <div class="document-info">
+                        <h1>{% trans "GUIA DE TRANSPORTE" %}</h1>
+                        <p><strong>#{{ guia.numero_guia }}</strong><br><strong>{% trans "Data" %}:</strong> {{ guia.data_emissao|date:"d/m/Y" }}</p>
+                    </div>
+                </div>
+
+                <div class="details-row">
+                    <div class="details-column">
+                        <h4>{% trans "Expedidor" %}</h4>
+                        <strong>{{ dados_empresa.nome_empresa }}</strong><br>
+                        {{ dados_empresa.endereco|linebreaksbr }}<br>
+                        NIF: {{ dados_empresa.nif }}
+                    </div>
+                    <div class="details-column">
+                        <h4>{% trans "Destinatário" %}</h4>
+                        <strong>{{ guia.cliente.nome }}</strong><br>
+                        {% if guia.cliente.endereco %}{{ guia.cliente.endereco|linebreaksbr }}<br>{% endif %}
+                        {% if guia.cliente.nif %}NIF: {{ guia.cliente.nif }}{% endif %}
+                    </div>
+                    <div class="details-column">
+                        <h4>{% trans "Transporte" %}</h4>
+                        <strong>{% trans "Matrícula" %}:</strong> {{ guia.matricula_veiculo|default:"N/A" }}<br>
+                        <strong>{% trans "Carga" %}:</strong> {{ guia.morada_carga|linebreaksbr }}<br>
+                        <strong>{% trans "Descarga" %}:</strong> {{ guia.morada_descarga|linebreaksbr }}
+                    </div>
+                </div>
+
+                <table class="items-table">
+                    <thead>
+                        <tr>
+                            <th>{% trans "Produto / Serviço" %}</th>
+                            <th style="text-align: right;">{% trans "Quantidade" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in guia.itens.all %}
+                        <tr>
+                            <td>{{ item.produto.nome }}{% if item.produto.calibre %} ({{ item.produto.calibre }}){% endif %}</td>
+                            <td align="right">{{ item.quantidade|floatformat:2 }} {{ item.produto.get_unidade_medida_display }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

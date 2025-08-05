@@ -17,6 +17,11 @@
                 </form>
             {% endif %}
 
+            {# --- NOVO BOTÃO PDF ADICIONADO AQUI --- #}
+            <a href="{% url 'guia_pdf' guia.id %}" class="btn btn-danger">
+                <i class="fas fa-file-pdf me-1"></i> PDF
+            </a>
+
             <a href="{% url 'editar_guia' guia.id %}" class="btn btn-warning">
                 <i class="fas fa-edit me-1"></i> {% trans "Editar Guia" %}
             </a>
@@ -45,7 +50,6 @@
             
             <hr class="my-4">
 
-            {# --- ALTERAÇÃO NESTA SECÇÃO --- #}
             <div class="row mb-4">
                 <div class="col-md-3">
                     <h4 class="h5">{% trans "Cliente" %}</h4>
@@ -60,18 +64,16 @@
                     <h4 class="h5">{% trans "Local de Descarga" %}</h4>
                     <p>{{ guia.morada_descarga|linebreaksbr }}</p>
                 </div>
-                {# --- NOVA COLUNA ADICIONADA PARA A MATRÍCULA --- #}
                 <div class="col-md-3">
                     {% if guia.matricula_veiculo %}
                         <h4 class="h5">{% trans "Veículo" %}</h4>
                         <p class="mb-0">
-                            <i class="fas fa-truck me-2" aria-hidden="true"></i>{# Ícone para melhorar o visual #}
+                            <i class="fas fa-truck me-2" aria-hidden="true"></i>
                             <strong>{{ guia.matricula_veiculo }}</strong>
                         </p>
                     {% endif %}
                 </div>
             </div>
-            {# --- FIM DA ALTERAÇÃO --- #}
 
             <div class="table-responsive">
                 <table class="table">

@@ -1,6 +1,7 @@
 # --- Ficheiro 100% Completo: stock/views.py ---
 import json
 from decimal import Decimal
+import pathlib # Importar a biblioteca pathlib
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db import transaction, models
 from django.contrib.auth.decorators import login_required
@@ -16,24 +17,22 @@ import calendar
 from django.core.paginator import Paginator
 from django.db.models import Sum, F, Q
 
+from django.http import HttpResponse
 from django.core.mail import EmailMessage, get_connection
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 
-# --- Views da Aplicação ---
+try:
+    from weasyprint import HTML
+except ImportError:
+    HTML = None
 
-# Em stock/views.py
-# Substitua a sua função home_view por esta
-
-# Em stock/views.py
-# Substitua a sua função home_view por esta versão completa e final
-
+# ... (O resto das suas views permanece exatamente igual) ...
 @login_required
 def home_view(request):
     hoje = date.today()
     
-    # --- Cálculos para os Cartões do Dashboard ---
     todas_as_faturas = Fatura.objects.all()
     faturas_pagas = todas_as_faturas.filter(paga=True)
     num_pagas = faturas_pagas.count()
@@ -49,7 +48,6 @@ def home_view(request):
 
     num_clientes = Cliente.objects.count()
     
-    # --- LÓGICA DO GRÁFICO (COM A CORREÇÃO) ---
     periodo = request.GET.get('periodo', '1m_daily')
     start_date_str = request.GET.get('start_date')
     end_date_str = request.GET.get('end_date')
@@ -74,20 +72,18 @@ def home_view(request):
             dados_grafico.append(float(total_com_igv))
             mes_atual_iter += relativedelta(months=1)
             
-    # --- BLOCO CORRIGIDO E REINTRODUZIDO ---
     elif periodo == '1m_daily':
         mes_atual, ano_atual = hoje.month, hoje.year
         _, num_dias = calendar.monthrange(ano_atual, mes_atual)
         
         for dia in range(1, num_dias + 1):
-            labels_grafico.append(str(dia)) # Adiciona a etiqueta para cada dia: '1', '2', '3'...
+            labels_grafico.append(str(dia))
             data_especifica = date(ano_atual, mes_atual, dia)
-            # Filtra as faturas apenas para este dia específico
             faturas_do_dia = faturas_grafico.filter(data_emissao=data_especifica)
             total_do_dia = sum(f.total_geral for f in faturas_do_dia)
             dados_grafico.append(float(total_do_dia))
 
-    else: # Lógica para 3m e 6m
+    else:
         num_meses = 3 if periodo == '3m' else 6
         for i in range(num_meses):
             mes_calculo = hoje - relativedelta(months=i)
@@ -98,7 +94,6 @@ def home_view(request):
         labels_grafico.reverse()
         dados_grafico.reverse()
     
-    # --- Resto da lógica da view (Estoque, Top 10, etc.) ---
     config, created = Configuracao.objects.get_or_create(pk=1)
     limite_estoque_baixo = config.limite_alerta_estoque
     produtos_estoque_baixo = Produto.objects.filter(estoque_atual__lte=limite_estoque_baixo).order_by('estoque_atual')
@@ -122,34 +117,22 @@ def home_view(request):
 
 @login_required
 def lista_clientes_view(request):
-    # Obtém os parâmetros de busca da URL
     q_nome = request.GET.get('q_nome', '')
     q_telefone = request.GET.get('q_telefone', '')
-
-    # Começa com todos os clientes, ordenados por nome
     clientes = Cliente.objects.all().order_by('nome')
-
-    # Aplica os filtros se os parâmetros de busca existirem
     if q_nome:
         clientes = clientes.filter(nome__icontains=q_nome)
-    
     if q_telefone:
         clientes = clientes.filter(telefone__icontains=q_telefone)
-
-    # A paginação é aplicada sobre a lista de clientes já filtrada
     paginator = Paginator(clientes, 15)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    
-    contexto = {'page_obj': page_obj}
-    
-    return render(request, 'stock/lista_clientes.html', contexto)
+    return render(request, 'stock/lista_clientes.html', {'page_obj': page_obj})
 
 @login_required
 def adicionar_cliente_view(request):
     if request.method == 'POST':
         nome = request.POST.get('nome')
-        # Adicionado 'utilizador=request.user' para registar o criador
         Cliente.objects.create(
             nome=nome, 
             nif=request.POST.get('nif'), 
@@ -171,13 +154,11 @@ def editar_cliente_view(request, cliente_id):
         cliente.telefone = request.POST.get('telefone')
         cliente.email = request.POST.get('email')
         cliente.endereco = request.POST.get('endereco')
-        # Adicionada a linha para registar quem modificou
         cliente.modificado_por = request.user
         cliente.save()
         messages.success(request, _("Os dados do cliente '{nome}' foram atualizados com sucesso!").format(nome=cliente.nome))
         return redirect('lista_clientes')
-    contexto = {'cliente': cliente}
-    return render(request, 'stock/editar_cliente.html', contexto)
+    return render(request, 'stock/editar_cliente.html', {'cliente': cliente})
 
 @login_required
 def apagar_cliente_view(request, cliente_id):
@@ -190,8 +171,7 @@ def apagar_cliente_view(request, cliente_id):
         except models.ProtectedError:
             messages.error(request, _("O cliente '{nome}' não pode ser apagado porque já tem faturas associadas a ele.").format(nome=cliente.nome))
         return redirect('lista_clientes')
-    contexto = {'cliente': cliente}
-    return render(request, 'stock/cliente_confirm_delete.html', contexto)
+    return render(request, 'stock/cliente_confirm_delete.html', {'cliente': cliente})
 
 @login_required
 def lista_produtos_view(request):
@@ -199,18 +179,14 @@ def lista_produtos_view(request):
     paginator = Paginator(produtos_list, 15)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    contexto = {'page_obj': page_obj}
-    return render(request, 'stock/lista_produtos.html', contexto)
+    return render(request, 'stock/lista_produtos.html', {'page_obj': page_obj})
 
 @login_required
 def adicionar_produto_view(request):
     if request.method == 'POST':
         nome = request.POST.get('nome')
-        # Adicionado 'utilizador=request.user' para registar o criador
         Produto.objects.create(
-            nome=nome, 
-            calibre=request.POST.get('calibre'), 
-            descricao=request.POST.get('descricao'), 
+            nome=nome, calibre=request.POST.get('calibre'), descricao=request.POST.get('descricao'), 
             unidade_medida=request.POST.get('unidade_medida'), 
             estoque_atual=Decimal(request.POST.get('estoque_atual', '0.00')), 
             preco_por_unidade=Decimal(request.POST.get('preco_por_unidade', '0.00')),
@@ -218,8 +194,7 @@ def adicionar_produto_view(request):
         )
         messages.success(request, _("O produto '{nome}' foi adicionado com sucesso!").format(nome=nome))
         return redirect('lista_produtos')
-    contexto = {'unidades': Produto.UNIDADES}
-    return render(request, 'stock/adicionar_produto.html', contexto)
+    return render(request, 'stock/adicionar_produto.html', {'unidades': Produto.UNIDADES})
 
 @login_required
 def editar_produto_view(request, produto_id):
@@ -231,13 +206,11 @@ def editar_produto_view(request, produto_id):
         produto.unidade_medida = request.POST.get('unidade_medida')
         produto.estoque_atual = Decimal(request.POST.get('estoque_atual', '0.00'))
         produto.preco_por_unidade = Decimal(request.POST.get('preco_por_unidade', '0.00'))
-        # Adicionada a linha para registar quem modificou
         produto.modificado_por = request.user
         produto.save()
         messages.success(request, _("O produto '{nome}' foi atualizado com sucesso!").format(nome=produto.nome))
         return redirect('lista_produtos')
-    contexto = {'produto': produto, 'unidades': Produto.UNIDADES}
-    return render(request, 'stock/editar_produto.html', contexto)
+    return render(request, 'stock/editar_produto.html', {'produto': produto, 'unidades': Produto.UNIDADES})
 
 @login_required
 def apagar_produto_view(request, produto_id):
@@ -250,20 +223,17 @@ def apagar_produto_view(request, produto_id):
         except models.ProtectedError:
             messages.error(request, _("O produto '{nome}' não pode ser apagado porque já está associado a faturas existentes.").format(nome=produto.nome))
         return redirect('lista_produtos')
-    contexto = {'produto': produto}
-    return render(request, 'stock/produto_confirm_delete.html', contexto)
+    return render(request, 'stock/produto_confirm_delete.html', {'produto': produto})
 
 @login_required
 def criar_fatura_view(request):
     if request.method == 'GET':
-        contexto = { 'clientes': Cliente.objects.all(), 'produtos': Produto.objects.all().order_by('nome') }
-        return render(request, 'stock/criar_fatura.html', contexto)
+        return render(request, 'stock/criar_fatura.html', { 'clientes': Cliente.objects.all(), 'produtos': Produto.objects.all().order_by('nome') })
     if request.method == 'POST':
         try:
             with transaction.atomic():
                 cliente_id = request.POST.get('cliente')
-                if not cliente_id:
-                    raise ValueError(_("Por favor, selecione um cliente."))
+                if not cliente_id: raise ValueError(_("Por favor, selecione um cliente."))
                 taxa_igv = Decimal(request.POST.get('taxa_igv', '17.00'))
                 desconto = Decimal(request.POST.get('desconto', '0.00'))
                 adiantamento = Decimal(request.POST.get('adiantamento', '0.00'))
@@ -272,21 +242,18 @@ def criar_fatura_view(request):
                 cliente = Cliente.objects.get(id=cliente_id)
                 ano_atual = date.today().year
                 ultima_fatura_ano = Fatura.objects.filter(data_emissao__year=ano_atual).order_by('numero_fatura').last()
+                novo_numero_seq = 1
                 if ultima_fatura_ano and ultima_fatura_ano.numero_fatura:
                     try:
-                        ultimo_numero = int(ultima_fatura_ano.numero_fatura.split('-')[-1])
-                        novo_numero_seq = ultimo_numero + 1
+                        novo_numero_seq = int(ultima_fatura_ano.numero_fatura.split('-')[-1]) + 1
                     except (ValueError, IndexError):
                         novo_numero_seq = Fatura.objects.filter(data_emissao__year=ano_atual).count() + 1
-                else:
-                    novo_numero_seq = 1
                 numero_final_fatura = f"{ano_atual}-{novo_numero_seq:04d}"
                 nova_fatura = Fatura.objects.create(cliente=cliente, numero_fatura=numero_final_fatura, taxa_igv=taxa_igv, desconto=desconto, adiantamento=adiantamento, utilizador=request.user)
                 for item_str in itens_json:
                     item_data = json.loads(item_str)
-                    produto_id = item_data['produto_id']
+                    produto = Produto.objects.get(id=item_data['produto_id'])
                     quantidade = Decimal(item_data['quantidade'])
-                    produto = Produto.objects.get(id=produto_id)
                     if produto.estoque_atual < quantidade: raise ValueError(_("Estoque insuficiente para {produto_nome}. Disponível: {estoque}").format(produto_nome=produto.nome, estoque=produto.estoque_atual))
                     ItemFatura.objects.create(fatura=nova_fatura, produto=produto, quantidade=quantidade, preco_unitario=Decimal(item_data['preco_unitario']))
                     produto.estoque_atual -= quantidade
@@ -295,8 +262,7 @@ def criar_fatura_view(request):
                 return redirect('detalhe_fatura', fatura_id=nova_fatura.id)
         except Exception as e:
             messages.error(request, _("Ocorreu um erro ao gerar a fatura: {erro}").format(erro=e))
-            contexto_erro = { 'clientes': Cliente.objects.all(), 'produtos': Produto.objects.all().order_by('nome') }
-            return render(request, 'stock/criar_fatura.html', contexto_erro)
+            return render(request, 'stock/criar_fatura.html', { 'clientes': Cliente.objects.all(), 'produtos': Produto.objects.all().order_by('nome') })
     return redirect('home')
 
 @login_required
@@ -309,141 +275,158 @@ def editar_fatura_view(request, fatura_id):
                     item_antigo.produto.estoque_atual += item_antigo.quantidade
                     item_antigo.produto.save()
                 fatura.itens.all().delete()
-                
                 cliente_id = request.POST.get('cliente')
-                if not cliente_id:
-                    raise ValueError(_("O campo cliente não pode estar vazio."))
-                
-                taxa_igv = Decimal(request.POST.get('taxa_igv', '17.00'))
-                desconto = Decimal(request.POST.get('desconto', '0.00'))
-                adiantamento = Decimal(request.POST.get('adiantamento', '0.00'))
+                if not cliente_id: raise ValueError(_("O campo cliente não pode estar vazio."))
                 itens_json = request.POST.getlist('items[]')
-
                 if not itens_json: raise ValueError(_("A fatura deve ter pelo menos um item."))
-
                 fatura.cliente = Cliente.objects.get(id=cliente_id)
-                fatura.taxa_igv = taxa_igv
-                fatura.desconto = desconto
-                fatura.adiantamento = adiantamento
-                
-                # --- LINHA ADICIONADA AQUI ---
-                fatura.modificado_por = request.user # Guarda o utilizador que está a fazer a edição
-                
-                fatura.save() # Salva todas as alterações
-
+                fatura.taxa_igv = Decimal(request.POST.get('taxa_igv', '17.00'))
+                fatura.desconto = Decimal(request.POST.get('desconto', '0.00'))
+                fatura.adiantamento = Decimal(request.POST.get('adiantamento', '0.00'))
+                fatura.modificado_por = request.user
+                fatura.save()
                 for item_str in itens_json:
                     item_data = json.loads(item_str)
-                    produto_id = item_data['produto_id']
+                    produto = Produto.objects.get(id=item_data['produto_id'])
                     quantidade = Decimal(item_data['quantidade'])
-                    produto = Produto.objects.get(id=produto_id)
-                    
                     if produto.estoque_atual < quantidade: raise ValueError(_("Estoque insuficiente para {produto_nome}. Disponível: {estoque}").format(produto_nome=produto.nome, estoque=produto.estoque_atual))
-                    
                     ItemFatura.objects.create(fatura=fatura, produto=produto, quantidade=quantidade, preco_unitario=Decimal(item_data['preco_unitario']))
                     produto.estoque_atual -= quantidade
                     produto.save()
-                    
                 messages.success(request, _("Fatura {numero} atualizada com sucesso!").format(numero=fatura.numero_fatura))
                 return redirect('detalhe_fatura', fatura_id=fatura.id)
         except Exception as e:
             messages.error(request, _("Ocorreu um erro ao salvar as alterações: {erro}").format(erro=e))
             return redirect('editar_fatura', fatura_id=fatura.id)
-            
-    itens_atuais = []
-    for item in fatura.itens.all():
-        itens_atuais.append({
-            'produto_id': item.produto.id, 
-            'produto_nome': f"{item.produto.nome} ({item.produto.calibre})" if item.produto.calibre else item.produto.nome, 
-            'quantidade': str(item.quantidade), 
-            'preco_unitario': str(item.preco_unitario), 
-            'subtotal': str(item.subtotal),
-        })
-    contexto = {
-        'fatura': fatura, 
-        'clientes': Cliente.objects.all(), 
-        'produtos': Produto.objects.all().order_by('nome'), 
-        'itens_atuais_json': json.dumps(itens_atuais)
-    }
-    return render(request, 'stock/editar_fatura.html', contexto)
+    itens_atuais = [{'produto_id': item.produto.id, 'produto_nome': f"{item.produto.nome} ({item.produto.calibre})" if item.produto.calibre else item.produto.nome, 'quantidade': str(item.quantidade), 'preco_unitario': str(item.preco_unitario), 'subtotal': str(item.subtotal)} for item in fatura.itens.all()]
+    return render(request, 'stock/editar_fatura.html', {'fatura': fatura, 'clientes': Cliente.objects.all(), 'produtos': Produto.objects.all().order_by('nome'), 'itens_atuais_json': json.dumps(itens_atuais)})
 
 @login_required
 def lista_faturas_view(request):
-    # Obtém os parâmetros de busca da URL (request.GET)
     q_numero = request.GET.get('q_numero', '')
     q_cliente = request.GET.get('q_cliente', '')
     q_data = request.GET.get('q_data', '')
-
-    # Começa com todas as faturas
+    q_paga = request.GET.get('q_paga', '')
+    q_periodo = request.GET.get('q_periodo', '')
     faturas = Fatura.objects.all().order_by('-data_emissao', '-numero_fatura')
-
-    # Aplica os filtros se os parâmetros de busca existirem
-    if q_numero:
-        faturas = faturas.filter(numero_fatura__icontains=q_numero)
-    
-    if q_cliente:
-        faturas = faturas.filter(cliente__nome__icontains=q_cliente)
-
+    if q_numero: faturas = faturas.filter(numero_fatura__icontains=q_numero)
+    if q_cliente: faturas = faturas.filter(cliente__nome__icontains=q_cliente)
     if q_data:
-        try:
-            # Tenta converter a data e filtrar
-            data_filtro = datetime.strptime(q_data, '%Y-%m-%d').date()
-            faturas = faturas.filter(data_emissao=data_filtro)
-        except (ValueError, TypeError):
-            # Ignora o filtro se a data for inválida
-            pass
-    
-    # A paginação é aplicada sobre a lista de faturas já filtrada
+        try: faturas = faturas.filter(data_emissao=datetime.strptime(q_data, '%Y-%m-%d').date())
+        except (ValueError, TypeError): pass
+    if q_paga == 'sim': faturas = faturas.filter(paga=True)
+    if q_paga == 'nao': faturas = faturas.filter(paga=False)
+    if q_periodo == 'mes_atual':
+        hoje = date.today()
+        faturas = faturas.filter(data_emissao__year=hoje.year, data_emissao__month=hoje.month)
     paginator = Paginator(faturas, 15)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    
-    # O contexto não precisa passar os 'q_', pois já estão em request.GET, 
-    # que é acessível no template.
-    contexto = {'page_obj': page_obj}
-    
-    return render(request, 'stock/lista_faturas.html', contexto)
+    page_obj = paginator.get_page(request.GET.get('page'))
+    return render(request, 'stock/lista_faturas.html', {'page_obj': page_obj})
 
 @login_required
 def detalhe_fatura_view(request, fatura_id):
     fatura = get_object_or_404(Fatura, id=fatura_id)
-    dados_empresa = DadosEmpresa.objects.first()
-    contexto = { 'fatura': fatura, 'dados_empresa': dados_empresa, }
-    return render(request, 'stock/detalhe_fatura.html', contexto)
+    return render(request, 'stock/detalhe_fatura.html', {'fatura': fatura})
 
 @login_required
 def toggle_fatura_paga_view(request, fatura_id):
     if request.method == 'POST':
         fatura = get_object_or_404(Fatura, id=fatura_id)
         fatura.paga = not fatura.paga
-
-        # --- LINHA ADICIONADA AQUI ---
-        fatura.modificado_por = request.user # Guarda quem clicou no botão
-
-        fatura.save() # Salva o novo estado 'paga' e o 'modificado_por'
-
-        if fatura.paga:
-            messages.success(request, _("A fatura {numero} foi marcada como PAGA.").format(numero=fatura.numero_fatura))
-        else:
-            messages.info(request, _("A fatura {numero} foi marcada como NÃO PAGA.").format(numero=fatura.numero_fatura))
+        fatura.modificado_por = request.user
+        fatura.save()
+        messages.success(request, _("A fatura {numero} foi marcada como PAGA.").format(numero=fatura.numero_fatura) if fatura.paga else _("A fatura {numero} foi marcada como NÃO PAGA.").format(numero=fatura.numero_fatura))
     return redirect('lista_faturas')
 
 @login_required
 def fatura_print_view(request, fatura_id):
     fatura = get_object_or_404(Fatura, id=fatura_id)
-    dados_empresa = DadosEmpresa.objects.first()
-    contexto = { 'fatura': fatura, 'dados_empresa': dados_empresa, }
-    return render(request, 'stock/fatura_print.html', contexto)
+    return render(request, 'stock/fatura_print.html', {'fatura': fatura})
 
-# --- VIEWS DE GUIAS DE TRANSPORTE (ATUALIZADO) ---
+@login_required
+def fatura_pdf_view(request, fatura_id):
+    if HTML is None:
+        return HttpResponse("WeasyPrint não está instalado.", status=501)
+    fatura = get_object_or_404(Fatura, id=fatura_id)
+    dados_empresa = DadosEmpresa.objects.first()
+    logo_uri = None
+    if dados_empresa and dados_empresa.logotipo and hasattr(dados_empresa.logotipo, 'path'):
+        logo_path = pathlib.Path(dados_empresa.logotipo.path)
+        logo_uri = logo_path.as_uri()
+    contexto = {'fatura': fatura, 'dados_empresa': dados_empresa, 'logo_uri': logo_uri}
+    html_string = render_to_string('stock/fatura_pdf.html', contexto)
+    pdf = HTML(string=html_string, base_url=request.build_absolute_uri('/')).write_pdf()
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="fatura_{fatura.numero_fatura}.pdf"'
+    return response
+
+# --- VIEW ATUALIZADA ---
+@login_required
+def enviar_fatura_email_view(request, fatura_id):
+    fatura = get_object_or_404(Fatura, id=fatura_id)
+    if request.method == 'POST':
+        if not fatura.cliente.email:
+            messages.error(request, _("O cliente '{nome}' não tem um endereço de email associado.").format(nome=fatura.cliente.nome))
+            return redirect('detalhe_fatura', fatura_id=fatura.id)
+        if HTML is None:
+            messages.error(request, "A biblioteca WeasyPrint não está instalada. O PDF não pode ser gerado.")
+            return redirect('detalhe_fatura', fatura_id=fatura.id)
+        try:
+            config = Configuracao.objects.first()
+            if not config or not config.email_remetente or not config.password_remetente:
+                messages.error(request, _("As credenciais de email não estão configuradas na área de administração."))
+                return redirect('detalhe_fatura', fatura_id=fatura.id)
+            dados_empresa = DadosEmpresa.objects.first()
+
+            # Corpo do email em texto simples
+            corpo_email = _("""
+            Caro(a) {cliente_nome},
+
+            Segue em anexo a fatura com o número {numero_fatura}.
+
+            Com os melhores cumprimentos,
+            {nome_empresa}
+            """).format(
+                cliente_nome=fatura.cliente.nome,
+                numero_fatura=fatura.numero_fatura,
+                nome_empresa=dados_empresa.nome_empresa if dados_empresa else 'A nossa empresa'
+            )
+            
+            # Lógica para gerar o PDF para o anexo
+            logo_uri = None
+            if dados_empresa and dados_empresa.logotipo and hasattr(dados_empresa.logotipo, 'path'):
+                logo_path = pathlib.Path(dados_empresa.logotipo.path)
+                logo_uri = logo_path.as_uri()
+            contexto_pdf = {'fatura': fatura, 'dados_empresa': dados_empresa, 'logo_uri': logo_uri}
+            html_string = render_to_string('stock/fatura_pdf.html', contexto_pdf)
+            pdf_em_memoria = HTML(string=html_string, base_url=request.build_absolute_uri('/')).write_pdf()
+            
+            assunto = _("Fatura Nº {numero_fatura} da {nome_empresa}").format(
+                numero_fatura=fatura.numero_fatura, 
+                nome_empresa=dados_empresa.nome_empresa if dados_empresa else ''
+            )
+            
+            email = EmailMessage(
+                assunto,
+                corpo_email, # Usar o corpo em texto simples
+                config.email_remetente,
+                [fatura.cliente.email]
+            )
+            email.attach(f'Fatura-{fatura.numero_fatura}.pdf', pdf_em_memoria, 'application/pdf')
+
+            connection = get_connection(host=settings.EMAIL_HOST, port=settings.EMAIL_PORT, username=config.email_remetente, password=config.password_remetente, use_tls=settings.EMAIL_USE_TLS)
+            connection.send_messages([email])
+            messages.success(request, _("Fatura enviada com sucesso para {email}.").format(email=fatura.cliente.email))
+        except Exception as e:
+            messages.error(request, _("Ocorreu um erro ao enviar o email: {erro}").format(erro=e))
+    return redirect('detalhe_fatura', fatura_id=fatura.id)
 
 @login_required
 def lista_guias_view(request):
     todas_as_guias_list = GuiaTransporte.objects.all()
     paginator = Paginator(todas_as_guias_list, 15)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    contexto = {'page_obj': page_obj}
-    return render(request, 'stock/lista_guias.html', contexto)
+    page_obj = paginator.get_page(request.GET.get('page'))
+    return render(request, 'stock/lista_guias.html', {'page_obj': page_obj})
 
 @login_required
 def criar_guia_desde_fatura_view(request, fatura_id):
@@ -456,33 +439,24 @@ def criar_guia_desde_fatura_view(request, fatura_id):
             with transaction.atomic():
                 ano_atual = date.today().year
                 ultima_guia_ano = GuiaTransporte.objects.filter(data_emissao__year=ano_atual).order_by('numero_guia').last()
+                novo_numero_seq = 1
                 if ultima_guia_ano and ultima_guia_ano.numero_guia:
-                    try:
-                        ultimo_numero = int(ultima_guia_ano.numero_guia.split('-')[-1])
-                        novo_numero_seq = ultimo_numero + 1
-                    except (ValueError, IndexError):
-                        novo_numero_seq = GuiaTransporte.objects.filter(data_emissao__year=ano_atual).count() + 1
-                else:
-                    novo_numero_seq = 1
+                    try: novo_numero_seq = int(ultima_guia_ano.numero_guia.split('-')[-1]) + 1
+                    except (ValueError, IndexError): novo_numero_seq = GuiaTransporte.objects.filter(data_emissao__year=ano_atual).count() + 1
                 numero_final_guia = f"{ano_atual}-{novo_numero_seq:04d}"
                 nova_guia = GuiaTransporte.objects.create(fatura=fatura, numero_guia=numero_final_guia, morada_carga=request.POST.get('morada_carga', ''), morada_descarga=request.POST.get('morada_descarga', ''), matricula_veiculo=request.POST.get('matricula_veiculo', ''), utilizador=request.user)
-                for item_fatura in fatura.itens.all():
-                    ItemGuia.objects.create(guia=nova_guia, produto=item_fatura.produto, quantidade=item_fatura.quantidade)
+                for item_fatura in fatura.itens.all(): ItemGuia.objects.create(guia=nova_guia, produto=item_fatura.produto, quantidade=item_fatura.quantidade)
                 messages.success(request, _("Guia de Transporte {numero} criada com sucesso a partir da fatura {fatura_num}.").format(numero=nova_guia.numero_guia, fatura_num=fatura.numero_fatura))
                 return redirect('detalhe_guia', guia_id=nova_guia.id)
         except Exception as e:
             messages.error(request, _("Ocorreu um erro ao gerar a guia: {erro}").format(erro=e))
             return redirect('detalhe_fatura', fatura_id=fatura.id)
-    dados_empresa = DadosEmpresa.objects.first()
-    contexto = {'fatura': fatura, 'dados_empresa': dados_empresa}
-    return render(request, 'stock/criar_guia_desde_fatura.html', contexto)
+    return render(request, 'stock/criar_guia_desde_fatura.html', {'fatura': fatura, 'dados_empresa': DadosEmpresa.objects.first()})
 
 @login_required
 def detalhe_guia_view(request, guia_id):
     guia = get_object_or_404(GuiaTransporte, id=guia_id)
-    dados_empresa = DadosEmpresa.objects.first()
-    contexto = { 'guia': guia, 'dados_empresa': dados_empresa }
-    return render(request, 'stock/detalhe_guia.html', contexto)
+    return render(request, 'stock/detalhe_guia.html', {'guia': guia})
 
 @login_required
 def editar_guia_view(request, guia_id):
@@ -499,43 +473,33 @@ def editar_guia_view(request, guia_id):
         except Exception as e:
             messages.error(request, _("Ocorreu um erro ao salvar as alterações: {erro}").format(erro=e))
             return redirect('editar_guia', guia_id=guia.id)
-    contexto = {'guia': guia}
-    return render(request, 'stock/editar_guia.html', contexto)
+    return render(request, 'stock/editar_guia.html', {'guia': guia})
 
 @login_required
 def guia_print_view(request, guia_id):
     guia = get_object_or_404(GuiaTransporte, id=guia_id)
-    dados_empresa = DadosEmpresa.objects.first()
-    contexto = { 'guia': guia, 'dados_empresa': dados_empresa }
-    return render(request, 'stock/guia_print.html', contexto)
+    return render(request, 'stock/guia_print.html', {'guia': guia, 'dados_empresa': DadosEmpresa.objects.first()})
 
 @login_required
-def enviar_fatura_email_view(request, fatura_id):
-    fatura = get_object_or_404(Fatura, id=fatura_id)
-    if request.method == 'POST':
-        if not fatura.cliente.email:
-            messages.error(request, _("O cliente '{nome}' não tem um endereço de email associado.").format(nome=fatura.cliente.nome))
-            return redirect('detalhe_fatura', fatura_id=fatura.id)
-        try:
-            config = Configuracao.objects.first()
-            if not config or not config.email_remetente or not config.password_remetente:
-                messages.error(request, _("As credenciais de email não estão configuradas na área de administração."))
-                return redirect('detalhe_fatura', fatura_id=fatura.id)
-            dados_empresa = DadosEmpresa.objects.first()
-            logo_url = ''
-            if dados_empresa and dados_empresa.logotipo:
-                logo_url = request.build_absolute_uri(dados_empresa.logotipo.url)
-            contexto_email = {'fatura': fatura, 'dados_empresa': dados_empresa, 'logo_url': logo_url}
-            html_content = render_to_string('stock/fatura_email.html', contexto_email)
-            assunto = _("Fatura Nº {numero_fatura} da {nome_empresa}").format(numero_fatura=fatura.numero_fatura, nome_empresa=dados_empresa.nome_empresa if dados_empresa else '')
-            email = EmailMessage(assunto, html_content, config.email_remetente, [fatura.cliente.email])
-            email.content_subtype = "html"
-            connection = get_connection(host=settings.EMAIL_HOST, port=settings.EMAIL_PORT, username=config.email_remetente, password=config.password_remetente, use_tls=settings.EMAIL_USE_TLS)
-            connection.send_messages([email])
-            messages.success(request, _("Fatura enviada com sucesso para {email}.").format(email=fatura.cliente.email))
-        except Exception as e:
-            messages.error(request, _("Ocorreu um erro ao enviar o email: {erro}").format(erro=e))
-    return redirect('detalhe_fatura', fatura_id=fatura.id)
+def guia_pdf_view(request, guia_id):
+    if HTML is None:
+        return HttpResponse("WeasyPrint não está instalado.", status=501)
+    guia = get_object_or_404(GuiaTransporte, id=guia_id)
+    dados_empresa = DadosEmpresa.objects.first()
+    logo_uri = None
+    if dados_empresa and dados_empresa.logotipo and hasattr(dados_empresa.logotipo, 'path'):
+        logo_path = pathlib.Path(dados_empresa.logotipo.path)
+        logo_uri = logo_path.as_uri()
+    contexto = {
+        'guia': guia,
+        'dados_empresa': dados_empresa,
+        'logo_uri': logo_uri,
+    }
+    html_string = render_to_string('stock/guia_pdf.html', contexto)
+    pdf = HTML(string=html_string, base_url=request.build_absolute_uri('/')).write_pdf()
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="guia_{guia.numero_guia}.pdf"'
+    return response
 
 @login_required
 def enviar_guia_email_view(request, guia_id):
@@ -544,20 +508,31 @@ def enviar_guia_email_view(request, guia_id):
         if not guia.cliente.email:
             messages.error(request, _("O cliente '{nome}' não tem um endereço de email associado.").format(nome=guia.cliente.nome))
             return redirect('detalhe_guia', guia_id=guia.id)
+        if HTML is None:
+            messages.error(request, "A biblioteca WeasyPrint não está instalada. O PDF não pode ser gerado.")
+            return redirect('detalhe_guia', guia_id=guia.id)
         try:
             config = Configuracao.objects.first()
             if not config or not config.email_remetente or not config.password_remetente:
                 messages.error(request, _("As credenciais de email não estão configuradas na área de administração."))
                 return redirect('detalhe_guia', guia_id=guia.id)
             dados_empresa = DadosEmpresa.objects.first()
-            logo_url = ''
-            if dados_empresa and dados_empresa.logotipo:
-                logo_url = request.build_absolute_uri(dados_empresa.logotipo.url)
-            contexto_email = {'guia': guia, 'dados_empresa': dados_empresa, 'logo_url': logo_url}
-            html_content = render_to_string('stock/guia_email.html', contexto_email)
+            
+            corpo_email = f"Caro(a) {guia.cliente.nome},\n\nSegue em anexo a Guia de Transporte com o número {guia.numero_guia}.\n\nCom os melhores cumprimentos,\n{dados_empresa.nome_empresa if dados_empresa else 'A nossa empresa'}"
+            
+            logo_uri = None
+            if dados_empresa and dados_empresa.logotipo and hasattr(dados_empresa.logotipo, 'path'):
+                logo_path = pathlib.Path(dados_empresa.logotipo.path)
+                logo_uri = logo_path.as_uri()
+            
+            contexto_pdf = {'guia': guia, 'dados_empresa': dados_empresa, 'logo_uri': logo_uri}
+            html_string = render_to_string('stock/guia_pdf.html', contexto_pdf)
+            pdf_em_memoria = HTML(string=html_string, base_url=request.build_absolute_uri('/')).write_pdf()
+            
             assunto = _("Guia de Transporte Nº {numero_guia} da {nome_empresa}").format(numero_guia=guia.numero_guia, nome_empresa=dados_empresa.nome_empresa if dados_empresa else '')
-            email = EmailMessage(assunto, html_content, config.email_remetente, [guia.cliente.email])
-            email.content_subtype = "html"
+            
+            email = EmailMessage(assunto, corpo_email, config.email_remetente, [guia.cliente.email])
+            email.attach(f'Guia-{guia.numero_guia}.pdf', pdf_em_memoria, 'application/pdf')
             connection = get_connection(host=settings.EMAIL_HOST, port=settings.EMAIL_PORT, username=config.email_remetente, password=config.password_remetente, use_tls=settings.EMAIL_USE_TLS)
             connection.send_messages([email])
             messages.success(request, _("Guia de Transporte enviada com sucesso para {email}.").format(email=guia.cliente.email))
@@ -565,15 +540,9 @@ def enviar_guia_email_view(request, guia_id):
             messages.error(request, _("Ocorreu um erro ao enviar o email: {erro}").format(erro=e))
     return redirect('detalhe_guia', guia_id=guia.id)
 
-# Adicione este código no final de stock/views.py
-
-from django.contrib.auth import views as auth_views
-# (A linha "from .models import DadosEmpresa" já deve existir no topo do seu ficheiro)
 
 class CustomLoginView(auth_views.LoginView):
     def get_context_data(self, **kwargs):
-        # Primeiro, obtém o contexto da classe original
         context = super().get_context_data(**kwargs)
-        # Depois, adiciona os dados da empresa ao contexto
         context['dados_empresa'] = DadosEmpresa.objects.first()
         return context

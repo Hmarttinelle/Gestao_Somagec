@@ -19,11 +19,19 @@
                     <label for="q_cliente" class="form-label">{% trans "Nome do Cliente" %}</label>
                     <input type="text" name="q_cliente" id="q_cliente" class="form-control" value="{{ request.GET.q_cliente }}">
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label for="q_data" class="form-label">{% trans "Data de Emissão" %}</label>
                     <input type="date" name="q_data" id="q_data" class="form-control" value="{{ request.GET.q_data }}">
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
+                    <label for="q_paga" class="form-label">{% trans "Estado" %}</label>
+                    <select name="q_paga" id="q_paga" class="form-select">
+                        <option value="" {% if not request.GET.q_paga %}selected{% endif %}>Todos</option>
+                        <option value="sim" {% if request.GET.q_paga == 'sim' %}selected{% endif %}>Paga</option>
+                        <option value="nao" {% if request.GET.q_paga == 'nao' %}selected{% endif %}>Não Paga</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
                     <button type="submit" class="btn btn-primary w-100">
                         <i class="fas fa-search"></i> {% trans "Pesquisar" %}
                     </button>
@@ -46,7 +54,7 @@
                             <th>{% trans "Criação" %}</th>
                             <th>{% trans "Criado por" %}</th>
                             <th>{% trans "Modificação" %}</th>
-                            <th>{% trans "Modificado por" %}</th> {# <-- NOVA COLUNA #}
+                            <th>{% trans "Modificado por" %}</th>
                             <th class="text-end">{% trans "Valor a Pagar" %}</th>
                             <th class="text-center">{% trans "Paga" %}</th>
                             <th class="text-end">{% trans "Ações" %}</th>
@@ -55,54 +63,31 @@
                     <tbody>
                         {% for fatura in page_obj %}
                             <tr>
-                                <td>
-                                    <a href="{% url 'detalhe_fatura' fatura.id %}"><strong>{{ fatura.numero_fatura }}</strong></a>
-                                </td>
+                                <td><a href="{% url 'detalhe_fatura' fatura.id %}"><strong>{{ fatura.numero_fatura }}</strong></a></td>
                                 <td>{{ fatura.cliente.nome }}</td>
                                 <td>{{ fatura.criado_em|date:"d/m/Y H:i" }}</td>
                                 <td>{{ fatura.utilizador.username|default:"N/A" }}</td>
-                                <td>
-                                    {% if fatura.foi_modificada %}
-                                        {{ fatura.atualizado_em|date:"d/m/Y H:i" }}
-                                    {% else %}
-                                        <span class="text-muted">--</span>
-                                    {% endif %}
-                                </td>
-                                <td> {# <-- NOVA CÉLULA #}
-                                    {% if fatura.modificado_por %}
-                                        {{ fatura.modificado_por.username }}
-                                    {% else %}
-                                        <span class="text-muted">--</span>
-                                    {% endif %}
-                                </td>
+                                <td>{% if fatura.foi_modificada %}{{ fatura.atualizado_em|date:"d/m/Y H:i" }}{% else %}<span class="text-muted">--</span>{% endif %}</td>
+                                <td>{% if fatura.modificado_por %}{{ fatura.modificado_por.username }}{% else %}<span class="text-muted">--</span>{% endif %}</td>
                                 <td class="text-end fw-bold">{{ fatura.valor_a_pagar|floatformat:2|intcomma }} CFA</td>
                                 <td class="text-center">
                                     <form action="{% url 'toggle_fatura_paga' fatura.id %}" method="post" class="d-inline">
                                         {% csrf_token %}
-                                        {% if fatura.paga %}
-                                            <button type="submit" class="btn btn-success btn-sm px-2 py-1">{% trans "Sim" %}</button>
-                                        {% else %}
-                                            <button type="submit" class="btn btn-danger btn-sm px-2 py-1">{% trans "Não" %}</button>
-                                        {% endif %}
+                                        <button type="submit" class="btn btn-sm px-2 py-1 {% if fatura.paga %}btn-success{% else %}btn-danger{% endif %}">
+                                            {% if fatura.paga %}{% trans "Sim" %}{% else %}{% trans "Não" %}{% endif %}
+                                        </button>
                                     </form>
                                 </td>
-                                <td class="text-end">
-                                    <a href="{% url 'editar_fatura' fatura.id %}" class="btn btn-warning btn-sm">{% trans "Editar" %}</a>
-                                </td>
+                                <td class="text-end"><a href="{% url 'editar_fatura' fatura.id %}" class="btn btn-warning btn-sm">{% trans "Editar" %}</a></td>
                             </tr>
                         {% empty %}
-                            <tr>
-                                <td colspan="9" class="text-center">{% trans "Nenhuma fatura encontrada." %}</td>
-                            </tr>
+                            <tr><td colspan="9" class="text-center">{% trans "Nenhuma fatura encontrada." %}</td></tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-
             {% if page_obj.has_other_pages %}
-                 {% with request.GET.urlencode as params %}
-                    {% include 'stock/pagination.html' with params=params %}
-                {% endwith %}
+                 {% with request.GET.urlencode as params %}{% include 'stock/pagination.html' with params=params %}{% endwith %}
             {% endif %}
         </div>
     </div>

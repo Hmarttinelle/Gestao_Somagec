@@ -1,104 +1,124 @@
-{% load i18n %}
-{% load l10n %}
-{% load static %}
-
+{% load i18n l10n humanize %}
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% blocktrans %}Guia de Transporte {{ guia.numero_guia }}{% endblocktrans %}</title>
+    <title>{% blocktrans %}Fatura {{ fatura.numero_fatura }}{% endblocktrans %}</title>
 </head>
 <body style="font-family: Arial, sans-serif; font-size: 12px; line-height: 1.5; background-color: #f4f4f4; margin: 0; padding: 20px;">
     <table width="100%" border="0" cellpadding="0" cellspacing="0">
         <tr>
             <td align="center">
-                <table width="600" border="0" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border: 1px solid #dddddd; border-radius: 5px; padding: 30px;">
+                <table width="650" border="0" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border: 1px solid #dddddd; padding: 30px;">
                     <tr>
                         <td style="padding-bottom: 20px;">
                             <table width="100%" border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td valign="top">
-                                        {% if logo_url %}
-                                            {# --- ALTERAÇÃO AQUI: Tamanho do logótipo igual ao do email da fatura --- #}
-                                            <img src="{{ logo_url }}" alt="Logotipo" style="max-height: 90px; max-width: 220px; height: auto; width: auto;">
+                                        {% if dados_empresa.logotipo and logo_url %}
+                                            <img src="{{ logo_url }}" alt="Logotipo" style="max-height: 120px; max-width: 300px;">
                                         {% elif dados_empresa %}
                                             <h2 style="margin: 0;">{{ dados_empresa.nome_empresa }}</h2>
                                         {% endif %}
                                     </td>
                                     <td valign="top" align="right">
-                                        <h1 style="margin: 0; font-size: 24px; color: #333;">{% trans "GUIA DE TRANSPORTE" %}</h1>
-                                        <p style="margin: 5px 0 0 0;"><strong>Nº:</strong> {{ guia.numero_guia }}</p>
-                                        <p style="margin: 5px 0 0 0;"><strong>{% trans "Data" %}:</strong> {{ guia.data_emissao }}</p>
+                                        <h1 style="margin: 0; font-size: 28px; color: #333;">{% trans "FATURA" %}</h1>
+                                        <p style="margin: 5px 0 0 0;"><strong>Nº:</strong> {{ fatura.numero_fatura }}</p>
+                                        <p style="margin: 5px 0 0 0;"><strong>{% trans "Data" %}:</strong> {{ fatura.data_emissao|date:"d/m/Y" }}</p>
                                     </td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
-                    <tr><td style="border-bottom: 2px solid #000; padding-top: 10px;"></td></tr>
+                    
                     <tr>
-                        <td style="padding-top: 20px; padding-bottom: 30px;">
+                        <td style="padding-top: 20px; padding-bottom: 20px; border-bottom: 2px solid #000;">
                             <table width="100%" border="0" cellpadding="0" cellspacing="0">
                                 <tr>
-                                    <td width="33%" valign="top" style="padding-right: 10px;">
-                                        <h4 style="margin: 0 0 5px 0; font-size: 13px;">{% trans "Expedidor" %}</h4>
+                                    <td width="50%" valign="top">
                                         <strong>{{ dados_empresa.nome_empresa }}</strong><br>
-                                        {{ dados_empresa.endereco|linebreaksbr }}<br>
+                                        Tel: {{ dados_empresa.telefone }}<br>
+                                        Email: {{ dados_empresa.email }}<br>
                                         NIF: {{ dados_empresa.nif }}
                                     </td>
-                                    <td width="33%" valign="top" style="padding-left: 10px; padding-right: 10px;">
-                                        <h4 style="margin: 0 0 5px 0; font-size: 13px;">{% trans "Destinatário" %}</h4>
-                                        <strong>{{ guia.cliente.nome }}</strong><br>
-                                        {% if guia.cliente.endereco %}{{ guia.cliente.endereco|linebreaksbr }}<br>{% endif %}
-                                        {% if guia.cliente.nif %}NIF: {{ guia.cliente.nif }}{% endif %}
-                                    </td>
-                                    <td width="33%" valign="top" style="padding-left: 10px;">
-                                        <h4 style="margin: 0 0 5px 0; font-size: 13px;">{% trans "Transporte" %}</h4>
-                                        <strong>{% trans "Matrícula" %}:</strong> {{ guia.matricula_veiculo|default:"N/A" }}<br>
-                                        <strong>{% trans "Carga" %}:</strong> {{ guia.morada_carga|linebreaksbr }}<br>
-                                        <strong>{% trans "Descarga" %}:</strong> {{ guia.morada_descarga|linebreaksbr }}
+                                    <td width="50%" valign="top" align="right">
+                                        <strong>{% trans "Faturado a" %}:</strong><br>
+                                        {{ fatura.cliente.nome }}<br>
+                                        {% if fatura.cliente.endereco %}{{ fatura.cliente.endereco|linebreaksbr }}<br>{% endif %}
+                                        {% if fatura.cliente.nif %}NIF: {{ fatura.cliente.nif }}{% endif %}
                                     </td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
+
                     <tr>
-                        <td>
+                        <td style="padding-top: 30px;">
                             <table width="100%" cellpadding="8" cellspacing="0" style="border-collapse: collapse;">
                                 <thead style="background-color: #f2f2f2;">
                                     <tr>
                                         <th style="border: 1px solid #ddd; text-align: left;">{% trans "Produto / Serviço" %}</th>
-                                        <th style="border: 1px solid #ddd; text-align: right;">{% trans "Quantidade" %}</th>
+                                        <th style="border: 1px solid #ddd; text-align: right;">{% trans "Qtd." %}</th>
+                                        <th style="border: 1px solid #ddd; text-align: right;">{% trans "Preço Unit." %}</th>
+                                        <th style="border: 1px solid #ddd; text-align: right;">{% trans "Subtotal" %}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for item in guia.itens.all %}
+                                    {% for item in fatura.itens.all %}
                                     <tr>
                                         <td style="border: 1px solid #ddd;">{{ item.produto.nome }}{% if item.produto.calibre %} ({{ item.produto.calibre }}){% endif %}</td>
-                                        <td style="border: 1px solid #ddd;" align="right">{{ item.quantidade|floatformat:2 }} {{ item.produto.get_unidade_medida_display }}</td>
+                                        <td style="border: 1px solid #ddd;" align="right">{{ item.quantidade|floatformat:2|intcomma }} {{ item.produto.get_unidade_medida_display }}</td>
+                                        <td style="border: 1px solid #ddd;" align="right">{{ item.preco_unitario|floatformat:2|intcomma }} CFA</td>
+                                        <td style="border: 1px solid #ddd;" align="right">{{ item.subtotal|floatformat:2|intcomma }} CFA</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
                         </td>
                     </tr>
+
+                    <tr>
+                        <td align="right" style="padding-top: 20px; padding-bottom: 50px;">
+                            <table width="50%" cellpadding="5" cellspacing="0" style="border-collapse: collapse;">
+                                <tr><td>{% trans "Subtotal" %}:</td><td align="right">{{ fatura.subtotal|floatformat:2|intcomma }} CFA</td></tr>
+                                {% if fatura.desconto > 0 %}
+                                <tr style="color: #dc3545;"><td>{% trans "Desconto" %} ({{ fatura.desconto|floatformat:2 }}%):</td><td align="right">- {{ fatura.valor_desconto|floatformat:2|intcomma }} CFA</td></tr>
+                                <tr><td>{% trans "Subtotal c/ Desconto" %}:</td><td align="right">{{ fatura.subtotal_apos_desconto|floatformat:2|intcomma }} CFA</td></tr>
+                                {% endif %}
+                                <tr><td>{% trans "IGV" %} ({{ fatura.taxa_igv|floatformat:2 }}%):</td><td align="right">{{ fatura.valor_igv|floatformat:2|intcomma }} CFA</td></tr>
+                                <tr style="font-weight: bold; border-top: 1px solid #ccc;"><td>{% trans "Total Geral" %}:</td><td align="right">{{ fatura.total_geral|floatformat:2|intcomma }} CFA</td></tr>
+                                {% if fatura.adiantamento > 0 %}
+                                <tr style="color: #198754;"><td>{% trans "Adiantamento" %}:</td><td align="right">- {{ fatura.adiantamento|floatformat:2|intcomma }} CFA</td></tr>
+                                {% endif %}
+                                <tr style="font-weight: bold; font-size: 1.2em; border-top: 2px solid #000; background-color: #333; color: #fff;">
+                                    <td style="padding: 8px;">{% trans "VALOR A PAGAR" %}:</td>
+                                    <td align="right" style="padding: 8px;">{{ fatura.valor_a_pagar|floatformat:2|intcomma }} CFA</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
                     
                     <tr>
-                        <td style="padding-top: 30px; border-top: 1px solid #cccccc; margin-top: 30px;">
+                        <td style="padding-top: 15px; border-top: 1px solid #cccccc; font-size: 10px; color: #555;">
                             <table width="100%" border="0" cellpadding="0" cellspacing="0">
-                                <tr >
-                                    <td align="right" style="text-align: right; font-size: 11px; color: #555;">
+                                <tr>
+                                    <td width="50%" valign="top" style="padding-right: 10px;">
+                                        {% if dados_empresa.dados_pagamento %}
+                                            <strong>{% trans "Dados de Pagamento" %}:</strong><br>
+                                            <div style="margin-top: 5px;">{{ dados_empresa.dados_pagamento|linebreaksbr }}</div>
+                                        {% endif %}
+                                    </td>
+                                    <td width="50%" valign="top" style="text-align: right; padding-left: 10px;">
+                                        <strong>{{ dados_empresa.nome_empresa }}</strong><br>
                                         {% if dados_empresa.endereco %}
-                                            <strong>{{ dados_empresa.nome_empresa }}</strong>
-                                            <p style="margin-top: 5px; margin-bottom: 0;">
-                                                <strong>{% trans "Endereço" %}:</strong><br>
-                                                {{ dados_empresa.endereco|linebreaksbr }}
-                                            </p>
+                                            <strong>{% trans "Endereço" %}:</strong><br>
+                                            {{ dados_empresa.endereco|linebreaksbr }}
                                         {% endif %}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td align="center" style="padding-top: 20px; font-size: 10px; color: #888;">
-                                        {% trans "Processado por" %}: {{ guia.utilizador.username|default:"N/A" }}
+                                    <td colspan="2" align="center" style="padding-top: 20px; font-size: 9px; color: #888;">
+                                        {% trans "Processado por" %}: {{ fatura.utilizador.username|default:"N/A" }}
                                     </td>
                                 </tr>
                             </table>
